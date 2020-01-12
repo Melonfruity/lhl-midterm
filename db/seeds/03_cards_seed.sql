@@ -1,0 +1,59 @@
+-- standard deck
+INSERT INTO cards (name, type, value, img_url) VALUES ('colour_joker', 'standard_cards', 'CJOKER', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('colourless_joker', 'standard_cards', 'CLJOKER', 'img_url');
+-- Hearts
+INSERT INTO cards (name, type, value, img_url) VALUES ('king_of_hearts', 'standard_cards', 'KH', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('queen_of_hearts', 'standard_cards', 'QH', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('jack_of_hearts', 'standard_cards', 'JH', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('10_of_hearts', 'standard_cards', '10H', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('9_of_hearts', 'standard_cards', '9H', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('8_of_hearts', 'standard_cards', '8H', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('7_of_hearts', 'standard_cards', '7H', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('6_of_hearts', 'standard_cards', '6H', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('5_of_hearts', 'standard_cards', '5H', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('4_of_hearts', 'standard_cards', '4H', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('3_of_hearts', 'standard_cards', '3H', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('2_of_hearts', 'standard_cards', '2H', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('ace_of_hearts', 'standard_cards', 'AH', 'img_url');
+-- Spades
+INSERT INTO cards (name, type, value, img_url) VALUES ('king_of_spades', 'standard_cards', 'KS', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('queen_of_spades', 'standard_cards', 'QS', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('jack_of_spades', 'standard_cards', 'JS', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('10_of_spades', 'standard_cards', '10S', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('9_of_spades', 'standard_cards', '9S', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('8_of_spades', 'standard_cards', '8S', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('7_of_spades', 'standard_cards', '7S', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('6_of_spades', 'standard_cards', '6S', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('5_of_spades', 'standard_cards', '5S', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('4_of_spades', 'standard_cards', '4S', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('3_of_spades', 'standard_cards', '3S', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('2_of_spades', 'standard_cards', '2S', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('ace_of_spades', 'standard_cards', 'AS', 'img_url');
+-- Clubs
+INSERT INTO cards (name, type, value, img_url) VALUES ('king_of_clubs', 'standard_cards', 'KD', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('queen_of_clubs', 'standard_cards', 'QC', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('jack_of_clubs', 'standard_cards', 'JC', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('10_of_clubs', 'standard_cards', '10C', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('9_of_clubs', 'standard_cards', '9C', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('8_of_clubs', 'standard_cards', '8C', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('7_of_clubs', 'standard_cards', '7C', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('6_of_clubs', 'standard_cards', '6C', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('5_of_clubs', 'standard_cards', '5C', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('4_of_clubs', 'standard_cards', '4C', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('3_of_clubs', 'standard_cards', '3C', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('2_of_clubs', 'standard_cards', '2C', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('ace_of_clubs', 'standard_cards', 'AC', 'img_url');
+-- Diamonds
+INSERT INTO cards (name, type, value, img_url) VALUES ('king_of_diamonds', 'standard_cards', 'KD', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('queen_of_diamonds', 'standard_cards', 'QD', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('jack_of_diamonds', 'standard_cards', 'JD', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('10_of_diamonds', 'standard_cards', '10D', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('9_of_diamonds', 'standard_cards', '9D', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('8_of_diamonds', 'standard_cards', '8D', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('7_of_diamonds', 'standard_cards', '7D', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('6_of_diamonds', 'standard_cards', '6D', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('5_of_diamonds', 'standard_cards', '5D', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('4_of_diamonds', 'standard_cards', '4D', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('3_of_diamonds', 'standard_cards', '3D', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('2_of_diamonds', 'standard_cards', '2D', 'img_url');
+INSERT INTO cards (name, type, value, img_url) VALUES ('ace_of_diamonds', 'standard_cards', 'AD', 'img_url');

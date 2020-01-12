@@ -6,7 +6,7 @@ const apiRouterWrapped = (db) => {
     // TEST API QUERY
 
     const queryString = `
-      SELECT * FROM name;
+      SELECT * FROM users;
     `
     db
       .query(queryString)
