@@ -3,15 +3,15 @@ const apiRouter = require('express').Router();
 const apiRouterWrapped = (db) => {
   
   apiRouter.get('/', (req, res) => {
-    // A query
-    db.query('SELECT * FROM names;', (err, res) => {
-      if (err) throw err;
-      for (let row of res.rows) {
-        console.log(JSON.stringify(row));
-      }
-      db.end();
-    });
-    res.render('index');
+    // TEST API QUERY
+
+    const queryString = `
+      SELECT * FROM name;
+    `
+    db
+      .query(queryString)
+      .then(data => res.status(200).json(data.rows))
+      .catch(err => res.status(400).json(err.stack));
   });
 
   return apiRouter;
