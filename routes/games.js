@@ -17,13 +17,11 @@ const gamesRouterWrapped = (db) => {
   
   // game update
   gamesRouter.post('/games/:id', (req, res) => {
-    // - Client to server using games id (POST api/games/:id)
-    // - If the user id being sent to games is the same as current_player
-    //   then update the cards_played table
-    // - server queries cards_played table and returns to all clients (players   
-    //   or host) cards_played info
-    // - If the update results in the game_state to be finished then the
-    //   server send the end game page (redirect /end)
+
+  });
+
+  // game update
+  gamesRouter.get('/games/:id', (req, res) => {
 
   });
 
