@@ -1,7 +1,7 @@
 const roomsRouter = require('express').Router();
 
 const roomsRouterWrapper = (db) => {
-    
+
   // get a specific room entry
   roomsRouter.get('/', (req, res) => {
     const { player_id, game_id } = req.body;
@@ -14,7 +14,6 @@ const roomsRouterWrapper = (db) => {
       .query(queryString)
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json(err.stack));
-
   });
 
   // create a new room
@@ -49,7 +48,7 @@ const roomsRouterWrapper = (db) => {
       .catch((err) => res.status(400).json(err.stack));
 
   });
-  
+
   return roomsRouter;
 };
 
