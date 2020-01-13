@@ -36,11 +36,13 @@ const gamesRouter = require('./routes/games');
 const rootRouter = require('./routes/root');
 const roomsRouter = require('./routes/rooms');
 const usersRouter = require('./routes/users');
+const testsRouter = require('./routes/tests');
 
 // Setting routes
 app.use('/games', gamesRouter(db));
 app.use('/rooms', roomsRouter(db));
 app.use('/users', usersRouter(db));
+app.use('/tests', testsRouter(db));
 app.use('/', rootRouter(db));
 
 app.listen(PORT, () => {
