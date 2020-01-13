@@ -12,13 +12,14 @@
 </head>
 
 <body>
-  <% if(user = 1){ %>
+  user is <%= user %>
+  <% if(user){ %>
   <div class="img"><img src="../images/placeholder.jpeg"></div>
   <span>Username Placeholder</span>
   <form method="POST" action="/logout">
     <button type="submit">Log out</button></form>
   <% } else { %>
-  <form method="POST" action="/login">
+  <form method="POST" action="/api/users/register">
     <label for="username">Username</label>
     <input type="username" name="username" id="username" /><br>
     <label for="password">Password</label>
