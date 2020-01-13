@@ -24,7 +24,7 @@ app.set(morgan('dev'));
 app.use(cookieParser());
 app.use(cookieSession({
   name: 'session',
-  keys: ['username'],
+  keys: ['userID'],
 }));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());

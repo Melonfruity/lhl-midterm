@@ -19,7 +19,8 @@ const usersRouterWrapper = (db) => {
         const user = data.rows[0];
         const loggedIn = userLogin(password, user.password);
         if (loggedIn) {
-          res.json(user);
+          req.session.userID = user.id;
+          res.status(200).json(user);
         } else {
           res.status(400).json({ error: 'unauthenticated' })
         }
@@ -49,13 +50,22 @@ const usersRouterWrapper = (db) => {
           const insertData = [username, userRegister(password)];
           db
             .query(insertString, insertData)
-            .then((data) => res.status(200).json(data.rows[0]));
+            .then((data) => {
+              const user = data.rows[0];
+              req.session.userID = user.id;
+              res.status(200).json(user)
+            });
         } else {
           res.status(500).json({ error: 'username already taken' });
         }
       })
       .catch(err => console.log(err.stack));
   });
+
+  usersRouter.post('/logout', (req, res) => {
+    req.session = null;
+    res.redirect(301, '/');
+  })
 
   return usersRouter;
 };
