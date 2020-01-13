@@ -1,3 +1,13 @@
+DROP TABLE IF EXISTS game_history_users;
+DROP TABLE IF EXISTS game_histories;
+DROP TABLE IF EXISTS player_hands;
+DROP TABLE IF EXISTS game_states;
+DROP TABLE IF EXISTS room_users;
+DROP TABLE IF EXISTS rooms;
+DROP TABLE IF EXISTS games;
+DROP TABLE IF EXISTS cards;
+DROP TABLE IF EXISTS users;
+
 CREATE TABLE cards (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL, -- king_of_hearts
