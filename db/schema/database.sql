@@ -62,7 +62,6 @@ CREATE TABLE game_history_users (
   PRIMARY KEY(game_history_id, user_id)
 );
 
-
 -- CARDS IN DECK
 CREATE TABLE game_states (
   id serial PRIMARY KEY,
