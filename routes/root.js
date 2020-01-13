@@ -3,7 +3,7 @@ const rootRouter = require('express').Router();
 const rootRouterWrapper = (db) => {
 
   // renders lobby page
-  rootRouter.get('/lobby', (req, res) => {
+  rootRouter.get('/', (req, res) => {
     res.render('index');
   });
 

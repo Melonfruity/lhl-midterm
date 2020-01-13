@@ -13,7 +13,7 @@ const testsRouterWrapped = (db) => {
   });
 
   testsRouter.post('/', (req, res) => {
-    console.log(req.body)
+
     const { username, password } = req.body
     const queryString = `
       INSERT 

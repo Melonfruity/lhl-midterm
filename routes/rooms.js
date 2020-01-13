@@ -4,7 +4,7 @@ const roomsRouterWrapper = (db) => {
     
   // get a specific room entry
   roomsRouter.get('/', (req, res) => {
-    const { player_id, game_id } = req;
+    const { player_id, game_id } = req.body;
 
     // change as necessary
     const queryString = `
@@ -19,7 +19,7 @@ const roomsRouterWrapper = (db) => {
 
   // create a new room
   roomsRouter.post('/', (req, res) => {
-    const { player_id, game_id } = req;
+    const { player_id, game_id } = req.body;
 
     // change as necessary
     const queryString = `

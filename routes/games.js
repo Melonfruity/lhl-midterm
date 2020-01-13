@@ -6,7 +6,7 @@ const gamesRouterWrapped = (db) => {
   
   // game_states update
   gamesRouter.post('/state', (req, res) => {
-    const { player_id, game_id } = req;
+    const { player_id, game_id } = req.body;
     
     // make a call to dealer
 
@@ -24,7 +24,7 @@ const gamesRouterWrapped = (db) => {
 
   // game_states get
   gamesRouter.get('/state', (req, res) => {
-    const { player_id, game_id } = req;
+    const { player_id, game_id } = req.body;
 
     // change as necessary
     const queryString = `
@@ -40,7 +40,7 @@ const gamesRouterWrapped = (db) => {
 
   // player_hand update
   gamesRouter.post('/hand', (req, res) => {
-    const { player_id, game_id } = req;
+    const { player_id, game_id } = req.body;
 
     // change as necessary
     const queryString = `
@@ -56,7 +56,7 @@ const gamesRouterWrapped = (db) => {
 
     // player_hand get
   gamesRouter.get('/hand', (req, res) => {
-    const { player_id, game_id } = req;
+    const { player_id, game_id } = req.body;
 
     // change as necessary
     const queryString = `
