@@ -6,6 +6,8 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const sass = require('node-sass-middleware');
 const dbParams = require('./utils/dbParams');
+const cookieParser = require('cookie-parser');
+const cookieSession = require('cookie-session');
 
 const app = express();
 
@@ -18,10 +20,16 @@ db.connect();
 
 // setting middleware
 app.set(morgan('dev'));
-
-app.set('view engine', 'ejs');
+app.use(cookieParser());
+app.use(cookieSession({
+  name: 'session',
+  keys: ['username'],
+}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
+// ejs view
+app.set('view engine', 'ejs');
 
 app.use("/styles", sass({
   src: __dirname + "/styles",

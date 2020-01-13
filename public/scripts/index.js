@@ -25,6 +25,6 @@
         $("<div>").text(user.username).appendTo($("body"));
       }
     });
-  })
+  });
 
 })(window.jQuery, window, document);
