@@ -18,12 +18,22 @@ const usersRouterWrapper = (db) => {
 
   // login
   usersRouter.post('/login', (req, res) => {
-    // userLogin
+
+  });
+
+  // render login page
+  usersRouter.get('/login', (req, res) => {
+
   });
 
   // register
+  usersRouter.post('/register', (req, res) => {
+
+  });
+
+  // render register
   usersRouter.get('/register', (req, res) => {
-    // userRegister
+
   });
 
   // // profile page DO LATER!

@@ -46,12 +46,14 @@ const gamesRouter = require('./routes/games');
 const roomsRouter = require('./routes/rooms');
 const usersRouter = require('./routes/users');
 const testsRouter = require('./routes/tests');
+// const apiRouter = require('./routes/api');
 
 // setting routes
-app.use('/games', gamesRouter(db));
 app.use('/rooms', roomsRouter(db));
-app.use('/users', usersRouter(db));
-app.use('/tests', testsRouter(db));
+// app.use('/api/db', roomsRouter(db));
+app.use('/api/games', gamesRouter(db));
+app.use('/api/users', usersRouter(db));
+app.use('/api/tests', testsRouter(db));
 app.use('/', rootRouter(db));
 
 app.listen(PORT, () => {
