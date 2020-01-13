@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title></title>
+
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <!-- <link rel="stylesheet" href="/styles/header.css" type="text/css" /> -->
+
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+</head>
+
+<body>
+  <% if(user = 1){ %>
+  <div class="img"><img src="../images/placeholder.jpeg"></div>
+  <span>Username Placeholder</span>
+  <form method="POST" action="/logout">
+    <button type="submit">Log out</button></form>
+  <% } else { %>
+  <form method="POST" action="/login">
+    <label for="username">Username</label>
+    <input type="username" name="username" id="username" /><br>
+    <label for="password">Password</label>
+    <input type="password" name="password" id="password" /><br>
+    <a href="/login"><button type="submit">Login</button></a>
+    <a href="/register"><button type="submit">Register</button></a>
+  </form>
+  <a href="/register"><button type="submit">Play As Guest</button></a>
+  <% } %>
+</body>
+
+</html>
