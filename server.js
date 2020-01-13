@@ -20,7 +20,9 @@ db.connect();
 app.set(morgan('dev'));
 
 app.set('view engine', 'ejs');
-app.set(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
@@ -30,12 +32,16 @@ app.use("/styles", sass({
 app.use(express.static('public'));
 
 // Routes
-const apiRouter = require('./routes/api');
+const gamesRouter = require('./routes/games');
 const rootRouter = require('./routes/root');
+const roomsRouter = require('./routes/rooms');
+const usersRouter = require('./routes/users');
 
 // Setting routes
-app.use('/api', apiRouter(db));
-app.use('/', rootRouter);
+app.use('/games', gamesRouter(db));
+app.use('/rooms', roomsRouter(db));
+app.use('/users', usersRouter(db));
+app.use('/', rootRouter(db));
 
 app.listen(PORT, () => {
   console.log(`Running on PORT ${PORT}`);

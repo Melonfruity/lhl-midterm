@@ -18,6 +18,7 @@ CREATE TABLE users (
 CREATE TABLE game_types (
   id SERIAL PRIMARY KEY,
   name VARCHAR(255) NOT NULL, -- Name of the game
+  type_of_cards VARCHAR(255), -- standard_deck, etc
   min_players SMALLINT NOT NULL DEFAULT 2,
   max_players SMALLINT NOT NULL DEFAULT 2
 );
@@ -46,14 +47,24 @@ CREATE TABLE players (
 /* 5. rooms */
 CREATE TABLE rooms (
   id SERIAL PRIMARY KEY,
+  host_id INTEGER REFERENCES players(id) NOT NULL,
+  games_id INTEGER REFERENCES games(id) ON DELETE CASCADE,
   players_id INTEGER REFERENCES players(id) ON DELETE CASCADE, -- table which hold all players in the game
-  game_type INTEGER REFERENCES game_types(id) -- which game is being played
+  game_type_id INTEGER REFERENCES game_types(id) -- which game is being played
 );
 
 /* 6. active game */
 CREATE TABLE games (
   id SERIAL PRIMARY KEY,
-  current_player_id INTEGER REFERENCES users(id), -- turn tracker
-  game_state VARCHAR(255), -- game state tracker
+  current_player_id INTEGER REFERENCES users(id), -- turn tracking
+  next_player_id INTEGER REFERENCES users(id),
+  game_state VARCHAR(255) DEFAULT 'IN_LOBBY', -- game state tracker
   game_winner_id INTEGER REFERENCES users(id)
+);
+
+/* 7. state tracker for each round */
+CREATE TABLE cards_played (
+  id SERIAL PRIMARY KEY,
+  card_id INTEGER REFERENCES cards(id),
+  games_id INTEGER REFERENCES games(id)
 );

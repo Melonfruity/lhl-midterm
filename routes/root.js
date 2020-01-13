@@ -1,8 +1,19 @@
 const rootRouter = require('express').Router();
+
+const rootRouterWrapper = (db) => {
   
-rootRouter.get('/', (req, res) => {
+  // render landing page
+  rootRouter.get('/', (req, res) => {
+    res.render('index');
+  });
 
-  res.render('index');
-});
+  // renders lobby page
+  rootRouter.get('/lobby', (req, res) => {
+    
+  });
 
-module.exports = rootRouter;
+  return rootRouter;
+
+}
+
+module.exports = rootRouterWrapper;

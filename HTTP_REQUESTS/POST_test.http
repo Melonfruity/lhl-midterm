@@ -1,0 +1,7 @@
+POST http://localhost:8080/api/erictestpost
+content-type: application/json
+
+{
+  "username": "user",
+  "password": "pass"
+}

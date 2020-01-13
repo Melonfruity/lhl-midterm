@@ -1,11 +1,8 @@
-$(() => {
-  $.ajax({
-    method: "GET",
-    url: "/api"
-  }).done((users) => {
-    console.log(users)
-    for(user of users) {
-      $("<div>").text(user.username).appendTo($("body"));
-    }
-  });;
-});
+// proper document ready function
+(function($, window, document){
+
+  $(function() {
+  
+  })
+
+})(window.jQuery, window, document);
