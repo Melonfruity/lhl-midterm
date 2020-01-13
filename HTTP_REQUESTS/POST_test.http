@@ -15,3 +15,13 @@ content-type: application/json
   "username": "user12",
   "password": "pass"
 }
+
+###
+
+POST http://localhost:8080/users
+content-type: application/json
+
+{
+  "username": "user",
+  "password": "pass"
+}
