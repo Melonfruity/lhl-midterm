@@ -66,5 +66,7 @@ CREATE TABLE games (
 CREATE TABLE cards_played (
   id SERIAL PRIMARY KEY,
   card_id INTEGER REFERENCES cards(id),
-  games_id INTEGER REFERENCES games(id)
+  games_id INTEGER REFERENCES games(id),
+  player_one INTEGER REFERENCES users(id),
+  player_two INTEGER REFERENCES users(id)
 );

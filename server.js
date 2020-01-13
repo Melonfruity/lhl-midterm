@@ -5,9 +5,10 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const sass = require('node-sass-middleware');
-const dbParams = require('./utils/dbParams');
 const cookieParser = require('cookie-parser');
 const cookieSession = require('cookie-session');
+
+const dbParams = require('./utils/dbParams');
 
 const app = express();
 
@@ -39,14 +40,14 @@ app.use("/styles", sass({
 }));
 app.use(express.static('public'));
 
-// Routes
-const gamesRouter = require('./routes/games');
+// routes
 const rootRouter = require('./routes/root');
+const gamesRouter = require('./routes/games');
 const roomsRouter = require('./routes/rooms');
 const usersRouter = require('./routes/users');
 const testsRouter = require('./routes/tests');
 
-// Setting routes
+// setting routes
 app.use('/games', gamesRouter(db));
 app.use('/rooms', roomsRouter(db));
 app.use('/users', usersRouter(db));
