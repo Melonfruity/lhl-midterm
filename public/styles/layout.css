@@ -36,11 +36,6 @@ body main {
   padding-left: 5vw;
 }
 
-#game-slot {
-  border: 2px solid black;
-  width: 60vw;
-}
-
 div.img {
   display: flex;
   justify-content: center;

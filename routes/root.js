@@ -12,6 +12,10 @@ const rootRouterWrapper = (db) => {
     res.render('stats');
   });
 
+  rootRouter.get('/rooms', (req, res) => {
+    res.render('rooms');
+  });
+
   return rootRouter;
 };
 
