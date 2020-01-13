@@ -18,6 +18,6 @@ const roomsRouterWrapper = (db) => {
   });
   
   return roomsRouter;
-}
+};
 
 module.exports = roomsRouterWrapper;

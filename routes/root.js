@@ -12,8 +12,12 @@ const rootRouterWrapper = (db) => {
     
   });
 
-  return rootRouter;
+  // // renders stats page
+  // rootRouter.get('/stats', (req, res) => {
+    
+  // });
 
-}
+  return rootRouter;
+};
 
 module.exports = rootRouterWrapper;

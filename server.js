@@ -11,12 +11,12 @@ const app = express();
 
 const PORT = process.env.PORT || 8080;
 
-// Database connection
+// database connection
 const { Pool } = require('pg');
 const db = new Pool(dbParams);
 db.connect();
 
-// Setting middleware
+// setting middleware
 app.set(morgan('dev'));
 
 app.set('view engine', 'ejs');
