@@ -7,7 +7,6 @@ const usersRouterWrapper = (db) => {
   usersRouter.post('/login', (req, res) => {
     const { username, password } = req.body;
     const queryParams = [username];
-    console.log(username, password, queryParams);
 
     const queryString = `
       SELECT * FROM users
@@ -17,8 +16,13 @@ const usersRouterWrapper = (db) => {
     db
       .query(queryString, queryParams)
       .then((data) => {
-        console.log(data.rows);
-        res.status(200).json(data.rows)
+        const user = data.rows[0];
+        const loggedIn = userLogin(password, user.password);
+        if (loggedIn) {
+          res.json(user);
+        } else {
+          res.status(400).json({ error: 'unauthenticated' })
+        }
       })
       .catch(err => res.status(400).json(err.stack));
   });
@@ -26,22 +30,32 @@ const usersRouterWrapper = (db) => {
   // register
   usersRouter.post('/register', (req, res) => {
     const { username, password } = req.body;
+    const queryParams = [username];
     
+    // Check if username is already taken
     const queryString = `
-      SELECT * FROM users;
-    
+      SELECT * FROM users
+      WHERE username = $1;
     `
-    // return the user entry if applicable
+    const insertString = `
+      INSERT INTO users (username, password)
+        VALUES ($1, $2)
+        RETURNING *;
+    `
     db
-      .query(queryString)
-      .then(data => res.status(200).json(data.rows))
-      .catch(err => res.status(400).json(err.stack));
+      .query(queryString, queryParams)
+      .then((data) => {
+        if (!data.rows[0]) {
+          const insertData = [username, userRegister(password)];
+          db
+            .query(insertString, insertData)
+            .then((data) => res.status(200).json(data.rows[0]));
+        } else {
+          res.status(500).json({ error: 'username already taken' });
+        }
+      })
+      .catch(err => console.log(err.stack));
   });
-
-  // // profile page DO LATER!
-  // usersRouter.post('/profile', (req, res) => {
-    
-  // });
 
   return usersRouter;
 };
