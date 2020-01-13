@@ -1,7 +1,52 @@
-body {
-  background-color: #EEE;
+html {
+  box-sizing: border-box;
 }
 
-body h1 {
-  color: #244751;
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  background-color: #EEE;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+body nav {
+  width: 100vw;
+  height: 15vh;
+  border: 2px solid black;
+  display: flex;
+  align-items: center;
+}
+
+body aside {
+  border: 2px solid black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 85vh;
+  width: 25vh;
+  padding: 3px;
+}
+
+body main {
+  width: 70vw;
+  padding-left: 5vw;
+}
+
+#game-slot {
+  border: 2px solid black;
+  width: 60vw;
+}
+
+div.img {
+  display: flex;
+  justify-content: center;
+}
+
+div.img img {
+  max-width: 100%;
+  max-height: 100%;
 }
