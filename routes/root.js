@@ -4,16 +4,13 @@ const rootRouterWrapper = (db) => {
   const databaseHelper = require('../utils/database')(db);
 
   // renders lobby page
-  let gamesData = {}
   rootRouter.get('/', (req, res) => {
     databaseHelper.getAllGames()
-    .then((data) => {
-      gamesData = data;
-      console.log("GAMES DATA", gamesData)
+    .then((gamesData) => {
+      const templateVars = {user: req.session ? req.session.userID : null, gamesData}
+      res.render('index', templateVars);
     })
-    .catch(err => console.log("Error: ", err))
-    const templateVars = {user: req.session ? req.session.userID : null, gamesData}
-    res.render('index', templateVars);
+    .catch((err) => res.status(400).json(err.stack));
   });
 
   // renders stats page
