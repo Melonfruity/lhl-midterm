@@ -25,10 +25,18 @@ module.exports = (db) => {
       .then((data) => {
         return data.rows[0]
       })
-    }
+  }
+
+  const getAllGames = () => {
+    const queryString = `SELECT * FROM games`;
+    return db.query(queryString)
+      .then(res => res.rows[0])
+      .catch(err => console.log(err))
+  }
 
   return {
-      findUserByUsername,
-      createUser
-    }
+    findUserByUsername,
+    createUser,
+    getAllGames
   }
+}
