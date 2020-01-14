@@ -1,4 +1,5 @@
 ### get landing page
+GET http://localpost:8080/ HTTP/1.1
+###
 GET https://obscure-harbor-31858.herokuapp.com/tests HTTP/1.1
 
-###

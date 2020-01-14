@@ -1,8 +1,6 @@
 img {
   max-width: 100%;
   max-height: 100%;
-  display: block;
-  /* remove extra space below image */
 }
 
 body {
@@ -40,14 +38,20 @@ body {
 .list-games {
   width: 100%;
   display: grid;
+<<<<<<< HEAD
   grid-template-rows: repeat(2, 400px);
   grid-template-columns: repeat(1, 100%);
+=======
+  grid-template-columns: repeat(2, 40%);
+>>>>>>> 0fd525abc0a9149cff3143a47aa4ed7c4bcf4f23
   justify-content: center;
+  grid-gap: 4rem;
 }
 
 .game {
   padding: 2em;
   width: 100%;
+<<<<<<< HEAD
   display: flex;
   flex-direction: row;
   border-bottom: 3px solid black;
@@ -101,4 +105,7 @@ body {
 
 .lobby-buttons button {
   width: 100px;
+=======
+  border: 1px solid black;
+>>>>>>> 0fd525abc0a9149cff3143a47aa4ed7c4bcf4f23
 }
