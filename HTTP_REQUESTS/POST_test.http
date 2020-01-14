@@ -2,7 +2,7 @@ POST http://localhost:8080/api/users/login
 content-type: application/json
 
 {
-  "username": "user12",
+  "username": "user1",
   "password": "pass"
 }
 
@@ -25,3 +25,35 @@ content-type: application/json
   "username": "user",
   "password": "pass"
 }
+
+###
+
+POST http://localhost:3001/api/games/hand
+content-type: application/json
+
+{
+  "user_id": "1",
+  "pickedCard": "4"
+}
+
+###
+
+POST http://localhost:3001/api/games/state
+content-type: application/json
+
+{
+  "room_id": "1"
+}
+
+###
+
+POST http://localhost:3001/api/games/state
+content-type: application/json
+
+{ 
+  "playedCard": "2",
+  "room_id": "1"
+}
+
+
+

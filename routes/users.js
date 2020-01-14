@@ -7,7 +7,6 @@ const usersRouterWrapper = (db) => {
   // login
   usersRouter.post('/login', (req, res) => {
     const { username, password } = req.body;
-    console.log(username, password)
     // return the user entry if applicable
     databaseHelper.findUserByUsername(username)
       .then((user) => {
@@ -28,12 +27,12 @@ const usersRouterWrapper = (db) => {
     databaseHelper.findUserByUsername(username)
       .then(data => {
         if (!data) {
-        return databaseHelper.createUser(username, password)
-        .then((createdUser => {
-          req.session.userID = createdUser.id;
-          res.redirect("/")
-          return;
-        }))
+          return databaseHelper.createUser(username, password)
+            .then((createdUser => {
+              req.session.userID = createdUser.id;
+              res.redirect("/")
+              return;
+            }))
         } else {
           res.status(500).json({ error: "username already taken" });
         }
