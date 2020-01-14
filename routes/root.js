@@ -9,6 +9,7 @@ const rootRouterWrapper = (db) => {
     databaseHelper.getAllGames()
     .then((data) => {
       gamesData = data;
+      console.log("GAMES DATA", gamesData)
     })
     .catch(err => console.log("Error: ", err))
     const templateVars = {user: req.session ? req.session.userID : null, gamesData}
