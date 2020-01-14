@@ -82,6 +82,8 @@ CREATE TABLE game_states (
   round_number SMALLINT DEFAULT 1
 );
 
+
+
 CREATE TABLE player_hands (
   id SERIAL PRIMARY KEY,
   game_state_id INTEGER REFERENCES game_states(id) ON DELETE CASCADE,

@@ -20,9 +20,7 @@ const rootRouterWrapper = (db) => {
     res.render('game');
   })
 
-  rootRouter.post('/game', (req, res) => {
-    res.render('game');
-  })
+
 
   return rootRouter;
 };

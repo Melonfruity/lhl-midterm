@@ -3,11 +3,26 @@ const gamesRouter = require('express').Router();
 const gamesRouterWrapped = (db) => {
 
   // Have frontend pass player_id and game_id
-  
+
+  //check if everyone went 
+  gamesRouter.get('/round', (req, res) => {
+    const { room_id } = req.body;
+
+    const queryString1 = `
+      SELECT card_1 + card_2 + card_3 + card_4 + card_5 + card_6 + card_7 + card_8 + card_9 + card_10 + card_11 + card_12 + card_13 as sum, round_number
+      FROM game_states
+      JOIN rooms ON room_id = rooms.id
+      WHERE room_id = 1
+      `;
+    db
+      .query(queryString1)
+      .then((data) => res.send(data.rows));
+  });
+
   // game_states update
   gamesRouter.post('/state', (req, res) => {
     const { room_id, playedCard } = req.body;
-    
+
     // make a call to dealer
 
     const queryString = `
@@ -53,12 +68,12 @@ const gamesRouterWrapped = (db) => {
     `;
     db
       .query(queryString)
-      .then((data) => {res.status(200).send(data.rows)})
+      .then((data) => { res.status(200).send(data.rows) })
       .catch((err) => res.status(400).json(err.stack));
   });
-  
 
-    // player_hand get
+
+  // player_hand get
   gamesRouter.get('/hand', (req, res) => {
     const { user_id } = req.body;
 
@@ -73,7 +88,7 @@ const gamesRouterWrapped = (db) => {
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json(err.stack));
   });
-  
+
 
   return gamesRouter;
 }
