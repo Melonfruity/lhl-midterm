@@ -1,10 +1,17 @@
 const rootRouter = require('express').Router();
 
 const rootRouterWrapper = (db) => {
+  const databaseHelper = require('../utils/database')(db);
 
   // renders lobby page
+  let gamesData = {}
   rootRouter.get('/', (req, res) => {
-    const templateVars = {user: req.session ? req.session.userID : null}
+    databaseHelper.getAllGames()
+    .then((data) => {
+      gamesData = data;
+    })
+    .catch(err => console.log("Error: ", err))
+    const templateVars = {user: req.session ? req.session.userID : null, gamesData}
     res.render('index', templateVars);
   });
 
