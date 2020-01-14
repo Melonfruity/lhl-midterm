@@ -1,6 +1,7 @@
 const rootRouter = require('express').Router();
 
 const rootRouterWrapper = (db) => {
+  const databaseHelper = require('../utils/database')(db);
 
   // renders lobby page
   rootRouter.get('/', (req, res) => {
@@ -16,13 +17,11 @@ const rootRouterWrapper = (db) => {
   rootRouter.get('/profile', async (req, res) => {
     const userData = await databaseHelper.getUserDetailsWithId(1) // temporary, pull actual user id from cookie
       .then((userData) => {
-        console.log("USERDATA", userData)
         return userData;
       })
       .catch((err) => res.status(400).json(err.stack));
     const gameData = await databaseHelper.getGamesWonWithUserId(1) // temporary, pull actual user id from cookie
       .then((gameData) => {
-        console.log("GAMEDATA", gameData)
         return gameData;
       })
     const templateVars = { user: req.session ? req.session.userID : null, userData, gameData }
