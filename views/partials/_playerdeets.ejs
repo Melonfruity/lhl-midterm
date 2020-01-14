@@ -19,39 +19,33 @@
   <body>
     <div class='player-deets'>
       <div class="profile-container">
-        <div>
+        <% if(user){ %>
           <img class='profile-image' src="/images/placeholder.jpeg">
+          <form method="POST" action="/logout">
+            <button class='btn' type="submit">Log out</button>
+          </form>
         </div>
+        <% } else { %>
         <div class='user-buttons'>
-          <button class='btn'>
-            Login
-          </button>
-          <button class='btn'>
-            Register
-          </button>
-          <button class='btn'>
-            Logout
-          </button>
+          <form method="POST" action="/api/users/register">
+            <div class="row">
+              <div class="input-field col s6">
+                <input value="Alvin" id="first_name2" type="text" class="validate">
+                <label class="active" for="first_name2">First Name</label>
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-field col s6">
+                <input value="Alvin" id="first_name2" type="text" class="validate">
+                <label class="active" for="first_name2">First Name</label>
+              </div>
+            </div>
+            <a href="/login"><button class='btn' type="submit">Login</button class='btn'></a>
+            <a href="/register"><button class='btn' type="submit">Register</button></a>
+          </form>
+          <a href="/register"><button class='btn' type="submit">Play As Guest</button class='btn'></a>
         </div>
+        <% } %>
       </div>
     </div>
   </body>
-</html>
-<body>
-
-  <!-- <% if(user){ %>
-  <div class="img"><img src="../images/placeholder.jpeg"></div>
-  <span>Username Placeholder</span>
-  <form method="POST" action="/logout">
-    <button type="submit">Log out</button></form>
-  <% } else { %>
-  <form method="POST" action="/api/users/register">
-    <label for="username">Username</label>
-    <input type="username" name="username" id="username" /><br>
-    <label for="password">Password</label>
-    <input type="password" name="password" id="password" /><br>
-    <a href="/login"><button type="submit">Login</button></a>
-    <a href="/register"><button type="submit">Register</button></a>
-  </form>
-  <a href="/register"><button type="submit">Play As Guest</button></a>
-  <% } %> -->
