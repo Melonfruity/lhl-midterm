@@ -1,74 +1,40 @@
-/* // See: https://sass-lang.com/
-
-
-body {
-  background-color: #EEE;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-
-  nav {
-    width: 100vw;
-    height: 15vh;
-    border: 2px solid black;
-    display: flex;
-    align-items: center;
-  }
-
-  aside {
-    border: 2px solid black;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    height: 85vh;
-    width: 25vh;
-    padding: 3px;
-  }
-
-  main {
-    width: 70vw;
-    padding-left: 5vw;
-  }
-}
-
-div.img {
-  display: flex;
-  justify-content: center;
-
-}
- */
-
 // contains everything in index
 img{
   max-width: 100%;
   max-height: 100%;
   display: block; /* remove extra space below image */
 }
-
+body {
+  display: flex;
+  flex-direction: row;
+}
 .main-container {
   height: 100vh;
-  width: 100%;
-  background-color: green;
+  width: 75%;
+  background-color: #84CEEB;
   display: flex;
   flex-direction: row;
   overflow: auto;
+  background-image: url('/images/black-linen.png');
 }
 
 // holds the lobby stuff
 .content {
   margin-top: 64px;
   display: flex;
-  width: 80%;
+  width: calc(100% - 12em);
   height: calc(100% - 64px);
   justify-content: center;
+  flex-direction: row;
+  margin-left: 6em;
+  margin-right: 6em;
 }
 
 // player stuff, login, etc
 .player-deets {
   margin-top: 64px;
-  width: 20%;
-  height: calc(100% - 64px);
-  border: 1px solid black;
+  width: 25%;
+  height: calc(100vh - 64px);
 }
 
 // games available
@@ -76,20 +42,65 @@ img{
   width: 100%;
   display: grid;
   grid-template-rows: repeat(2, 400px);
+  grid-template-columns: repeat(1, 100%);
   justify-content: center;
 }
 
 .game {
+  padding: 2em;
   width: 100%;
-  border: 1px solid black;
   display: flex;
   flex-direction: row;
+  border-bottom: 3px solid black;
 }
 
 .game-info {
+  width: calc(100% - 300px);
   display: flex;
+  flex-direction: column;
+  margin-left: 1em;
+  margin-right: 1em;
+  padding-left: 1em;
 }
 
 .game-img {
   height: 300px;
+  width: 300px;
+  border: 1px solid black;
+  border-radius: 150px;
+  background-image: url('/images/placeholder.jpeg');;
+  background-size: 212px;
+  background-position: 50%;
+}
+
+// list of rooms
+.list-rooms {
+  display: none;
+  width: 30%;
+  border: 1px black solid;
+  height: 100%;
+}
+
+.mt1em {
+  margin-top: 1em;
+}
+
+.ml1em {
+  margin-top: 1em;
+}
+
+.less-margins {
+  margin: 5px; 
+}
+
+.lobby-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1em;
+  padding-left: 2em;
+  padding-right: 2em;
+}
+
+.lobby-buttons button {
+  width: 100px;
 }

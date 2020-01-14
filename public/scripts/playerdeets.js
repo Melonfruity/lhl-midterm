@@ -5,38 +5,28 @@ $(() => {
   const $username = $('#username'); 
   const $password = $('#password');
 
-  let password;
-  let username;
-
-  $username.change(() => {
-    username = $username.val()
-  })
-
-  $username.change(() => {
-    password = $password.val()
-  })
-
   $login.on('click', (e) => {
     e.preventDefault();
+    console.log($username.val(), $password.val())
     $.ajax({
       method: "POST",
       url: "/api/users/login",
-      data: {username, password}
+      data: {username: $username.val(), password: $password.val()}
     }).done((users) => {
-      console.log(users)
-    });  
+      window.location.reload();
+    });
   })
 
-  $login.on('click', (e) => {
+  $register.on('click', (e) => {
     e.preventDefault();
+    console.log($username.val(), $password.val())
     $.ajax({
       method: "POST",
       url: "/api/users/register",
-      data: {username, password}
+      data: {username: $username.val(), password: $password.val()}
     }).done((users) => {
-      console.log(users)
+      window.location.reload();
     });  
   })
-
 });
 

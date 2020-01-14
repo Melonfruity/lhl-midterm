@@ -1,10 +1,13 @@
 img {
   max-width: 100%;
-   max-height: 100%;
- }
+  max-height: 100%;
+}
+
+.player-deets {
+  background-color: #464866;
+}
 
 .profile-container {
-  margin: 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,7 +17,21 @@ img {
   display: absolute;
 }
 
-.user-buttons {
+.sign {
   display: flex;
   flex-direction: column;
+  padding-top: 100px;
+}
+
+.sign-buttons {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#login, #register, #guest {
+  width: 70%;
+  margin: auto;
+  margin-bottom: 1em;
 }
