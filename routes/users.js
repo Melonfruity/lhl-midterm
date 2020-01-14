@@ -26,21 +26,12 @@ const usersRouterWrapper = (db) => {
     databaseHelper.findUserByUsername(username)
       .then(data => {
         if (!data) {
-<<<<<<< HEAD
         return databaseHelper.createUser(username, password)
         .then((createdUser => {
           req.session.userID = createdUser.id;
           res.status(200).json(createdUser);
           return;
         }))
-=======
-          return databaseHelper.createUser(username, password)
-            .then((createdUser => {
-              req.session.userID = createdUser.id;
-              res.redirect("/")
-              return;
-            }))
->>>>>>> 0fd525abc0a9149cff3143a47aa4ed7c4bcf4f23
         } else {
           res.status(400).json({ error: "username already taken" });
         }
