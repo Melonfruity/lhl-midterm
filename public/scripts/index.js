@@ -6,25 +6,9 @@
   // checkout routes/tests.js
 
   $(function() {
-    $.ajax({
-      method: "GET",
-      url: "/tests"
-    }).done((users) => {
-      console.log(users)
-      for (user of users) {
-        $("<div>").text(user.username).appendTo($("body"));
-      }
-    });
-    $.ajax({
-      method: "POST",
-      url: "/tests",
-      data: { username: 'user', password: 'pass' },
-    }).done((users) => {
-      console.log(users)
-      for (user of users) {
-        $("<div>").text(user.username).appendTo($("body"));
-      }
-    });
+    // JOIN ROOM
+    
+    // HOST ROOM
   });
 
 })(window.jQuery, window, document);

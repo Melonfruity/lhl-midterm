@@ -12,41 +12,47 @@
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
+    <script type="text/javascript" src="/scripts/playerdeets.js"></script>
     <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   </head>
 
   <body>
-    <div class='player-deets'>
-      <div class="profile-container">
+      <div class='player-deets'>
         <% if(user){ %>
-          <img class='profile-image' src="/images/placeholder.jpeg">
-          <span>Username Placeholder</span>
-          <form method="POST" action="/logout">
-            <button class='btn' type="submit">Log out</button>
-          </form>
+        <div class="profile-container">
+            <img class='profile-image' src="/images/placeholder.jpeg">
+            <form method="POST" action="/api/users/logout">
+              <button class='btn' type="submit">Log out</button>
+            </form>
         </div>
         <% } else { %>
-        <div class='user-buttons'>
-          <form method="POST" action="/api/users/register">
+        <div class='sign container center-align'>
+          <h3>WELCOME</h3>
+          <h5>sign-in to play</h5>
+          <form class='center-align col 12'>
             <div class="row">
-              <div class="input-field col s6">
-                <input value="Alvin" id="first_name2" type="text" class="validate">
-                <label class="active" for="first_name2">First Name</label>
+              <div class="input-field col s12">
+                <input id="username" name="username" type="text" class="validate">
+                <label class="active text-light-blue lighten-5" for="username">USERNAME</label>
               </div>
             </div>
             <div class="row">
-              <div class="input-field col s6">
-                <input value="Alvin" id="first_name2" type="text" class="validate">
-                <label class="active" for="first_name2">First Name</label>
+              <div class="input-field col s12">
+                <input name="password" id="password" type="password" class="validate">
+                <label value='password' class="active text-light-blue lighten-5" for="password">PASSWORD</label>
               </div>
             </div>
-            <a href="/login"><button class='btn' type="submit">Login</button class='btn'></a>
-            <a href="/register"><button class='btn' type="submit">Register</button></a>
-          </form>
-          <a href="/register"><button class='btn' type="submit">Play As Guest</button class='btn'></a>
+            <div class="sign-buttons">
+              <button id='login' class="btn waves-effect waves-light s6 blue darken-4" type="submit">Login</button>
+              <button id='register' class="btn waves-effect waves-light s6 light-blue darken-2" type="submit">register</button>
+              <button id='guest' class="btn waves-effect waves-light s6 teal darken-4" type="submit">GUEST</button>
+            </div>
+            </form>
         </div>
         <% } %>
       </div>
-    </div>
-  </body>
+    </body>
+    <script>
+    </script>
+
+</html>
