@@ -26,7 +26,7 @@
       }
     })
 
-    
+
 
     // $.click((e) => {
     //   e.preventDefault();
