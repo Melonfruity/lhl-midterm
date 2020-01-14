@@ -9,39 +9,30 @@
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
   <link rel="stylesheet" href="/styles/index.css" type="text/css" />
 
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/index.js"></script>
 </head>
 
+<%- include('partials/_header') %>
+
 <body>
-  <nav>
-    <%- include('partials/_nav') %>
-  </nav>
-
-  <main>
-    <div id="game-slot">
-      <div class="img"><img src="/images/placeholder.jpeg"></div>
-      <h2>GOPS</h2>
-      <h3>Description</h3>
-      <p>Game description blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</p>
-      <h3>How to Play</h3>
-      <p>How to Play blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah</p>
-      <h3>Play Now</h3>
-      <span>Host New Room</span>
-      <button type="submit">Host</button><br>
-      <span>Room 1</span>
-      <span>2/4 players</span>
-      <button type="submit">Join</button><br>
-      <span>Room 2</span>
-      <span>1/4 players</span>
-      <button type="submit">Join</button>
+  <div class='main-container'>
+    <div class='content'>
+      <div class='list-games'>
+        <% for (let i = 0; i < 9; i ++) { %>
+          <div class='game'>
+            G
+          </div>
+        <% } %>
+      </div>
     </div>
-  </main>
-
-  <aside>
-    <%- include('partials/_aside') %>
-  </aside>
-
+    <%- include('partials/_playerdeets') %>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
 </html>

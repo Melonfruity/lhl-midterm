@@ -7,17 +7,15 @@
   flex-direction: row;
 }
 
-// holds the lobby stuff
 .content {
   margin-top: 64px;
   display: flex;
   width: 80%;
-  height: calc(100% - 64px);;
+  height: calc(100% - 64px);
   border: 1px solid black;
   justify-content: center;
 }
 
-// player stuff, login, etc
 .player-deets {
   margin-top: 64px;
   width: 20%;
@@ -25,7 +23,6 @@
   border: 1px solid black;
 }
 
-// games available
 .games {
   margin-left: 10em;
   margin-right: 10em;

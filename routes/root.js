@@ -8,6 +8,11 @@ const rootRouterWrapper = (db) => {
     res.render('index', templateVars);
   });
 
+  // renders room page
+  rootRouter.get('/room', (req, res) => {
+    res.render('room');
+  });
+
   // renders stats page
   rootRouter.get('/stats', (req, res) => {
     const templateVars = {user: req.session ? req.session.userID: null}

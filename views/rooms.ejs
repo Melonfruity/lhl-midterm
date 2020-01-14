@@ -6,22 +6,44 @@
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
-  <!-- <link rel="stylesheet" href="/styles/game.css" type="text/css" /> -->
+  <link rel="stylesheet" href="/styles/room.css" type="text/css" />
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
 </head>
 
-<body>
-  <nav>
-    <%- include('partials/_nav') %>
-  </nav>
-  <main>
+<%- include('partials/_header') %>
 
-  </main>
-  <aside>
-    <%- include('partials/_aside') %>
-  </aside>
+<body>
+  <div class='main-container'>
+    <div class='content'>
+      <div class='players'>
+        <table class="striped highlight centered">
+          <thead>
+            <tr>
+              <th>Player</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Alvin</td>
+            </tr>
+            <tr>
+              <td>Alvin</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class='gameplay'>
+
+      </div>
+    </div>
+    <%- include('partials/_playerdeets') %>
+  </div>
 </body>
 
 </html>
