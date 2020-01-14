@@ -4,7 +4,6 @@ const rootRouterWrapper = (db) => {
 
   // renders lobby page
   rootRouter.get('/', (req, res) => {
-    console.log("SESSIONS", req.session)
     const templateVars = {user: req.session ? req.session.userID : null}
     res.render('index', templateVars);
   });
