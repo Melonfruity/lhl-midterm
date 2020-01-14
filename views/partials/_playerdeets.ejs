@@ -21,31 +21,76 @@
       <div class="profile-container">
         <% if(user){ %>
           <img class='profile-image' src="/images/placeholder.jpeg">
-          <form method="POST" action="/logout">
+          <form method="POST" action="/api/users/logout">
             <button class='btn' type="submit">Log out</button>
           </form>
         </div>
         <% } else { %>
         <div class='user-buttons'>
-          <form method="POST" action="/api/users/register">
+          <form>
             <div class="row">
               <div class="input-field col s6">
-                <input value="Alvin" id="first_name2" type="text" class="validate">
-                <label class="active" for="first_name2">First Name</label>
+                <input id="username" type="text" class="validate">
+                <label class="active" for="username">First Name</label>
               </div>
             </div>
             <div class="row">
               <div class="input-field col s6">
-                <input value="Alvin" id="first_name2" type="text" class="validate">
-                <label class="active" for="first_name2">First Name</label>
+                <input value='username' id="password" type="password" class="validate">
+                <label value='password' class="active" for="password">First Name</label>
               </div>
             </div>
-            <a href="/login"><button class='btn' type="submit">Login</button class='btn'></a>
-            <a href="/register"><button class='btn' type="submit">Register</button></a>
+            <a href="/login"><button class='btn' id='login' type="submit">Login</button></a>
+            <a href="/register"><button class='btn' id='register' type="submit">Register</button></a>
           </form>
           <a href="/register"><button class='btn' type="submit">Play As Guest</button class='btn'></a>
         </div>
         <% } %>
       </div>
-    </div>
-  </body>
+      </div>
+    </body>
+    <script>
+      
+      $(() => {
+        
+        const $login = $('#login');
+        const $register = $('#register');
+        const $username = $('#username'); 
+        const $password = $('#password');
+
+        let password;
+        let username;
+
+        $username.change(() => {
+          username = $username.val()
+        })
+
+        $username.change(() => {
+          password = $password.val()
+        })
+
+        $login.on('click', (e) => {
+          e.preventDefault();
+          $.ajax({
+            method: "POST",
+            url: "/api/users/login",
+            data: {username, password}
+          }).done((users) => {
+            console.log(users)
+          });  
+        })
+
+        $login.on('click', (e) => {
+          e.preventDefault();
+          $.ajax({
+            method: "POST",
+            url: "/api/users/register",
+            data: {username, password}
+          }).done((users) => {
+            console.log(users)
+          });  
+        })
+
+      });
+
+    </script>
