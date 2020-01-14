@@ -26,13 +26,11 @@
         <% for (let i = 0; i < 2; i ++) { %>
         <div class='game'>
           <div class="img"><img src="/images/placeholder.jpeg"></div>
-          <h2>GOPS</h2>
+          <h2><%= gamesData.name %></h2>
           <h3>Description</h3>
-          <p>Game description blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
-            blah blah blah</p>
+          <p><%= gamesData.description %></p>
           <h3>How to Play</h3>
-          <p>How to Play blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah blah
-            blah blah</p>
+          <p><%= gamesData.tutorial %></p>
           <h3>Play Now</h3>
           <span>Host New Room</span>
           <button type="submit">Host</button><br>
