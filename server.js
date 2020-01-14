@@ -22,7 +22,7 @@ db.connect();
 
 // setting middleware
 app.set(morgan('dev'));
-app.set(cors());
+app.use(cors());
 app.use(cookieParser());
 app.use(cookieSession({
   name: 'session',
