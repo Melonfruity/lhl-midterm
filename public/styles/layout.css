@@ -40,6 +40,8 @@ div.img {
 img {
   max-width: 100%;
   max-height: 100%;
+  display: block;
+  /* remove extra space below image */
 }
 
 .main-container {
@@ -69,12 +71,17 @@ img {
 .list-games {
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(2, 40%);
+  grid-template-rows: repeat(2, 400px);
   justify-content: center;
-  grid-gap: 4rem;
 }
 
 .game {
   width: 100%;
   border: 1px solid black;
+  display: flex;
+  flex-direction: row;
+}
+
+.game-img {
+  height: 300px;
 }
