@@ -1,7 +1,6 @@
 const rootRouter = require('express').Router();
 
 const rootRouterWrapper = (db) => {
-  const databaseHelper = require('../utils/database')(db);
 
   // renders lobby page
   rootRouter.get('/', (req, res) => {
@@ -42,7 +41,17 @@ const rootRouterWrapper = (db) => {
     res.render('rooms', templateVars);
   });
 
+  rootRouter.get('/game', (req, res) => {
+    res.render('game');
+  })
+
+  rootRouter.post('/game', (req, res) => {
+    res.render('game');
+  })
+
   return rootRouter;
 };
+
+
 
 module.exports = rootRouterWrapper;

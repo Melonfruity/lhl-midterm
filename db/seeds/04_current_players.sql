@@ -1,0 +1,1 @@
+INSERT INTO players (player_one, player_two) VALUES (1, 2);

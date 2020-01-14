@@ -25,20 +25,21 @@
       <div class='list-games'>
         <% for (let i = 0; i < 2; i ++) { %>
         <div class='game'>
-          <div class="game-img">
-            <img src="/images/placeholder.jpeg">
-            <div>
-              <button class="btn center" type="submit">Host</button>
-              <button class="btn center" type="submit">Join</button>
-            </div>
-          </div>
-          <div class='game-info'>
-            <h2><%= gamesData.name %></h2>
-            <h3>Description</h3>
-            <p><%= gamesData.description %></p>
-            <h3>How to Play</h3>
-            <p><%= gamesData.tutorial %></p>
-          </div>
+          <div class="img"><img src="/images/placeholder.jpeg"></div>
+          <h2><%= gamesData.name %></h2>
+          <h3>Description</h3>
+          <p><%= gamesData.description %></p>
+          <h3>How to Play</h3>
+          <p><%= gamesData.tutorial %></p>
+          <h3>Play Now</h3>
+          <span>Host New Room</span>
+          <button type="submit">Host</button><br>
+          <span>Room 1</span>
+          <span>2/4 players</span>
+          <button type="submit">Join</button><br>
+          <span>Room 2</span>
+          <span>1/4 players</span>
+          <button type="submit">Join</button>
         </div>
         <% } %>
       </div>
