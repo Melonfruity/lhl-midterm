@@ -1,0 +1,18 @@
+.main-area {
+  display: flex;
+  justify-content: center;
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 1px solid black;
+  width: 50vw;
+  padding: 2rem;
+}
+
+p, h3 {
+  display: flex;
+  justify-content: center;
+}

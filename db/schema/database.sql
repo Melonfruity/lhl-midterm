@@ -23,6 +23,7 @@ CREATE TABLE users (
   username VARCHAR(255),
   password VARCHAR(255),
   tokens INTEGER,
+  player_since DATE NOT NULL DEFAULT CURRENT_DATE
   is_guest BOOLEAN
 );
 
