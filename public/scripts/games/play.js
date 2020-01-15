@@ -7,17 +7,17 @@ const loadPage = function (message) {
     success: function () {
       if (message === 'not done') {
         $(".status").remove();
-        $("body").append(`<p class="status">not done</p>`);
+        $(".main-container .content").append(`<p class="status">not done</p>`);
       }
       else {
-        $("body").append(`<p class="announcement"> ${message}</p>`)
+        $(".main-container .content").append(`<p class="announcement"> ${message}</p>`)
       }
 
     }
   });
 };
 
-const loadCards = function (message, id) {
+const loadCards = function (message, user_id) {
 
   $.ajax({
     url: '/game',
@@ -30,13 +30,13 @@ const loadCards = function (message, id) {
           output += `${card.slice(5)}, `;
         }
       }
-      $(`.player${id}-message`).remove();
-      $(`.player${id}-hand`).append(`<div class="player${id}-message"> ${output}</p>`)
+      $(`.player${user_id}-message`).remove();
+      $(`.player${user_id}-hand`).append(`<div class="player${user_id}-message"> ${output}</p>`)
     }
   });
 };
 
-const startRound = function (bool) {
+const startRound = function (bool, user_id, game_state_id) {
   if (bool) {
 
     $.ajax({
@@ -47,6 +47,7 @@ const startRound = function (bool) {
       },
       success: function (data) {
         bool = false;
+        loadPage(data.cardValue);
         getPlayerhand(1, 1); // currently hardcoded
         getPlayerhand(2, 1); // currently hardcoded
       }
