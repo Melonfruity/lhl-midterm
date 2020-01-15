@@ -2,50 +2,49 @@
 <html lang="en">
 
 <head>
-  <title></title>
+  <title>Game</title>
 
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-  <!-- <link rel="stylesheet" href="/styles/stats.css" type="text/css" /> -->
+  <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css" />
 
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-
+  <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
   <script type="text/javascript" src="/scripts/games/play.js"></script>
 </head>
 
+<%- include('partials/_header') %>
+
 <body>
-  <p>player 1 cards</p>
-  <div class="player1-hand">
-    
-  </div>
-  <p>player 2 cards</p>
-  <div class="player2-hand">
-
-  </div>
-
- 
-  <div>
-    <textarea class="submit-card" name="text" placeholder="card number"></textarea>
-    <textarea class="user_id" name="text" placeholder="user id"></textarea>
-    <input class="submit-button" type="submit" value="submit">
-  </div>
-  <button type:"button" class="round-check">check roun</button>
-
-
-  <div class="message">
-    <div class="dealer-card">
-
-
-    </div>
-    <div class="winner">
-
+  <div class="main-container">
+    <div class="content" style="display: block">
+      <p>player 1 cards</p>
+      <div class="player1-hand">
+        <p>testing</p>
+      </div>
+      <p>player 2 cards</p>
+      <div class="player2-hand">
+      </div>
+      <div>
+        <textarea class="submit-card" name="text" placeholder="card number"></textarea>
+        <textarea class="user_id" name="text" placeholder="user id"></textarea>
+        <input class="submit-button btn s6" type="submit" value="submit">
+      </div>
+      <div class="message">
+        <div class="dealer-card">
+        </div>
+        <div class="winner">
+        </div>
+      </div>
     </div>
   </div>
+  <%- include('partials/_playerdeets') %>
 </body>
 
 </html>
