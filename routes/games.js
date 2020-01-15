@@ -194,17 +194,19 @@ const gamesRouterWrapped = (db) => {
 
   // player_hand get
   gamesRouter.get('/hand', (req, res) => {
-    const { user_id } = req.body;
+    const user_id = req.query.user_id;
+    const game_state_id = req.query.game_state_id;
 
     // change as necessary
     const queryString = `
-      SELECT card_1, card_2, card_ 3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13 FROM player_hands
-      WHERE user_id = ${user_id};
+      SELECT card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13 FROM player_hands
+      WHERE user_id = ${user_id}
+      AND game_state_id = ${game_state_id};
     `
     // update players hand
     db
       .query(queryString)
-      .then((data) => res.status(200).json(data.rows))
+      .then((data) => res.status(200).json(data.rows[0]))
       .catch((err) => res.status(400).json(err.stack));
   });
 

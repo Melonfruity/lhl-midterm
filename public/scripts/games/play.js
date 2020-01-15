@@ -23,15 +23,22 @@ const loadCards = function(message, id) {
     url: '/game',
     method: 'GET',
     success: function() {
-      $("body").append(`<div class="player1-hand"> ${message}</p>`)
+      let output = '';
+      //console.log(JSON.stringify(message));
+      for (let card in message) {
+        if (message[card] > 0) {
+          output += `${card.slice(5)}, `;
+        }
       }
-
-    
+      $(`.player${id}-message`).remove();
+      $(`.player${id}-hand`).append(`<div class="player${id}-message"> ${output}</p>`)
+    }
   });
 };
 
 const startRound = function(bool) {
   if (bool) {
+
     $.ajax({
       method: "post",
       url: "/api/games/start",
@@ -41,24 +48,25 @@ const startRound = function(bool) {
       success: function(data) {
         bool = false;
         loadPage(`The card value is ${data.cardValue}`)
+        getPlayerhand(1, 1);
+        getPlayerhand(2, 1);
       }
-    })
+    });
   }
-}
+};
 
-const getPlayerhand = function(id) {
+const getPlayerhand = function(id, game_state_id) {
   setInterval(function() {
     $.ajax({
       method: "get",
-      url: "/api/games/hand",
-      
+      url: `/api/games/hand?user_id=${id}&game_state_id=${game_state_id}`,
       success: function(data) {
-        
-        loadCards(`${data.rows[0]}`, );
+        // console.log(data);
+        loadCards(data, id);
       }
-    })
-  }, 3000)
-}
+    });
+  }, 3000);
+};
 
 let roundInput = [];
 
@@ -95,7 +103,7 @@ let roundInput = [];
         },
       });
     });
-    getPlayerhand();
+
 
     //long polling check if round is over
     setInterval(function() {
@@ -131,4 +139,4 @@ let roundInput = [];
     // });
   });
 
-})(window.jQuery, window, document);
+})(window.jQuery, window, document); 
