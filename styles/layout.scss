@@ -1,7 +1,11 @@
 // contains everything in index
+
+html {
+  scroll-behavior: smooth;
+}
+
 img {
   max-width: 100%;
-<<<<<<< HEAD
   max-height: 100%;
   display: block; /* remove extra space below image */
 }
@@ -9,19 +13,14 @@ body {
   display: flex;
   flex-direction: row;
 }
-=======
-   max-height: 100%;
- }
-
->>>>>>> 0fd525abc0a9149cff3143a47aa4ed7c4bcf4f23
 .main-container {
   height: 100vh;
   width: 75%;
-  background-color: #84CEEB;
+  background-color: #bbe1fa;
   display: flex;
   flex-direction: row;
   overflow: auto;
-  background-image: url('/images/black-linen.png');
+  background-image: url('/images/asfalt-dark.png');
 }
 
 // holds the lobby stuff
@@ -45,14 +44,11 @@ body {
 
 // games available
 .list-games {
+  height: 100%;
   width: 100%;
   display: grid;
-<<<<<<< HEAD
   grid-template-rows: repeat(2, 400px);
   grid-template-columns: repeat(1, 100%);
-=======
-  grid-template-columns: repeat(2, 40%);
->>>>>>> 0fd525abc0a9149cff3143a47aa4ed7c4bcf4f23
   justify-content: center;
   grid-gap: 4rem;
 }
@@ -60,7 +56,6 @@ body {
 .game {
   padding: 2em;
   width: 100%;
-<<<<<<< HEAD
   display: flex;
   flex-direction: row;
   border-bottom: 3px solid black;
@@ -87,9 +82,10 @@ body {
 
 // list of rooms
 .list-rooms {
+  padding: 1em;
   display: none;
-  width: 30%;
-  border: 1px black solid;
+  flex-direction: column;
+  width: 70%;
   height: 100%;
 }
 
@@ -116,7 +112,3 @@ body {
 .lobby-buttons button {
   width: 100px;
 }
-=======
-  border: 1px solid black;
-}
->>>>>>> 0fd525abc0a9149cff3143a47aa4ed7c4bcf4f23

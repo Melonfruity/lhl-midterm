@@ -1,6 +1,12 @@
+html {
+  scroll-behavior: smooth;
+}
+
 img {
   max-width: 100%;
   max-height: 100%;
+  display: block;
+  /* remove extra space below image */
 }
 
 body {
@@ -11,11 +17,11 @@ body {
 .main-container {
   height: 100vh;
   width: 75%;
-  background-color: #84CEEB;
+  background-color: #bbe1fa;
   display: flex;
   flex-direction: row;
   overflow: auto;
-  background-image: url("/images/black-linen.png");
+  background-image: url("/images/asfalt-dark.png");
 }
 
 .content {
@@ -36,6 +42,7 @@ body {
 }
 
 .list-games {
+  height: 100%;
   width: 100%;
   display: grid;
   grid-template-rows: repeat(2, 400px);
@@ -72,9 +79,10 @@ body {
 }
 
 .list-rooms {
+  padding: 1em;
   display: none;
-  width: 30%;
-  border: 1px black solid;
+  flex-direction: column;
+  width: 70%;
   height: 100%;
 }
 

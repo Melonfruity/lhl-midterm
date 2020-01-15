@@ -16,8 +16,7 @@
   <!-- Compiled and minified JavaScript -->
   <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/index.js"></script>
-</head>
+  </head>
 
 <%- include('partials/_header') %>
 
@@ -32,7 +31,7 @@
             </div>
             <div class="lobby-buttons">
               <button class="btn purple darken-4 host" type="button">Host</button>
-              <button class="btn s6 join" type="button">Join</button>
+              <button class="btn s6 join" id="<%= gamesData.id %>" type="button">Join</button>
             </div>
           </div>
           <div class='game-info center-align'>
@@ -55,12 +54,75 @@
         <% } %>
       </div>
       <div class='list-rooms mt1em'>
-        g
+        <h3 class="center-align">
+          AVAILABLE GAMES
+        </h3>
+        <div class='rooms'>
+          
+          <table class="striped highlight centered">
+            <thead>
+              <tr>
+                <th>Player</th>
+                <th>Room</th>
+                <th>Players</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  </td>
+                  <td>
+                    1
+                  </td>
+                  <td>
+                    1/4
+                  </td>
+              </tr>
+              <tr>
+                <td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque beatae blanditiis earum quis ratione iusto sed, laborum velit tempora harum minus voluptatem eligendi unde iure soluta libero inventore accusantium nobis?
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Cum facere dolorem excepturi quo atque ratione consequuntur ipsam a, praesentium quia cumque veritatis recusandae eligendi, explicabo fugit hic provident doloremque omnis?
+                  </td>
+                  <td>
+                    1
+                  </td>
+                  <td>
+                    1/4
+                  </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
   <%- include('partials/_playerdeets') %>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script type="text/javascript" src="/scripts/index.js"></script>
 </body>
 
 </html>
