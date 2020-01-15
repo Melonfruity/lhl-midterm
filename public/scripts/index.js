@@ -17,7 +17,6 @@
     const $listGames = $('.list-games');
     const $rooms = $('.rooms');
     
-    
     const grabGames = (game_id) => {
       
       $rooms.empty();
@@ -44,8 +43,8 @@
 
         $.ajax({
           method: 'GET',
-          url: '/rooms/all',
-          data: { game_id: 1 }
+          url: '/api/db/all',
+          data: { game_id }
         }).done(rooms => {
           for (room of rooms) {
             const newRoom = createRoom(room.id, room.game_id, room.game_started);
@@ -55,7 +54,6 @@
             })
           }
         });
-        
         
       } else {
         $gameInfo.css('display', 'flex');
@@ -78,14 +76,28 @@
     })
 
     // HOST ROOM
-
     $hostOne.click((e) => {
-      document.location.href = `/game/:${game_id}`;
+      $.ajax({
+        method: 'POST',
+        url: '/rooms',
+        data: { game_id: 1}
+      }).done((room) => {
+        console.log(room)
+        const room_id = room.room_id;
+        document.location.href = `/rooms/:${room_id}`
+      })
     })
 
-
     $hostTwo.click((e) => {
-      document.location.href = `/game/:${game_id}`;
+      $.ajax({
+        method: 'POST',
+        url: '/rooms',
+        data: { game_id: 2}
+      }).done((room) => {
+        console.log(room)
+        const room_id = room.room_id;
+        document.location.href = `/rooms/:${room_id}`
+      })
     })
   });
 

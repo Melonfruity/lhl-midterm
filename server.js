@@ -49,11 +49,11 @@ const gamesRouter = require('./routes/games');
 const roomsRouter = require('./routes/rooms');
 const usersRouter = require('./routes/users');
 const testsRouter = require('./routes/tests');
-// const apiRouter = require('./routes/api');
+const dbRouter = require('./routes/db');
 
 // setting routes
 app.use('/rooms', roomsRouter(db));
-// app.use('/api/db', roomsRouter(db));
+app.use('/api/db', dbRouter(db));
 app.use('/api/games', gamesRouter(db));
 app.use('/api/users', usersRouter(db));
 app.use('/api/tests', testsRouter(db));

@@ -1,3 +1,5 @@
+const { userLogin, userRegister } = require('./helpers');
+
 module.exports = (db) => {
 
   const findUserByUsername = (username) => {
@@ -19,7 +21,7 @@ module.exports = (db) => {
     VALUES ($1, $2)
     RETURNING *;
   `;
-    const insertData = [username, password];
+    const insertData = [username, userRegister(password)];
     return db
       .query(insertString, insertData)
       .then((data) => {
