@@ -6,7 +6,6 @@ const dbRouterWrapper = (db) => {
     // change as necessary
     const { game_id } = req.query;
     const queryParams = [game_id];
-    console.log(game_id)
     const queryString = `
       SELECT * FROM rooms
       WHERE rooms.game_id = $1;
