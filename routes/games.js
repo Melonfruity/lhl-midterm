@@ -140,7 +140,8 @@ const gamesRouterWrapped = (db) => {
 
     // make a call to dealer
 
-    const queryString = `UPDATE game_states
+    const queryString = `
+      UPDATE game_states
       SET card_${playedCard} = 0
       WHERE room_id = ${room_id}
       RETURNING *;`;
@@ -205,32 +206,18 @@ const gamesRouterWrapped = (db) => {
 
   gamesRouter.post('/start', (req, res) => {
     const { game_state_id } = req.body;
-<<<<<<< HEAD
     const queryString1 = `
     
-=======
-    const queryString1 = `BEGIN;
-
->>>>>>> master
     UPDATE player_hands
     SET played_this_round = false,
         card_played = null
     WHERE game_state_id = ${game_state_id};
-<<<<<<< HEAD
     `
     console.log('start')
-=======
-
-    UPDATE game_states
-    SET round_number = round_number +1
-    WHERE game_states.id = ${game_state_id};
-
-    COMMIT;`
->>>>>>> master
 
     db
       .query(queryString1)
-      .then(console.log("DEALER CARD = ", dealerCard(game_state_id, res)))
+      .then(dealerCard(game_state_id, res))
 
   });
 
