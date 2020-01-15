@@ -6,3 +6,5 @@ INSERT INTO rooms (name, game_started) VALUES ('room1', true);
 INSERT INTO game_states (card_1) VALUES (1);
 INSERT INTO player_hands (game_state_id, user_id) VALUES (1, 1);
 INSERT INTO player_hands (game_state_id, user_id) VALUES (1, 2);
+INSERT INTO last_played_cards (player_hands, game_states_id) VALUES (1,1);
+INSERT INTO last_played_cards (player_hands, game_states_id) VALUES (2,1);

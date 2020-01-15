@@ -1,3 +1,6 @@
+
+let output = {};
+
 const gamesRouter = require('express').Router();
 
 const gamesRouterWrapped = (db) => {
@@ -5,18 +8,33 @@ const gamesRouterWrapped = (db) => {
   // Have frontend pass player_id and game_id
 
   //check if everyone went 
-  gamesRouter.get('/round', (req, res) => {
-    const { room_id } = req.body;
-
+  gamesRouter.post('/round', (req, res) => {
+    const { game_state_id, playedCard } = req.body;
+    console.log(game_state_id)
+    const roundFinished = false;
     const queryString1 = `
-      SELECT card_1 + card_2 + card_3 + card_4 + card_5 + card_6 + card_7 + card_8 + card_9 + card_10 + card_11 + card_12 + card_13 as sum, round_number
-      FROM game_states
-      JOIN rooms ON room_id = rooms.id
-      WHERE room_id = 1
+      SELECT played_this_round
+      FROM player_hands 
+      JOIN game_states ON game_state_id = game_states.id
+      where game_states.id = ${game_state_id}
       `;
+    const queryString2 = `
+      SELECT user_id, MAX()
+      `
     db
       .query(queryString1)
-      .then((data) => res.send(data.rows));
+      .then((data) => {
+        for (let user of data.rows) {
+          if (user.played_this_round) {
+            break;
+          }
+        }
+        if (roundFinished) {
+          db
+            .query()
+        }
+        res.json({ "roundFinished": 'false' });
+      });
   });
 
   // game_states update
@@ -58,17 +76,27 @@ const gamesRouterWrapped = (db) => {
 
   // player_hand update
   gamesRouter.post('/hand', (req, res) => {
+
+
     const { user_id, pickedCard } = req.body;    // change as necessary
-    const queryString = `
+    output[user_id] = pickedCard;
+    const queryString1 = `
+      BEGIN;
+
       UPDATE player_hands
       SET card_${pickedCard} = 0
+          ,played_this_round = true
       WHERE user_id = ${user_id}
       RETURNING *;
 
+      UPDATE last_played_cards
+      SET card = ${playedCard}
+      WHERE last_played_cards.id 
+
     `;
     db
-      .query(queryString)
-      .then((data) => { res.status(200).send(data.rows) })
+      .query(queryString1)
+      .then((data) => res.status(200).send(data.rows))
       .catch((err) => res.status(400).json(err.stack));
   });
 
@@ -88,6 +116,7 @@ const gamesRouterWrapped = (db) => {
       .then((data) => res.status(200).json(data.rows))
       .catch((err) => res.status(400).json(err.stack));
   });
+
 
 
   return gamesRouter;

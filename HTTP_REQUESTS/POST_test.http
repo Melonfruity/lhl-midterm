@@ -55,5 +55,12 @@ content-type: application/json
   "room_id": "1"
 }
 
+###
 
+POST http://localhost:3001/api/games/round
+content-type: application/json
+
+{
+  "game_state_id": "1"
+}
 
