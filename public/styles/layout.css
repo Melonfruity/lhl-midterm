@@ -45,7 +45,7 @@ body {
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-rows: repeat(2, 400px);
+  grid-template-rows: repeat(2, 500px);
   grid-template-columns: repeat(1, 100%);
   justify-content: center;
   grid-gap: 4rem;

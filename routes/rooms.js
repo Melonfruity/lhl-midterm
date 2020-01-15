@@ -38,10 +38,9 @@ const roomsRouterWrapper = (db) => {
   roomsRouter.get('/all', (req, res) => {
     // change as necessary
     const queryString = `
-      SELECT * FROM game_states;
+      SELECT * FROM rooms
+      WHERE rooms.game_id = $1;
     `
-
-    // return all rooms
     db
       .query(queryString)
       .then((data) => res.status(200).json(data.rows))
