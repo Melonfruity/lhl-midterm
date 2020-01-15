@@ -15,12 +15,12 @@ const rootRouterWrapper = (db) => {
 
   // renders profile page
   rootRouter.get('/profile', async (req, res) => {
-    const userData = await databaseHelper.getUserDetailsWithId(req.session.userID)
+    const userData = await databaseHelper.getUserDetailsWithId(2) // hardcoded for now just for testing
       .then((userData) => {
         return userData;
       })
       .catch((err) => res.status(400).json(err.stack));
-    const gameData = await databaseHelper.getGamesWonWithUserId(req.session.userID)
+    const gameData = await databaseHelper.getGamesWonWithUserId(2) // hardcoded for now just for testing
       .then((gameData) => {
         return gameData;
       })
@@ -28,15 +28,25 @@ const rootRouterWrapper = (db) => {
     res.render('profile', templateVars);
   });
 
-// renders stats page
-rootRouter.get('/stats', (req, res) => {
-  databaseHelper.mostGamesWon()
-  .then((statsData) => {
-    const templateVars = { user: req.session ? req.session.userID : null, statsData}
+  // renders stats page
+  rootRouter.get('/stats', async (req, res) => {
+    const gamesWon = await databaseHelper.mostGamesWon()
+      .then((gamesWon) => {
+        return gamesWon;
+      })
+      .catch((err) => res.status(400).json(err.stack));
+    const gamesPlayed = await databaseHelper.mostGamesPlayed()
+      .then((gamesPlayed) => {
+        return gamesPlayed;
+      })
+      .catch((err) => res.status(400).json(err.stack));
+      const winRate = await databaseHelper.highestWinRatio()
+      .then((winRate) => {
+        return winRate;
+      })
+    const templateVars = { user: req.session ? req.session.userID : null, gamesWon, gamesPlayed, winRate }
     res.render('stats', templateVars);
-  })
-  .catch((err) => res.status(400).json(err.stack));
-});
+  });
 
   // renders room page
   rootRouter.get('/rooms', (req, res) => {

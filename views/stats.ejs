@@ -59,10 +59,20 @@
       </table>
       <h3>Highest Win Ratio</h3>
       <table>
+        <thead>
         <tr>
           <th>Username</th>
           <th>%</th>
         </tr>
+      </thead>
+      <tbody>
+        <% winRate.forEach((entry) => { %>
+          <tr>
+            <td><%= entry.username %></td>
+            <td><%= entry.win_ratio*100 %>%</td>
+          </tr>
+          <% }) %>
+      </tbody>
       </table>
     </div>
     <%- include('partials/_playerdeets') %>
