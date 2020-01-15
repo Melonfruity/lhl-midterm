@@ -10,3 +10,6 @@ GET http://localhost:3001/api/games/round
   "room_id": 1,
   "playedCard": 3
 }
+
+###
+GET http://localhost:3001/api/games/hand?user_id=1&game_state_id=1

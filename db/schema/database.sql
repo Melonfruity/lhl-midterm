@@ -86,7 +86,8 @@ CREATE TABLE game_states (
   card_11 SMALLINT DEFAULT 1,
   card_12 SMALLINT DEFAULT 1,
   card_13 SMALLINT DEFAULT 1,
-  round_number SMALLINT DEFAULT 1
+  dealer_card SMALLINT,
+  round_number SMALLINT DEFAULT 0
 );
 
 
@@ -96,7 +97,7 @@ CREATE TABLE player_hands (
   game_state_id INTEGER REFERENCES game_states(id) ON DELETE CASCADE,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   suit SMALLINT DEFAULT 0,
-  score SMALLINT DEFAULT 1,
+  score SMALLINT DEFAULT 0,
   card_1 SMALLINT DEFAULT 1,
   card_2 SMALLINT DEFAULT 1,
   card_3 SMALLINT DEFAULT 1,
@@ -110,12 +111,8 @@ CREATE TABLE player_hands (
   card_11 SMALLINT DEFAULT 1,
   card_12 SMALLINT DEFAULT 1,
   card_13 SMALLINT DEFAULT 1, 
-  played_this_round BOOLEAN DEFAULT false
+  played_this_round BOOLEAN DEFAULT false,
+  card_played SMALLINT 
 );
 
-CREATE TABLE last_played_cards (
-  id SERIAL PRIMARY KEY,
-  player_hands INTEGER REFERENCES player_hands(id) ON DELETE CASCADE,
-  game_states_id INTEGER REFERENCES game_states(id) ON DELETE CASCADE,
-  card SMALLINT 
-);
+
