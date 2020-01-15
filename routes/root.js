@@ -59,7 +59,8 @@ const rootRouterWrapper = (db) => {
   });
 
   rootRouter.get('/game', (req, res) => {
-    res.render('game');
+    const templateVars = { user: req.session ? req.session.userID : null }
+    res.render('game', templateVars);
   })
 
 

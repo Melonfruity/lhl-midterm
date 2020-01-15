@@ -1,10 +1,10 @@
 // proper document ready function
-const loadPage = function(message) {
+const loadPage = function (message) {
 
   $.ajax({
     url: '/game',
     method: 'GET',
-    success: function() {
+    success: function () {
       if (message === 'not done') {
         $(".status").remove();
         $("body").append(`<p class="status">not done</p>`);
@@ -17,12 +17,12 @@ const loadPage = function(message) {
   });
 };
 
-const loadCards = function(message, id) {
+const loadCards = function (message, id) {
 
   $.ajax({
     url: '/game',
     method: 'GET',
-    success: function() {
+    success: function () {
       let output = '';
       //console.log(JSON.stringify(message));
       for (let card in message) {
@@ -36,7 +36,7 @@ const loadCards = function(message, id) {
   });
 };
 
-const startRound = function(bool) {
+const startRound = function (bool) {
   if (bool) {
 
     $.ajax({
@@ -45,48 +45,47 @@ const startRound = function(bool) {
       data: {
         game_state_id: 1
       },
-      success: function(data) {
+      success: function (data) {
         bool = false;
-        loadPage(`The card value is ${data.cardValue}`)
-        getPlayerhand(1, 1);
-        getPlayerhand(2, 1);
+        getPlayerhand(1, 1); // currently hardcoded
+        getPlayerhand(2, 1); // currently hardcoded
       }
     });
   }
 };
 
-const getPlayerhand = function(id, game_state_id) {
-  setInterval(function() {
-    $.ajax({
-      method: "get",
-      url: `/api/games/hand?user_id=${id}&game_state_id=${game_state_id}`,
-      success: function(data) {
-        // console.log(data);
-        loadCards(data, id);
-      }
-    });
-  }, 3000);
+const getPlayerhand = function (id, game_state_id) {
+  $.ajax({
+    method: "get",
+    url: `/api/games/hand?user_id=${id}&game_state_id=${game_state_id}`,
+    success: function (data) {
+      loadCards(data, id);
+    }
+  });
 };
 
 let roundInput = [];
 
-(function($, window, document) {
+let initialize = true;
+
+// (function ($, window, document) {
+$(document).ready(function () {
   let gameOver = false;
-  let initialize = true;
+
+
 
 
   // example of how to get and post to the server.
   // In this case, to the test server
   // checkout routes/tests.js
 
-  $(function() {
+  $(function () {
     //initialize game
 
     startRound(initialize); //run once if initialize true
 
-
     //Submit card choice for a user
-    $('.submit-button').click(function() {
+    $('.submit-button').click(function () {
       $.ajax({
         method: "post",
         url: "/api/games/hand",
@@ -94,11 +93,10 @@ let roundInput = [];
           user_id: $(".user_id").val(),
           pickedCard: $(".submit-card").val()
         },
-        success: function(data) {
+        success: function (data) {
           console.log(data);
-
         },
-        error: function(xhr) {
+        error: function (xhr) {
           console.log(xhr);
         },
       });
@@ -106,7 +104,7 @@ let roundInput = [];
 
 
     //long polling check if round is over
-    setInterval(function() {
+    setInterval(function () {
       if (!gameOver) {
         $.ajax({
           method: "post",
@@ -114,7 +112,7 @@ let roundInput = [];
           data: {
             game_state_id: '1'
           },
-          success: function(data) {
+          success: function (data) {
             if (data.winner) {
               initialize = true;
               loadPage(`Winner: ${data.winner}, Score: ${data.score}, Round: ${data.round_number}`);
@@ -139,4 +137,5 @@ let roundInput = [];
     // });
   });
 
-})(window.jQuery, window, document); 
+})
+// (window.jQuery, window, document);
