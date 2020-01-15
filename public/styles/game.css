@@ -1,0 +1,12 @@
+.card {
+  height: 10rem;
+}
+
+div[class$=hand] {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+div[class$=hand] img {
+  cursor: pointer;
+}
