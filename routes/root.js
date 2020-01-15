@@ -29,30 +29,35 @@ const rootRouterWrapper = (db) => {
   });
 
   // renders stats page
-  rootRouter.get('/stats', (req, res) => {
-    databaseHelper.mostGamesWon()
-    .then((statsData) => {
-      const templateVars = { user: req.session ? req.session.userID : null, statsData}
-      res.render('stats', templateVars);
-    })
-    .catch((err) => res.status(400).json(err.stack));
-  });
-
-  // renders room page
-  rootRouter.get('/rooms', (req, res) => {
-    const templateVars = { user: req.session ? req.session.userID : null }
-    res.render('rooms', templateVars);
-  });
-
-  rootRouter.get('/game', (req, res) => {
-    res.render('game');
+  rootRouter.get('/stats', async (req, res) => {
+    const gamesWon = await databaseHelper.mostGamesWon()
+      .then((gamesWon) => {
+        return gamesWon;
+      })
+      .catch((err) => res.status(400).json(err.stack));
+    const gamesPlayed = await databaseHelper.mostGamesPlayed()
+      .then((gamesPlayed) => {
+        return gamesPlayed;
+      })
+    const templateVars = { user: req.session ? req.session.userID : null, gamesWon, gamesPlayed }
+    res.render('stats', templateVars);
   })
 
-  rootRouter.post('/game', (req, res) => {
-    res.render('game');
-  })
+// renders room page
+rootRouter.get('/rooms', (req, res) => {
+  const templateVars = { user: req.session ? req.session.userID : null }
+  res.render('rooms', templateVars);
+});
 
-  return rootRouter;
+rootRouter.get('/game', (req, res) => {
+  res.render('game');
+})
+
+rootRouter.post('/game', (req, res) => {
+  res.render('game');
+})
+
+return rootRouter;
 };
 
 

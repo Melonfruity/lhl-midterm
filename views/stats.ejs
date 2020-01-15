@@ -32,7 +32,7 @@
           </tr>
         </thead>
         <tbody>
-          <% statsData.forEach((entry) => { %>
+          <% gamesWon.forEach((entry) => { %>
             <tr>
               <td><%= entry.username %></td>
               <td><%= entry.games_won %></td>
@@ -42,10 +42,20 @@
       </table>
       <h3>Most Games Played</h3>
       <table>
-        <tr>
-          <th>Username</th>
-          <th>#</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>#</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% gamesPlayed.forEach((entry) => { %>
+            <tr>
+              <td><%= entry.username %></td>
+              <td><%= entry.games_played %></td>
+            </tr>
+            <% }) %>
+        </tbody>
       </table>
       <h3>Highest Win Ratio</h3>
       <table>
