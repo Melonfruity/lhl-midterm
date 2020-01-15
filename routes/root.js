@@ -15,12 +15,12 @@ const rootRouterWrapper = (db) => {
 
   // renders profile page
   rootRouter.get('/profile', async (req, res) => {
-    const userData = await databaseHelper.getUserDetailsWithId(req.session.userID) // temporary, pull actual user id from cookie
+    const userData = await databaseHelper.getUserDetailsWithId(req.session.userID)
       .then((userData) => {
         return userData;
       })
       .catch((err) => res.status(400).json(err.stack));
-    const gameData = await databaseHelper.getGamesWonWithUserId(req.session.userID) // temporary, pull actual user id from cookie
+    const gameData = await databaseHelper.getGamesWonWithUserId(req.session.userID)
       .then((gameData) => {
         return gameData;
       })
@@ -28,33 +28,29 @@ const rootRouterWrapper = (db) => {
     res.render('profile', templateVars);
   });
 
-  // renders stats page
-  rootRouter.get('/stats', async (req, res) => {
-    const gamesWon = await databaseHelper.mostGamesWon()
-      .then((gamesWon) => {
-        return gamesWon;
-      })
-      .catch((err) => res.status(400).json(err.stack));
-    const gamesPlayed = await databaseHelper.mostGamesPlayed()
-      .then((gamesPlayed) => {
-        return gamesPlayed;
-      })
-    const templateVars = { user: req.session ? req.session.userID : null, gamesWon, gamesPlayed }
+// renders stats page
+rootRouter.get('/stats', (req, res) => {
+  databaseHelper.mostGamesWon()
+  .then((statsData) => {
+    const templateVars = { user: req.session ? req.session.userID : null, statsData}
     res.render('stats', templateVars);
   })
-
-// renders room page
-rootRouter.get('/rooms', (req, res) => {
-  const templateVars = { user: req.session ? req.session.userID : null }
-  res.render('rooms', templateVars);
+  .catch((err) => res.status(400).json(err.stack));
 });
 
-// renders game page
-rootRouter.get('/game', (req, res) => {
-  res.render('game');
-})
+  // renders room page
+  rootRouter.get('/rooms', (req, res) => {
+    const templateVars = { user: req.session ? req.session.userID : null }
+    res.render('rooms', templateVars);
+  });
 
-return rootRouter;
+  rootRouter.get('/game', (req, res) => {
+    res.render('game');
+  })
+
+
+
+  return rootRouter;
 };
 
 
