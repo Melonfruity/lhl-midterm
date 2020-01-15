@@ -1,7 +1,10 @@
-body {
-  background-color: #EEE;
+.leaderboard-tables {
+  display: flex;
+  flex-direction: row;
 }
 
-body h1 {
-  color: #244751;
+.bdr {
+  border-right: 2px solid black;
+  border-left: 2px solid black;
+  height: 100%;
 }

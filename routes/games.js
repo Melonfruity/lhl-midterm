@@ -213,8 +213,7 @@ const gamesRouterWrapped = (db) => {
         card_played = null
     WHERE game_state_id = ${game_state_id};
     `
-    console.log('start')
-
+    
     db
       .query(queryString1)
       .then(dealerCard(game_state_id, res))
