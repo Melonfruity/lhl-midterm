@@ -44,7 +44,7 @@
         $.ajax({
           method: 'GET',
           url: '/api/db/all',
-          data: { game_id: 1 }
+          data: { game_id }
         }).done(rooms => {
           for (room of rooms) {
             const newRoom = createRoom(room.id, room.game_id, room.game_started);
@@ -92,7 +92,7 @@
       $.ajax({
         method: 'POST',
         url: '/rooms',
-        data: { game_id: 1}
+        data: { game_id: 2}
       }).done((room) => {
         console.log(room)
         const room_id = room.room_id;
