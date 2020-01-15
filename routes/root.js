@@ -49,11 +49,8 @@ rootRouter.get('/rooms', (req, res) => {
   res.render('rooms', templateVars);
 });
 
+// renders game page
 rootRouter.get('/game', (req, res) => {
-  res.render('game');
-})
-
-rootRouter.post('/game', (req, res) => {
   res.render('game');
 })
 
