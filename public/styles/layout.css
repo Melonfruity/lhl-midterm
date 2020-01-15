@@ -1,5 +1,12 @@
 html {
   scroll-behavior: smooth;
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  height: 100%;
+  width: 100%;
 }
 
 img {
@@ -15,7 +22,7 @@ body {
 }
 
 .main-container {
-  height: 100vh;
+  height: 100%;
   width: 75%;
   background-color: #bbe1fa;
   display: flex;
@@ -38,14 +45,14 @@ body {
 .player-deets {
   margin-top: 64px;
   width: 25%;
-  height: calc(100vh - 64px);
+  height: calc(100% - 64px);
 }
 
 .list-games {
   height: 100%;
   width: 100%;
   display: grid;
-  grid-template-rows: repeat(2, 400px);
+  grid-template-rows: repeat(2, auto-fit);
   grid-template-columns: repeat(1, 100%);
   justify-content: center;
   grid-gap: 4rem;

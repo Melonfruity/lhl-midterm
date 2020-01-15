@@ -30,8 +30,8 @@ module.exports = (db) => {
   const getAllGames = () => {
     const queryString = `SELECT * FROM games`;
     return db.query(queryString)
-      .then(res => res.rows[0])
-      .catch(err => console.log(err))
+      .then(res => res.rows)
+      .catch(err => console.log(err));
   }
 
   const getUserDetailsWithId = (id) => {
