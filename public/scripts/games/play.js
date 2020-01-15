@@ -18,7 +18,7 @@ const loadPage = function (message) {
   });
 };
 
-const loadCards = function (message, id) {
+const loadCards = function (message, user_id) {
 
   $.ajax({
     url: '/game',
@@ -33,8 +33,8 @@ const loadCards = function (message, id) {
           $(`.player${id}-hand`).append(`<img src="/images/standard_card_deck/${card.slice(5)}${suit}.jpg" class="card" value="${card.slice(5)}">`)
         }
       }
-      $(`.player${id}-message`).remove();
-      $(`.player${id}-hand`).append(`<div class="player${id}-message"> ${output}</p>`)
+      $(`.player${user_id}-message`).remove();
+      $(`.player${user_id}-hand`).append(`<div class="player${user_id}-message"> ${output}</p>`)
     }
   })
   .then(() => {
@@ -59,7 +59,7 @@ const loadCards = function (message, id) {
 
 };
 
-const startRound = function (bool) {
+const startRound = function (bool, user_id, game_state_id) {
   if (bool) {
 
     $.ajax({
@@ -70,6 +70,7 @@ const startRound = function (bool) {
       },
       success: function (data) {
         bool = false;
+        loadPage(data.cardValue);
         getPlayerhand(1, 1); // currently hardcoded
         getPlayerhand(2, 1); // currently hardcoded
       }
