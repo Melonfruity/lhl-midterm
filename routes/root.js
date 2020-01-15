@@ -11,7 +11,6 @@ const rootRouterWrapper = (db) => {
           user: req.session ? req.session.userID : null,
           gamesData
         }
-        console.log(gamesData);
         res.render('index', templateVars);
       })
       .catch((err) => res.status(400).json(err.stack));
@@ -19,17 +18,14 @@ const rootRouterWrapper = (db) => {
 
   // renders profile page
   rootRouter.get('/profile', async (req, res) => {
-    const userData = await databaseHelper.getUserDetailsWithId(2) // hardcoded for now just for testing
-      .then((userData) => {
-        return userData;
-      })
-      .catch((err) => res.status(400).json(err.stack));
-    const gameData = await databaseHelper.getGamesWonWithUserId(2) // hardcoded for now just for testing
-      .then((gameData) => {
-        return gameData;
-      })
-    const templateVars = { user: req.session ? req.session.userID : null, userData, gameData }
-    res.render('profile', templateVars);
+    const user_id = 1; // req.session.userID;
+
+    console.log(user_id);
+    const userDetail = await databaseHelper
+      .getUserDetailsWithId(1);
+    const gameDetail = await databaseHelper
+      .getGamesWonWithUserId(1);
+    res.json({user_id, userDetail, gameDetail});
   });
 
   // renders stats page

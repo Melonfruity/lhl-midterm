@@ -18,12 +18,15 @@
 
   <body>
       <div class='player-deets'>
-        <% if(user){ %>
+        <% if (user) { %>
         <div class="profile-container">
             <img class='profile-image' src="/images/placeholder.jpeg">
+            
             <form method="POST" action="/api/users/logout">
-              <button class='btn' type="submit">Log out</button>
+              <button id="logout" class='btn' type="submit">Log out</button>
             </form>
+            <div id="profile-details">
+            </div>
         </div>
         <% } else { %>
         <div class='sign container center-align'>

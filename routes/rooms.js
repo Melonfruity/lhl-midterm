@@ -69,7 +69,7 @@ const roomsRouterWrapper = (db) => {
         const templateVars = {
           user: req.session ? req.session.userID : null,
           gamesData
-        }
+        };
         console.log(gamesData);
         res.render('index', templateVars);
       })

@@ -88,7 +88,6 @@
       })
     })
 
-
     $hostTwo.click((e) => {
       $.ajax({
         method: 'POST',
