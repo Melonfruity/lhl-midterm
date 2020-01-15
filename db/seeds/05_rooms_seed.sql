@@ -1,1 +1,0 @@
-INSERT INTO rooms (host_id, games_id, players_id, game_type_id) VALUES (1, 1, 1, 1);

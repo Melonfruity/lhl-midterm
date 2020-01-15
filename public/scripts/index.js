@@ -6,25 +6,50 @@
   // checkout routes/tests.js
 
   $(function() {
-    $.ajax({
-      method: "GET",
-      url: "/tests"
-    }).done((users) => {
-      console.log(users)
-      for (user of users) {
-        $("<div>").text(user.username).appendTo($("body"));
+    // JOIN ROOM
+    const $joinZero = $('#0');
+    const $joinOne = $('#1');
+
+    const $gameInfo = $('.game-info');
+    const $listRooms = $('.list-rooms');
+    const $listGames = $('.list-games');
+
+    $joinZero.click((e) => {
+      if ($gameInfo.css('display') === 'flex') {
+        $gameInfo.css('display', 'none');
+        $listGames.css('width', '30%');
+        $listRooms.css('display', 'flex');
+        $listRooms.css('width', '70%');
+      } else {
+        $gameInfo.css('display', 'flex');
+        $listGames.css('width', '100%');
+        $listRooms.css('display', 'none');
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       }
-    });
-    $.ajax({
-      method: "POST",
-      url: "/tests",
-      data: { username: 'user', password: 'pass' },
-    }).done((users) => {
-      console.log(users)
-      for (user of users) {
-        $("<div>").text(user.username).appendTo($("body"));
+    })
+
+    $joinOne.click((e) => {
+      if ($gameInfo.css('display') === 'flex') {
+        $gameInfo.css('display', 'none');
+        $listGames.css('width', '30%');
+        $listRooms.css('display', 'flex');
+        $listRooms.css('width', '70%');
+      } else {
+        $gameInfo.css('display', 'flex');
+        $listGames.css('width', '100%');
+        $listRooms.css('display', 'none');
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
       }
-    });
+    })
+
+
+    // HOST ROOM
   });
 
 })(window.jQuery, window, document);

@@ -1,4 +1,14 @@
 .navi {
   height: 64px;
   position: absolute;
+  background-color: #1b262c;
+  z-index: 9999;
+}
+
+.brand-logo {
+  margin-left: 20px;
+}
+
+.links {
+  margin-right: 20px;
 }

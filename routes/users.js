@@ -3,7 +3,6 @@ const { userLogin, userRegister } = require('../utils/helpers');
 
 const usersRouterWrapper = (db) => {
   const databaseHelper = require('../utils/database')(db);
-
   // login
   usersRouter.post('/login', (req, res) => {
     const { username, password } = req.body;
@@ -13,7 +12,7 @@ const usersRouterWrapper = (db) => {
         const loggedIn = userLogin(password, user.password);
         if (loggedIn) {
           req.session.userID = user.id;
-          res.redirect("/")
+          res.status(200).json(user);
         } else {
           res.status(400).json({ error: 'unauthenticated' })
         }
@@ -27,14 +26,14 @@ const usersRouterWrapper = (db) => {
     databaseHelper.findUserByUsername(username)
       .then(data => {
         if (!data) {
-          return databaseHelper.createUser(username, password)
-            .then((createdUser => {
-              req.session.userID = createdUser.id;
-              res.redirect("/")
-              return;
-            }))
+        return databaseHelper.createUser(username, password)
+        .then((createdUser => {
+          req.session.userID = createdUser.id;
+          res.status(200).json(createdUser);
+          return;
+        }))
         } else {
-          res.status(500).json({ error: "username already taken" });
+          res.status(400).json({ error: "username already taken" });
         }
       })
       .catch(err => console.log(err.stack));
@@ -42,7 +41,7 @@ const usersRouterWrapper = (db) => {
 
   usersRouter.post('/logout', (req, res) => {
     req.session = null;
-    res.redirect(301, '/');
+    res.redirect(301, '/')
   })
 
   return usersRouter;
