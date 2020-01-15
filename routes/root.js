@@ -15,12 +15,12 @@ const rootRouterWrapper = (db) => {
 
   // renders profile page
   rootRouter.get('/profile', async (req, res) => {
-    const userData = await databaseHelper.getUserDetailsWithId(1) // temporary, pull actual user id from cookie
+    const userData = await databaseHelper.getUserDetailsWithId(req.session.userID) // temporary, pull actual user id from cookie
       .then((userData) => {
         return userData;
       })
       .catch((err) => res.status(400).json(err.stack));
-    const gameData = await databaseHelper.getGamesWonWithUserId(1) // temporary, pull actual user id from cookie
+    const gameData = await databaseHelper.getGamesWonWithUserId(req.session.userID) // temporary, pull actual user id from cookie
       .then((gameData) => {
         return gameData;
       })
