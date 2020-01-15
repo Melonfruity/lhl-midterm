@@ -157,8 +157,8 @@ const gamesRouterWrapped = (db) => {
   // player_hand update
   gamesRouter.post('/hand', (req, res) => {
 
-
     const { user_id, pickedCard } = req.body;
+    console.log("PICKED CARD", pickedCard)
     let output = {};   // change as necessary
     output[user_id] = pickedCard;
     const queryString1 = `UPDATE player_hands
@@ -180,7 +180,7 @@ const gamesRouterWrapped = (db) => {
     const game_state_id = req.query.game_state_id;
 
     // change as necessary
-    const queryString = `SELECT card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13 FROM player_hands
+    const queryString = `SELECT suit, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13 FROM player_hands
       WHERE user_id = ${user_id}
       AND game_state_id = ${game_state_id};`
     // update players hand

@@ -1,4 +1,5 @@
 // proper document ready function
+
 const loadPage = function (message) {
 
   $.ajax({
@@ -7,10 +8,10 @@ const loadPage = function (message) {
     success: function () {
       if (message === 'not done') {
         $(".status").remove();
-        $("body").append(`<p class="status">not done</p>`);
+        $(".main-container .content").append(`<p class="status">not done</p>`);
       }
       else {
-        $("body").append(`<p class="announcement"> ${message}</p>`)
+        $(".main-container .content").append(`<p class="announcement"> ${message}</p>`)
       }
 
     }
@@ -24,16 +25,38 @@ const loadCards = function (message, id) {
     method: 'GET',
     success: function () {
       let output = '';
-      //console.log(JSON.stringify(message));
+      let suit = message.suit;
+      delete message.suit;
       for (let card in message) {
         if (message[card] > 0) {
           output += `${card.slice(5)}, `;
+          $(`.player${id}-hand`).append(`<img src="/images/standard_card_deck/${card.slice(5)}${suit}.jpg" class="card" value="${card.slice(5)}">`)
         }
       }
       $(`.player${id}-message`).remove();
       $(`.player${id}-hand`).append(`<div class="player${id}-message"> ${output}</p>`)
     }
+  })
+  .then(() => {
+    $('.card').on('click', (function () {
+      console.log("I've been clicked")
+      $.ajax({
+        method: "post",
+        url: "/api/games/hand",
+        data: {
+          user_id: $(".user_id").val(),
+          pickedCard: $('.card').attr('value')
+        },
+        success: function (data) {
+          console.log(data);
+        },
+        error: function (xhr) {
+          console.log(xhr);
+        }
+      })
+    }))
   });
+
 };
 
 const startRound = function (bool) {
@@ -65,14 +88,10 @@ const getPlayerhand = function (id, game_state_id) {
 };
 
 let roundInput = [];
-
 let initialize = true;
 
-// (function ($, window, document) {
 $(document).ready(function () {
   let gameOver = false;
-
-
 
 
   // example of how to get and post to the server.
@@ -84,7 +103,7 @@ $(document).ready(function () {
 
     startRound(initialize); //run once if initialize true
 
-    //Submit card choice for a user
+    //Submit card choice for a user (this has been updated to the on img click above)
     $('.submit-button').click(function () {
       $.ajax({
         method: "post",
@@ -101,7 +120,6 @@ $(document).ready(function () {
         },
       });
     });
-
 
     //long polling check if round is over
     setInterval(function () {
@@ -138,4 +156,3 @@ $(document).ready(function () {
   });
 
 })
-// (window.jQuery, window, document);
