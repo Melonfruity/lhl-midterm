@@ -32,7 +32,17 @@ POST http://localhost:3001/api/games/hand
 content-type: application/json
 
 {
-  "user_id": "1",
+  "user_id": "2",
+  "pickedCard": "8"
+}
+
+###
+
+POST http://localhost:3001/api/games/hand
+content-type: application/json
+
+{
+  "user_id": "2",
   "pickedCard": "4"
 }
 
@@ -64,3 +74,11 @@ content-type: application/json
   "game_state_id": "1"
 }
 
+###
+
+POST http://localhost:3001/api/games/start
+content-type: application/json
+
+{
+  "game_state_id": "1"
+}
