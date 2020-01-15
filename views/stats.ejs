@@ -25,10 +25,20 @@
       <h2>Leaderboard</h2>
       <h3>Most Games Won</h3>
       <table>
-        <tr>
-          <th>Username</th>
-          <th>#</th>
-        </tr>
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>#</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% statsData.forEach((entry) => { %>
+            <tr>
+              <td><%= entry.username %></td>
+              <td><%= entry.games_won %></td>
+            </tr>
+            <% }) %>
+        </tbody>
       </table>
       <h3>Most Games Played</h3>
       <table>
@@ -41,7 +51,7 @@
       <table>
         <tr>
           <th>Username</th>
-          <th>#</th>
+          <th>%</th>
         </tr>
       </table>
     </div>

@@ -30,8 +30,12 @@ const rootRouterWrapper = (db) => {
 
   // renders stats page
   rootRouter.get('/stats', (req, res) => {
-    const templateVars = { user: req.session ? req.session.userID : null }
-    res.render('stats', templateVars);
+    databaseHelper.mostGamesWon()
+    .then((statsData) => {
+      const templateVars = { user: req.session ? req.session.userID : null, statsData}
+      res.render('stats', templateVars);
+    })
+    .catch((err) => res.status(400).json(err.stack));
   });
 
   // renders room page
