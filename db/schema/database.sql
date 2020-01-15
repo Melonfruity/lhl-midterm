@@ -89,17 +89,8 @@ CREATE TABLE game_states (
   round_number SMALLINT DEFAULT 1
 );
 
-<<<<<<< HEAD
-CREATE TABLE last_played_cards (
-  id SERIAL PRIMARY KEY,
-  player_hands INTEGER REFERENCES player_hands(id) ON DELETE CASCADE,
-  game_states_id INTEGER REFERENCES game_states(id) ON DELETE CASCADE,
-  card SMALLINT 
-)
 
-=======
 /* 9. what a player currently has in their hand */
->>>>>>> e4fdf29661b644abc6b0190f90635e63c39885db
 CREATE TABLE player_hands (
   id SERIAL PRIMARY KEY,
   game_state_id INTEGER REFERENCES game_states(id) ON DELETE CASCADE,
@@ -122,3 +113,9 @@ CREATE TABLE player_hands (
   played_this_round BOOLEAN DEFAULT false
 );
 
+CREATE TABLE last_played_cards (
+  id SERIAL PRIMARY KEY,
+  player_hands INTEGER REFERENCES player_hands(id) ON DELETE CASCADE,
+  game_states_id INTEGER REFERENCES game_states(id) ON DELETE CASCADE,
+  card SMALLINT 
+);
