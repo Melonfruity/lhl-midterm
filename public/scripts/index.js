@@ -7,19 +7,56 @@
 
   $(function() {
     // JOIN ROOM
-    const $joinZero = $('#0');
-    const $joinOne = $('#1');
+    const $joinOne = $('#j1');
+    const $joinTwo = $('#j2');
+    const $hostOne = $('#h1');
+    const $hostTwo = $('#h2');
 
     const $gameInfo = $('.game-info');
     const $listRooms = $('.list-rooms');
     const $listGames = $('.list-games');
+    const $rooms = $('.rooms');
+    
+    
+    const grabGames = (game_id) => {
+      
+      $rooms.empty();
 
-    $joinZero.click((e) => {
+      const createRoom = (room_id, game_id, game_started) => `
+        <tr id="r${room_id}">
+          <td>
+            ${game_id}
+          </td>
+          <td>
+            1/2
+          </td>
+          <td>
+            ${game_started}
+          </td>
+        </tr>
+      `
+
       if ($gameInfo.css('display') === 'flex') {
         $gameInfo.css('display', 'none');
         $listGames.css('width', '30%');
         $listRooms.css('display', 'flex');
         $listRooms.css('width', '70%');
+
+        $.ajax({
+          method: 'GET',
+          url: '/rooms/all',
+          data: { game_id: 1 }
+        }).done(rooms => {
+          for (room of rooms) {
+            const newRoom = createRoom(room.id, room.game_id, room.game_started);
+            $rooms.append(newRoom);
+            document.querySelector(`#r${room.id}`).addEventListener('click', (e) => {
+              document.location.href = `/game/:${game_id}`;
+            })
+          }
+        });
+        
+        
       } else {
         $gameInfo.css('display', 'flex');
         $listGames.css('width', '100%');
@@ -29,27 +66,27 @@
           behavior: 'smooth'
         });
       }
-    })
+    }
 
     $joinOne.click((e) => {
-      if ($gameInfo.css('display') === 'flex') {
-        $gameInfo.css('display', 'none');
-        $listGames.css('width', '30%');
-        $listRooms.css('display', 'flex');
-        $listRooms.css('width', '70%');
-      } else {
-        $gameInfo.css('display', 'flex');
-        $listGames.css('width', '100%');
-        $listRooms.css('display', 'none');
-        window.scrollTo({
-          top: 0,
-          behavior: 'smooth'
-        });
-      }
+      grabGames(1);
     })
 
 
+    $joinTwo.click((e) => {
+      grabGames(2);
+    })
+
     // HOST ROOM
+
+    $hostOne.click((e) => {
+      document.location.href = `/game/:${game_id}`;
+    })
+
+
+    $hostTwo.click((e) => {
+      document.location.href = `/game/:${game_id}`;
+    })
   });
 
 })(window.jQuery, window, document);

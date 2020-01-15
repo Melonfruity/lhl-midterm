@@ -7,7 +7,11 @@ const rootRouterWrapper = (db) => {
   rootRouter.get('/', (req, res) => {
     databaseHelper.getAllGames()
       .then((gamesData) => {
-        const templateVars = { user: req.session ? req.session.userID : null, gamesData }
+        const templateVars = {
+          user: req.session ? req.session.userID : null,
+          gamesData
+        }
+        console.log(gamesData);
         res.render('index', templateVars);
       })
       .catch((err) => res.status(400).json(err.stack));
