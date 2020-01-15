@@ -71,66 +71,75 @@ const gamesRouterWrapped = (db) => {
         return true;
       })
       .then((finished) => {
+        console.log(finished);
 
         if (finished) {
 
-          db
+          return db
             .query(queryString2)
-            .then((data) => {
-              if (data.rows.length > 1) { //if there is a tie
-                output.winner = 'tie';
-                output.score = 0;
-                res.json(output);
-              } else {
-                output.winner = data.rows[0].user_id;
+        }
+        else {
+          res.json(output);
+        }
+      })
+      .then((data) => {
+        if(!data) return;
+        if (data.rows.length > 1) { //if there is a tie
+          output.winner = 'tie';
+          output.score = 0;
+          res.json(output);
 
-                const queryString3 = `
+        } else {
+          output.winner = data.rows[0].user_id;
+
+          const queryString3 = `
               SELECT dealer_card 
               FROM game_states
               WHERE game_states.id = ${game_state_id}
               `;
-                db
-                  .query(queryString3)
-                  .then((data) => {
-                    output.roundScore = data.rows[0].dealer_card;
-                    //console.log(output.score, output.winner);
-                    const queryString4 = `
+          db
+            .query(queryString3)
+            .then((data) => {
+              output.roundScore = data.rows[0].dealer_card;
+              //console.log(output.score, output.winner);
+              const queryString4 = `
                     UPDATE player_hands
                     SET score = score + ${output.roundScore}
                     WHERE user_id = ${output.winner}
                     RETURNING score
                     `;
-                    db
-                      .query(queryString4)
-                      .then((data) => {
+              db
+                .query(queryString4)
+                .then((data) => {
+                  output.score = data.rows[0].score;
+                  console.log('increment');
 
-                        output.score = data.rows[0].score;
-                        // const incrementRound = `
-                        // UPDATE game_states
-                        // SET round_number = round_number + 1
-                        // WHERE game_states.id = ${game_state_id}
-                        // RETURNING round_number
-                        // `;
+                  const incrementRound = `
+                        UPDATE game_states
+                        SET round_number = round_number + 1
+                        WHERE game_states.id = 1
+                        RETURNING round_number;
+                        `;
 
-                        // db
-                        //   .query(incrementRound)
-                        //   .then((data) => {
-                        //     output.round_number = data.rows[0].round_number
-                        console.log(output)
-                        res.json(output);
-                      })
-                    // })
+                  db
+                    .query(incrementRound)
+                    .then((data) => {
+                      output.round_number = data.rows[0].round_number
+                      console.log(output)
+                      res.json(output);
+                    })
 
-                  })
-              }
 
-            });
-        }
-        if (!finished) {
-          res.json(output);
-        }
+                })
+            })
+
+        };
+
       });
-  })
+
+   
+  });
+
 
 
   // game_states update
@@ -213,19 +222,13 @@ const gamesRouterWrapped = (db) => {
   gamesRouter.post('/start', (req, res) => {
     const { game_state_id } = req.body;
     const queryString1 = `
-    BEGIN;
     
     UPDATE player_hands
     SET played_this_round = false,
         card_played = null
     WHERE game_state_id = ${game_state_id};
-
-    UPDATE game_states 
-    SET round_number = round_number +1
-    WHERE game_states.id = ${game_state_id};
-
-    COMMIT;
     `
+    console.log('start')
 
     db
       .query(queryString1)
