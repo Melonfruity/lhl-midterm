@@ -8,10 +8,10 @@ const loadPage = function (message) {
     success: function () {
       if (message === 'not done') {
         $(".status").remove();
-        $(".main-container .content").append(`<p class="status">not done</p>`);
+        $(".dealer-card").append(`<p class="status">not done</p>`);
       }
       else {
-        $(".main-container .content").append(`<p class="announcement"> ${message}</p>`)
+        $(".dealer-card").append(`<img src="/images/standard_card_deck/${message}H.jpg" class="card" value="${message}"><p class="announcement">${message}</p>`)
       }
 
     }
@@ -19,7 +19,6 @@ const loadPage = function (message) {
 };
 
 const loadCards = function (message, user_id) {
-  console.log("load cards gets called")
 
   $.ajax({
     url: '/game',
@@ -34,26 +33,24 @@ const loadCards = function (message, user_id) {
           $(`.player${user_id}-hand`).append(`<img src="/images/standard_card_deck/${card.slice(5)}${suit}.jpg" class="card" value="${card.slice(5)}">`)
         }
       }
-      console.log("ajax call is completed under load cards");
       $(`.player${user_id}-message`).remove();
       $(`.player${user_id}-hand`).append(`<div class="player${user_id}-message"> ${output}</p>`)
     }
   })
   .then(() => {
     $('.card').on('click', (function () {
-      console.log("I've been clicked")
       $.ajax({
         method: "post",
         url: "/api/games/hand",
         data: {
           user_id: $(".user_id").val(),
-          pickedCard: $('.card').attr('value')
+          pickedCard: $(this).attr('value')
         },
         success: function (data) {
-          console.log(data);
+          console.log("data from success: card on click ", data);
         },
         error: function (xhr) {
-          console.log(xhr);
+          console.log("data from error: card on click ", xhr);
         }
       })
     }))
@@ -116,10 +113,10 @@ $(document).ready(function () {
           pickedCard: $(".submit-card").val()
         },
         success: function (data) {
-          console.log(data);
+          console.log("data from success: submit button on click ", data);
         },
         error: function (xhr) {
-          console.log(xhr);
+          console.log("data from error: submit button on click ", xhr);
         },
       });
     });

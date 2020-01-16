@@ -1,5 +1,6 @@
-.card {
-  height: 10rem;
+img.card {
+  max-height: 10rem;
+  margin: 4px;
 }
 
 div[class$=hand] {

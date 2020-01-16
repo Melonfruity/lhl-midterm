@@ -63,7 +63,7 @@ const gamesRouterWrapped = (db) => {
         return true;
       })
       .then((finished) => {
-        console.log(finished);
+        console.log("Post/round is finished: ", finished);
 
         if (finished) {
 
@@ -93,7 +93,6 @@ const gamesRouterWrapped = (db) => {
             .query(queryString3)
             .then((data) => {
               output.roundScore = data.rows[0].dealer_card;
-              //console.log(output.score, output.winner);
               const queryString4 = `
                     UPDATE player_hands
                     SET score = score + ${output.roundScore}
@@ -168,9 +167,8 @@ const gamesRouterWrapped = (db) => {
 
   // player_hand update
   gamesRouter.post('/hand', (req, res) => {
-
-    const { user_id, pickedCard } = req.body;
-    console.log("PICKED CARD", pickedCard)
+    let { user_id, pickedCard } = req.body;
+    if (user_id = 0) {user_id = 1} // this is for testing only, remove later
     let output = {};   // change as necessary
     output[user_id] = pickedCard;
     const queryString1 = `UPDATE player_hands
