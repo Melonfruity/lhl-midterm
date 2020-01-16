@@ -58,7 +58,7 @@ body {
   grid-gap: 4rem;
 }
 
-.game {
+.game1, .game2 {
   padding: 2em;
   width: 100%;
   display: flex;
@@ -117,28 +117,36 @@ body {
   width: 100px;
 }
 
-@media only screen and (max-width: 1024px) {
-  .game {
-    width: 100%;
-    display: flex;
+@media only screen and (max-width: 768px) {
+  .game1, .game2 {
     flex-direction: column;
-    border-bottom: 3px solid black;
-  }
-  .game-info {
-    width: 100%;
-    margin-left: 0em;
-    margin-right: 0em;
-    padding-left: 0em;
-  }
-  .game-join {
-    display: flex;
-    flex-direction: column;
+    padding: 0;
     align-items: center;
-    width: 100%;
   }
   .lobby-buttons {
     display: flex;
-    width: 100%;
     justify-content: space-between;
+  }
+  .game-join {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .game-img {
+    margin: auto;
+  }
+  .game-info {
+    width: 100%;
+    padding-left: 0;
+  }
+  .list-games {
+    width: 100%;
+  }
+  .list-rooms {
+    width: 100%;
+  }
+  .content {
+    flex-direction: column;
   }
 }
