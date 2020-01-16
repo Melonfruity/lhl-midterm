@@ -98,8 +98,6 @@
       }
     })
 
-    
-
     // HOST ROOM
     $hostOne.click((e) => {
       $.ajax({
