@@ -6,14 +6,23 @@ $(() => {
   const $username = $('#username');
   const $password = $('#password');
 
+  const $errorMsg = $('.error-msg');
+  console.log($errorMsg)
   const login = () => {
-    $.ajax({
-      method: "POST",
-      url: "/api/users/login",
-      data: { username: $username.val(), password: $password.val() }
-    }).done((users) => {
-      window.location.reload();
-    });
+    if ($username.val().length < 3 || $password.val().length < 3) {
+      $errorMsg.text('USER OR PASSWORD TOO SHORT');
+    } else {
+      $.ajax({
+        method: "POST",
+        url: "/api/users/login",
+        data: {username: $username.val(), password: $password.val()}
+      }).done((users) => window.location.reload())
+      .always(data => {
+        if (data.fail().responseText) {
+          $errorMsg.text('WRONG USER OR PASSWORD');
+        }
+      });
+    }
   }
 
   $login.on('click', (e) => {
@@ -28,15 +37,20 @@ $(() => {
 
   $register.on('click', (e) => {
     e.preventDefault();
-    $.ajax({
-      method: "POST",
-      url: "/api/users/register",
-      data: { username: $username.val(), password: $password.val() }
-    }).done((users) => {
-      window.location.reload();
-    }).fail(function (xhr) {
-      console.log(xhr);
-    });
+    if ($username.val().length < 3 || $password.val().length < 3) {
+      $errorMsg.text('USER OR PASSWORD TOO SHORT');
+    } else {
+      $.ajax({
+        method: "POST",
+        url: "/api/users/register",
+        data: {username: $username.val(), password: $password.val()}
+      }).done((users) => window.location.reload())
+        .always(data => {
+        if (data.fail().responseText) {
+          $errorMsg.text('USER TAKEN');
+        }
+      });
+    }
   });
 
   const $profileDetails = $('#profile-details');
