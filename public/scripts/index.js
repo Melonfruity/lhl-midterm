@@ -12,6 +12,9 @@
     const $hostOne = $('#h1');
     const $hostTwo = $('#h2');
 
+    const $gameOne = $('.game1');
+    const $gameTwo = $('.game2');
+
     const $gameInfo = $('.game-info');
     const $listRooms = $('.list-rooms');
     const $listGames = $('.list-games');
@@ -54,19 +57,25 @@
 
     $joinOne.click((e) => { 
 
-      if ($gameInfo.css('display') === 'flex') {
-        $gameInfo.css('display', 'none');
-        $listGames.css('width', '30%');
-        $listRooms.css('display', 'flex');
-        $listRooms.css('width', '70%');
+      if ($listRooms.css('display') === 'none') {
+
+        if ($(window).width() <= 768) {
+          $listRooms.css('display', 'flex');
+          $gameTwo.css('display', 'none');
+        } else {
+          $listRooms.css('display', 'flex');
+        }
         grabGames(1);
         setIdGOPS = setInterval(() => {
           grabGames(1);
         }, 5000)
       } else {
-        $gameInfo.css('display', 'flex');
-        $listGames.css('width', '100%');
-        $listRooms.css('display', 'none');
+        if ($(window).width() <= 768) {
+          $listRooms.css('display', 'none');
+          $gameTwo.css('display', 'flex');
+        } else {
+          $listRooms.css('display', 'none');
+        }
         window.scrollTo({
           top: 0,
           behavior: 'smooth'
@@ -77,19 +86,24 @@
 
 
     $joinTwo.click((e) => {
-      if ($gameInfo.css('display') === 'flex') {
-        $gameInfo.css('display', 'none');
-        $listGames.css('width', '30%');
-        $listRooms.css('display', 'flex');
-        $listRooms.css('width', '70%');
+      if ($listRooms.css('display') === 'none') {
+        if ($(window).width() <= 768) {
+          $listRooms.css('display', 'flex');
+          $gameOne.css('display', 'none');
+        } else {
+          $listRooms.css('display', 'flex');
+        }
         grabGames(2);
-        setIdVF = setInterval(() => {
+        setIdGOPS = setInterval(() => {
           grabGames(2);
-        }, 3000)
+        }, 5000)
       } else {
-        $gameInfo.css('display', 'flex');
-        $listGames.css('width', '100%');
-        $listRooms.css('display', 'none');
+        if ($(window).width() <= 768) {
+          $listRooms.css('display', 'none');
+          $gameOne.css('display', 'flex');
+        } else {
+          $listRooms.css('display', 'none');
+        }
         window.scrollTo({
           top: 0,
           behavior: 'smooth'
@@ -105,7 +119,6 @@
         url: '/rooms',
         data: { game_id: 1}
       }).done((room) => {
-        console.log(room)
         const room_id = room.room_id;
         document.location.href = `/rooms/:${room_id}`  //changed from /rooms/:roomid to /game/fid for consistency
       })
@@ -117,10 +130,10 @@
         url: '/rooms',
         data: { game_id: 2}
       }).done((room) => {
-        console.log(room)
         const room_id = room.room_id;
         document.location.href = `/rooms/:${room_id}`
       })
     })
+
   });
 })(window.jQuery, window, document);

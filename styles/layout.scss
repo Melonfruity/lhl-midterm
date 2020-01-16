@@ -60,7 +60,7 @@ body {
   grid-gap: 4rem;
 }
 
-.game {
+.game1, .game2 {
   padding: 2em;
   width: 100%;
   display: flex;
@@ -119,6 +119,7 @@ body {
   width: 100px;
 }
 
+<<<<<<< HEAD
 .rooms {
   tr {
     cursor: pointer;
@@ -129,29 +130,47 @@ h3 {
   padding: 1rem;
   border-bottom: 2px solid black;
 }
+=======
+@media only screen and (max-width: 768px ){
+  .game1, .game2 {
+    flex-direction: column;
+    padding: 0;
+    align-items: center;
+  }
+>>>>>>> ca8fcd0fc002165db2157ebf599b3c7fb84bfe13
 
-@media only screen and (max-width: 1024px ){
-  .game {
+  .lobby-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+  .game-join {
     width: 100%;
     display: flex;
     flex-direction: column;
-    border-bottom: 3px solid black;
+    justify-content: center;
+  }
+  .game-img {
+    margin: auto;
   }
   .game-info {
     width: 100%;
-    margin-left: 0em;
-    margin-right: 0em;
-    padding-left: 0em;
+    padding-left: 0;
   }
-  .game-join {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+  .list-games {
     width: 100%;
   }
-  .lobby-buttons {
-    display: flex;
+
+  .list-rooms {
     width: 100%;
-    justify-content: space-between;
   }
+<<<<<<< HEAD
 }
+=======
+
+  .content {
+    flex-direction: column;
+  }
+
+}
+>>>>>>> ca8fcd0fc002165db2157ebf599b3c7fb84bfe13
