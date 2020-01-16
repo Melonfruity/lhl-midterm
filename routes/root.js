@@ -59,8 +59,6 @@ const rootRouterWrapper = (db) => {
     res.render('game', templateVars);
   })
 
-
-
   return rootRouter;
 };
 

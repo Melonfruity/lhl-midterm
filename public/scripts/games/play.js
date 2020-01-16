@@ -6,9 +6,9 @@ const loadPage = function (message) {
     url: '/game',
     method: 'GET',
     success: function () {
-      if (message === 'not done') {
+      if (message === 'Round not done') {
         $(".status").remove();
-        $(".dealer-card").append(`<p class="status">not done</p>`);
+        $(".dealer-card").append(`<p class="status">Waiting For Other Players</p>`);
       }
       else {
         $(".dealer-card").append(`<img src="/images/standard_card_deck/${message}H.jpg" class="card" value="${message}"><p class="announcement">${message}</p>`)
@@ -136,7 +136,7 @@ $(document).ready(function () {
               loadPage(`Winner: ${data.winner}, Score: ${data.score}, Round: ${data.round_number}`);
               startRound(initialize);
             } else
-              loadPage('not done');
+              loadPage('Round not done');
 
           }
         })
