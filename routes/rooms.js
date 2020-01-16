@@ -16,7 +16,7 @@ const roomsRouterWrapper = (db) => {
           VALUES ('why is there a name?', $1, $2, false)
           RETURNING *;
         `
-      
+
       const queryNewRoomParams = [user_id, game_id];
 
       db
@@ -30,18 +30,18 @@ const roomsRouterWrapper = (db) => {
               RETURNING *;
           `
           const queryNewRoomUsersParams = [room.id, room.host_id];
-          
+
           db
             .query(queryNewRoomUsers, queryNewRoomUsersParams)
             .then((roomUsers) => console.log(roomUsers.rows))
-          
+
           const queryNewGameState = `
             INSERT INTO game_states (room_id)
               VALUES ($1)
               RETURNING *;
           `
           const queryNewGameStateParams = [room.id];
-          
+
           db
             .query(queryNewGameState, queryNewGameStateParams)
             .then((gameState) => {
@@ -50,7 +50,7 @@ const roomsRouterWrapper = (db) => {
                   VALUES ($1, $2)
                   RETURNING *;
               `
-              const queryNewPlayerHandParams = [gameState.id, user_id];    
+              const queryNewPlayerHandParams = [gameState.id, user_id];
               db
                 .query(queryNewPlayerHand, queryNewPlayerHandParams)
                 .then((playerHand) => console.log(playerHand.rows))
@@ -58,23 +58,29 @@ const roomsRouterWrapper = (db) => {
           res.json({ room_id: room.id });
         })
         .catch((err) => res.status(400).json(err.stack));
-      }
+    }
   });
 
   roomsRouter.get('/:id', (req, res) => {
-    // change this to games
-    console.log(req.params)
-    databaseHelper.getAllGames()
-      .then((gamesData) => {
-        const templateVars = {
-          user: req.session ? req.session.userID : null,
-          gamesData
-        };
-        console.log(gamesData);
-        res.render('index', templateVars);
-      })
-      .catch((err) => res.status(400).json(err.stack));
-  });
+    const templateVars = { user: req.session ? req.session.userID : null };
+    res.render('game', templateVars);
+  })
+
+
+
+  // change this to games
+  // console.log(req.params)
+  // databaseHelper.getAllGames()
+  //   .then((gamesData) => {
+  //     const templateVars = {
+  //       user: req.session ? req.session.userID : null,
+  //       gamesData
+  //     };
+  //     console.log(gamesData);
+  //     res.render('index', templateVars);
+  //   })
+  //   .catch((err) => res.status(400).json(err.stack));
+  //});
 
   return roomsRouter;
 };

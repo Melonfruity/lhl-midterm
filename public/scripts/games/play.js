@@ -1,11 +1,36 @@
 // proper document ready function
+const getGameStateId = function(room_id) {
+  return $.ajax({
+    url: `/api/games/state/`,
+    method: 'GET',
+    data: {
+      room_id: room_id
+    },
+    success: function(data) {
+      return data;
+    }
+  })
+}
 
-const loadPage = function (message) {
+const roomIdFromUrl = function(url) {
+  let output = '';
+  for (let i = url.length - 1; i >= 0; i--) {
+    if (url[i] === '/') {
+      for (let j = i + 1; j < url.length; j++) {
+        output += url[j];
+      }
+      return output;
+    }
+  }
+};
+
+
+const loadPage = function(message) {
 
   $.ajax({
-    url: '/game',
+    url: '/rooms/:id',
     method: 'GET',
-    success: function () {
+    success: function() {
       if (message === 'Round not done') {
         $(".status").remove();
         $(".dealer-card").append(`<p class="status">Waiting For Other Players</p>`);
@@ -18,123 +43,143 @@ const loadPage = function (message) {
   });
 };
 
-const loadCards = function (message, user_id) {
+const loadCards = function(message) {
 
   $.ajax({
-    url: '/game',
+    url: '/rooms/:id',
     method: 'GET',
-    success: function () {
+    success: function() {
       let output = '';
       let suit = message.suit;
       delete message.suit;
       for (let card in message) {
         if (message[card] > 0) {
           output += `${card.slice(5)}, `;
-          $(`.player${user_id}-hand`).append(`<img src="/images/standard_card_deck/${card.slice(5)}${suit}.jpg" class="card" value="${card.slice(5)}">`)
+          $(`.player-hand`).append(`<img src="/images/standard_card_deck/${card.slice(5)}${suit}.jpg" class="card" value="${card.slice(5)}">`)
         }
       }
-      $(`.player${user_id}-message`).remove();
-      $(`.player${user_id}-hand`).append(`<div class="player${user_id}-message"> ${output}</p>`)
+      $(`.player-message`).remove();
+      $(`.player-hand`).append(`<div class="player-message"> ${output}</p>`)
     }
   })
-  .then(() => {
-    $('.card').on('click', (function () {
-      $.ajax({
-        method: "post",
-        url: "/api/games/hand",
-        data: {
-          user_id: $(".user_id").val(),
-          pickedCard: $(this).attr('value')
-        },
-        success: function (data) {
-          console.log("data from success: card on click ", data);
-        },
-        error: function (xhr) {
-          console.log("data from error: card on click ", xhr);
-        }
-      })
-    }))
-  });
+    .then(() => {
+      $('.card').on('click', (function() {
+        $.ajax({
+          method: "post",
+          url: "/api/games/hand",
+          data: {
+            pickedCard: $(this).attr('value')
+          },
+          success: function(data) {
+            console.log("data from success: card on click ", data);
+          },
+          error: function(xhr) {
+            console.log("data from error: card on click ", xhr);
+          }
+        })
+      }))
+    });
 
 };
 
-const startRound = function (bool, user_id, game_state_id) {
+const startRound = function(bool, room_id, game_state_id) {
   if (bool) {
 
     $.ajax({
-      method: "post",
-      url: "/api/games/start",
-      data: {
-        game_state_id: 1
-      },
-      success: function (data) {
+      method: "get",
+      url: `/api/games/start/?room_id=${room_id}`,
+      success: function(data) {
         bool = false;
         loadPage(data.cardValue);
-        getPlayerhand(1, 1); // currently hardcoded
-        getPlayerhand(2, 1); // currently hardcoded
+        getPlayerhand(game_state_id);
       }
     });
   }
 };
 
-const getPlayerhand = function (id, game_state_id) {
+const getPlayerhand = function(game_state_id) {
   $.ajax({
     method: "get",
-    url: `/api/games/hand?user_id=${id}&game_state_id=${game_state_id}`,
-    success: function (data) {
-      loadCards(data, id);
+    url: `/api/games/hand/?game_state_id=${game_state_id}`,
+    success: function(data) {
+      loadCards(data);
     }
   });
 };
 
 let roundInput = [];
 let initialize = true;
+let room_id;
+let gameOver = false;
+let game_state_id;
 
-$(document).ready(function () {
-  let gameOver = false;
+
+$(document).ready(function() {
+
 
 
   // example of how to get and post to the server.
   // In this case, to the test server
   // checkout routes/tests.js
 
-  $(function () {
+  $(function() {
+    console.log('hello')
     //initialize game
+    const pageURL = $(location).attr("href");
+    console.log(pageURL)
+    room_id = roomIdFromUrl(pageURL)
 
-    startRound(initialize); //run once if initialize true
+    getGameStateId(room_id)
+      .then(data => {
+        game_state_id = data.id;
+        startRound(initialize, room_id, game_state_id);
+        
+      });
+
+
+
+
+    
+
+
+    
+
+
+
+
+
+
+    //run once if initialize true
 
     //Submit card choice for a user (this has been updated to the on img click above)
-    $('.submit-button').click(function () {
+    $('.submit-button').click(function() {
       $.ajax({
         method: "post",
-        url: "/api/games/hand",
+        url: "/api/games/hand/",
         data: {
-          user_id: $(".user_id").val(),
-          pickedCard: $(".submit-card").val()
+          pickedCard: $(".submit-card").val(),
+          room_id: room_id
         },
-        success: function (data) {
+        success: function(data) {
           console.log("data from success: submit button on click ", data);
         },
-        error: function (xhr) {
+        error: function(xhr) {
           console.log("data from error: submit button on click ", xhr);
         },
       });
     });
 
     //long polling check if round is over
-    setInterval(function () {
+    setInterval(function() {
       if (!gameOver) {
         $.ajax({
-          method: "post",
-          url: "/api/games/round",
-          data: {
-            game_state_id: '1'
-          },
-          success: function (data) {
+          method: "get",
+          url: `/api/games/round/?room_id=${room_id}`,
+          success: function(data) {
             if (data.winner) {
               initialize = true;
               loadPage(`Winner: ${data.winner}, Score: ${data.score}, Round: ${data.round_number}`);
-              startRound(initialize);
+              startRound(initialize, room_id, game_state_id);
             } else
               loadPage('Round not done');
 
@@ -143,16 +188,7 @@ $(document).ready(function () {
 
       }
     }, 3000)
-    // $.ajax({
-    //   method: "POST",
-    //   url: "/game",
-    //   data: { username: 'user', password: 'pass' },
-    // }).done((users) => {
-    //   console.log(users)
-    //   for (user of users) {
-    //     $("<div>").text(user.username).appendTo($("body"));
-    //   }
-    // });
+
   });
 
 })

@@ -138,26 +138,22 @@ INSERT INTO game_history_users (game_history_id, user_id) VALUES (10, 8);
 
 -- GAME STATES SEED
 
-INSERT INTO game_states (room_id, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13, round_number)
-VALUES (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
+INSERT INTO game_states (room_id, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13)
+VALUES (1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
-INSERT INTO game_states (room_id, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13, round_number)
-VALUES (1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2);
+INSERT INTO game_states (room_id, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13)
+VALUES (2, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 
-INSERT INTO game_states (room_id, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13, round_number)
-VALUES (1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 3);
-
-INSERT INTO game_states (room_id, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13, round_number)
-VALUES (1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 4);
-
+INSERT INTO game_states (room_id, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13)
+VALUES (3, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1);
 
 -- PLAYERS HANDS SEED
 
 INSERT INTO player_hands (game_state_id, user_id, suit, score, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13)
-VALUES (1, 1, 'S', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1);
+VALUES (1, 1, 'S', 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO player_hands (game_state_id, user_id, suit, score, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13)
-VALUES (1, 2, 'C', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1);
+VALUES (1, 2, 'C', 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO player_hands (game_state_id, user_id, suit, score, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13)
-VALUES (1, 3, 'H', 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1);
+VALUES (2, 3, 'H', 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
 INSERT INTO player_hands (game_state_id, user_id, suit, score, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13)
-VALUES (2, 1, 'D', 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1);
+VALUES (2, 1, 'D', 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1);
