@@ -7,15 +7,16 @@ $(() => {
   const $password = $('#password');
 
   const $errorMsg = $('.error-msg');
-  console.log($errorMsg)
-  const login = () => {
-    if ($username.val().length < 3 || $password.val().length < 3) {
+  const login = (guest) => {
+    const username = guest ? 'guest' : $username.val();
+    const password = guest ? 'guest' : $password.val();
+    if (username.length < 3 || password.length < 3 && guest) {
       $errorMsg.text('USER OR PASSWORD TOO SHORT');
     } else {
       $.ajax({
         method: "POST",
         url: "/api/users/login",
-        data: {username: $username.val(), password: $password.val()}
+        data: {username, password}
       }).done((users) => window.location.reload())
       .always(data => {
         if (data.fail().responseText) {
@@ -27,12 +28,12 @@ $(() => {
 
   $login.on('click', (e) => {
     e.preventDefault();
-    login();
+    login(false);
   });
 
   $guest.on('click', (e) => {
     e.preventDefault();
-    login();
+    login(true);
   });
 
   $register.on('click', (e) => {

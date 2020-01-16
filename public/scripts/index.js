@@ -15,9 +15,7 @@
     const $gameOne = $('.game1');
     const $gameTwo = $('.game2');
 
-    const $gameInfo = $('.game-info');
     const $listRooms = $('.list-rooms');
-    const $listGames = $('.list-games');
     const $rooms = $('.rooms');
     
     const grabGames = (game_id) => {
