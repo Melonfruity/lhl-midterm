@@ -1,62 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title></title>
 
-    <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
-    <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
-    <link rel="stylesheet" href="/styles/playerdeets.css" type="text/css" />
+<head>
+  <title></title>
+  ​
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/playerdeets.css" type="text/css" />
+  ​
+  <!-- Compiled and minified CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  ​
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script type="text/javascript" src="/scripts/playerdeets.js"></script>
+  <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
+</head>
+​
 
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-    <!-- Compiled and minified JavaScript -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script type="text/javascript" src="/scripts/playerdeets.js"></script>
-    <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  </head>
-
-  <body>
-      <div class='player-deets'>
-        <% if (user) { %>
-        <div class="profile-container">
-            <img class='profile-image' src="/images/placeholder.jpeg">
-            
-            <form method="POST" action="/api/users/logout">
-              <button id="logout" class='btn' type="submit">Log out</button>
-            </form>
-            <div id="profile-details">
-            </div>
-        </div>
-        <% } else { %>
-        <div class='sign container center-align'>
-          <h4>WELCOME</h4>
-          <h5>sign-in to play</h5>
-          <h5 class="error-msg"></h5>
-          <form class='center-align col 12'>
-            <div class="row">
-              <div class="input-field col s12">
-                <input id="username" name="username" type="text" class="validate">
-                <label class="active text-light-blue lighten-5" for="username">USERNAME</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <input name="password" id="password" type="password" class="validate">
-                <label value='password' class="active text-light-blue lighten-5" for="password">PASSWORD</label>
-              </div>
-            </div>
-            <div class="sign-buttons">
-              <button id='login' class="btn waves-effect waves-light s6 blue darken-4" type="submit">Login</button>
-              <button id='register' class="btn waves-effect waves-light s6 light-blue darken-2" type="submit">register</button>
-              <button id='guest' class="btn waves-effect waves-light s6 teal darken-4" type="submit">GUEST</button>
-            </div>
-            </form>
-        </div>
-        <% } %>
+<body>
+  <div class='player-deets'>
+    <% if (user) { %>
+    <div class="profile-container">
+      <div id="profile-details">
       </div>
-    </body>
-    <script>
-    </script>
+      <form method="POST" action="/api/users/logout">
+        <button id="logout" class='btn' type="submit">Log out</button>
+      </form>
+    </div>
+    <% } else { %>
+    <div class='sign container center-align'>
+      <h4>WELCOME</h4>
+      <h5>sign-in to play</h5>
+      <h5 class="error-msg"></h5>
+      <form class='center-align col 12'>
+        <div class="row">
+          <div class="input-field col s12">
+            <input id="username" name="username" type="text" class="validate">
+            <label class="active text-light-blue lighten-5" for="username">USERNAME</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input name="password" id="password" type="password" class="validate">
+            <label value='password' class="active text-light-blue lighten-5" for="password">PASSWORD</label>
+          </div>
+        </div>
+        <div class="sign-buttons">
+          <button id='login' class="btn waves-effect waves-light s6 blue darken-4" type="submit">Login</button>
+          <button id='register' class="btn waves-effect waves-light s6 light-blue darken-2"
+            type="submit">register</button>
+          <button id='guest' class="btn waves-effect waves-light s6 teal darken-4" type="submit">GUEST</button>
+        </div>
+      </form>
+    </div>
+    <% } %>
+  </div>
+</body>
+<script>
+</script>
+​
 
 </html>
