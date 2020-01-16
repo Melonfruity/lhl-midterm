@@ -19,6 +19,7 @@ const loadPage = function (message) {
 };
 
 const loadCards = function (message, user_id) {
+  console.log("load cards gets called")
 
   $.ajax({
     url: '/game',
@@ -30,9 +31,10 @@ const loadCards = function (message, user_id) {
       for (let card in message) {
         if (message[card] > 0) {
           output += `${card.slice(5)}, `;
-          $(`.player${id}-hand`).append(`<img src="/images/standard_card_deck/${card.slice(5)}${suit}.jpg" class="card" value="${card.slice(5)}">`)
+          $(`.player${user_id}-hand`).append(`<img src="/images/standard_card_deck/${card.slice(5)}${suit}.jpg" class="card" value="${card.slice(5)}">`)
         }
       }
+      console.log("ajax call is completed under load cards");
       $(`.player${user_id}-message`).remove();
       $(`.player${user_id}-hand`).append(`<div class="player${user_id}-message"> ${output}</p>`)
     }
