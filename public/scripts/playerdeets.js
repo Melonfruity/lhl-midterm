@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 $(() => {
 
   const $login = $('#login');
@@ -7,7 +8,7 @@ $(() => {
   const $password = $('#password');
 
   const $errorMsg = $('.error-msg');
-  console.log($errorMsg)
+  console.log($errorMsg);
   const login = () => {
     if ($username.val().length < 3 || $password.val().length < 3) {
       $errorMsg.text('USER OR PASSWORD TOO SHORT');
@@ -15,15 +16,15 @@ $(() => {
       $.ajax({
         method: "POST",
         url: "/api/users/login",
-        data: {username: $username.val(), password: $password.val()}
+        data: { username: $username.val(), password: $password.val() }
       }).done((users) => window.location.reload())
-      .always(data => {
-        if (data.fail().responseText) {
-          $errorMsg.text('WRONG USER OR PASSWORD');
-        }
-      });
+        .always(data => {
+          if (data.fail().responseText) {
+            $errorMsg.text('WRONG USER OR PASSWORD');
+          }
+        });
     }
-  }
+  };
 
   $login.on('click', (e) => {
     e.preventDefault();
@@ -43,13 +44,13 @@ $(() => {
       $.ajax({
         method: "POST",
         url: "/api/users/register",
-        data: {username: $username.val(), password: $password.val()}
+        data: { username: $username.val(), password: $password.val() }
       }).done((users) => window.location.reload())
         .always(data => {
-        if (data.fail().responseText) {
-          $errorMsg.text('USER TAKEN');
-        }
-      });
+          if (data.fail().responseText) {
+            $errorMsg.text('USER TAKEN');
+          }
+        });
     }
   });
 
@@ -66,7 +67,7 @@ $(() => {
       <p>Player Since: ${userDetail.player_since} </p>
       <p>Games Played: ${gamesPlayed.games_played} </p>
       <p>Games Won: ${gameDetail.games_won} </p>
-    `
+    `;
     $profileDetails.append(profileDetails);
   });
 });

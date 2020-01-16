@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 // proper document ready function
 const getGameStateId = function(room_id) {
   return $.ajax({
@@ -9,8 +10,8 @@ const getGameStateId = function(room_id) {
     success: function(data) {
       return data;
     }
-  })
-}
+  });
+};
 
 const roomIdFromUrl = function(url) {
   let output = '';
@@ -34,9 +35,8 @@ const loadPage = function(message) {
       if (message === 'Round not done') {
         $(".status").remove();
         $(".dealer-card").append(`<p class="status">Waiting For Other Players</p>`);
-      }
-      else {
-        $(".dealer-card").append(`<img src="/images/standard_card_deck/${message}H.jpg" class="card" value="${message}"><p class="announcement">${message}</p>`)
+      } else {
+        $(".dealer-card").append(`<img src="/images/standard_card_deck/${message}H.jpg" class="card" value="${message}"><p class="announcement">${message}</p>`);
       }
 
     }
@@ -55,11 +55,11 @@ const loadCards = function(message) {
       for (let card in message) {
         if (message[card] > 0) {
           output += `${card.slice(5)}, `;
-          $(`.player-hand`).append(`<img src="/images/standard_card_deck/${card.slice(5)}${suit}.jpg" class="card" value="${card.slice(5)}">`)
+          $(`.player-hand`).append(`<img src="/images/standard_card_deck/${card.slice(5)}${suit}.jpg" class="card" value="${card.slice(5)}">`);
         }
       }
       $(`.player-message`).remove();
-      $(`.player-hand`).append(`<div class="player-message"> ${output}</p>`)
+      $(`.player-hand`).append(`<div class="player-message"> ${output}</p>`);
     }
   })
     .then(() => {
@@ -76,8 +76,8 @@ const loadCards = function(message) {
           error: function(xhr) {
             console.log("data from error: card on click ", xhr);
           }
-        })
-      }))
+        });
+      }));
     });
 
 };
@@ -123,26 +123,26 @@ $(document).ready(function() {
   // checkout routes/tests.js
 
   $(function() {
-    console.log('hello')
+    console.log('hello');
     //initialize game
     const pageURL = $(location).attr("href");
-    console.log(pageURL)
-    room_id = roomIdFromUrl(pageURL)
+    console.log(pageURL);
+    room_id = roomIdFromUrl(pageURL);
 
     getGameStateId(room_id)
       .then(data => {
         game_state_id = data.id;
         startRound(initialize, room_id, game_state_id);
-        
+
       });
 
 
 
 
-    
 
 
-    
+
+
 
 
 
@@ -184,11 +184,11 @@ $(document).ready(function() {
               loadPage('Round not done');
 
           }
-        })
+        });
 
       }
-    }, 3000)
+    }, 3000);
 
   });
 
-})
+});
