@@ -16,12 +16,14 @@ module.exports = (db) => {
   }
 
   const createUser = (username, password) => {
+    const profilePicsArray = ['Bulbasaur', 'Caterpie', 'Charmander', 'Pidgey', 'Pikachu', 'Rattata', 'Snorlax', 'Squirtle', 'Weedle', 'Zubat'];
+    let imgUrl = "/images/user_photos/" + profilePicsArray[Math.floor(Math.random() * profilePicsArray.length)] + ".png";
     const insertString = `
-    INSERT INTO users (username, password)
-    VALUES ($1, $2)
+    INSERT INTO users (username, password, img_url)
+    VALUES ($1, $2, $3)
     RETURNING *;
   `;
-    const insertData = [username, userRegister(password)];
+    const insertData = [username, userRegister(password), imgUrl];
     return db
       .query(insertString, insertData)
       .then((data) => {
@@ -37,13 +39,27 @@ module.exports = (db) => {
   }
 
   const getUserDetailsWithId = (id) => {
-    const queryString = `SELECT username, COUNT(*) as games_played, TO_CHAR(player_since :: DATE, 'Mon dd, yyyy') AS player_since
+    const queryString = `SELECT username, img_url, TO_CHAR(player_since :: DATE, 'Mon dd, yyyy') AS player_since
+    FROM users
+    WHERE id = $1
+    GROUP BY username, users.player_since, img_url;`
+    return db.query(queryString, [id])
+      .then((data) => {
+        return data.rows[0];
+      })
+  }
+
+  const getGamesPlayedWithId = (id) => {
+    const queryString = `SELECT users.id, COUNT(*) as games_played
     FROM users
     JOIN game_history_users ON users.id = game_history_users.user_id
     WHERE id = $1
-    GROUP BY username, users.player_since;`
+    GROUP BY users.id;`
     return db.query(queryString, [id])
       .then((data) => {
+        if (!data.rows.length) {
+          return { games_played: 0 };
+        }
         return data.rows[0];
       })
   }
@@ -52,11 +68,14 @@ module.exports = (db) => {
     const queryString = `SELECT users.id, COUNT(winner) AS games_won
     FROM users
     JOIN game_history_users ON users.id = user_id
-    Join game_histories ON game_history_id = game_histories.id
+    JOIN game_histories ON game_history_id = game_histories.id
     WHERE users.id = $1
     GROUP BY users.id;`
     return db.query(queryString, [id])
       .then((data) => {
+        if (!data.rows.length) {
+            return { games_won: 0 };
+        }
         return data.rows[0];
       })
   }
@@ -120,6 +139,7 @@ LIMIT 10;`
     createUser,
     getAllGames,
     getUserDetailsWithId,
+    getGamesPlayedWithId,
     getGamesWonWithUserId,
     mostGamesWon,
     mostGamesPlayed,

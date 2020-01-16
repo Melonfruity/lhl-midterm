@@ -12,11 +12,11 @@
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
   <link rel="stylesheet" href="https://unpkg.com/simplebar@latest/dist/simplebar.css"/>
-  
+
   <!-- Compiled and minified JavaScript -->
   <script src="https://unpkg.com/simplebar@latest/dist/simplebar.min.js"></script>
   <script type="text/javascript" src="/vendor/jquery-3.0.0.js"></script>
-  <script type="text/javascript" src="/scripts/index.js"></script>  
+  <script type="text/javascript" src="/scripts/index.js"></script>
 </head>
 
 <%- include('partials/_header') %>
@@ -25,7 +25,6 @@
   <div class='main-container' data-simplebar>
     <div class='content'>
       <div class='list-games mt1em'>
-        <% console.log(gamesData) %>
         <% for (gameData of gamesData) { %>
         <div class='game'>
           <div class='game-join'>
