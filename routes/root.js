@@ -18,14 +18,18 @@ const rootRouterWrapper = (db) => {
 
   // renders profile page
   rootRouter.get('/profile', async (req, res) => {
-    const user_id = 1; // req.session.userID;
+    const user_id = req.session.userID;
+    const userDetail = await databaseHelper.getUserDetailsWithId(user_id);
+    const gameDetail = await databaseHelper.getGamesWonWithUserId(user_id)
+    .then(res => {
+      return res;
+    })
+    .catch((err) => {return 0});
+    const gamesPlayed = await databaseHelper.getGamesPlayedWithId(user_id)
+    .then(res => res)
+    .catch((err) => {return 0});
 
-    console.log(user_id);
-    const userDetail = await databaseHelper
-      .getUserDetailsWithId(1);
-    const gameDetail = await databaseHelper
-      .getGamesWonWithUserId(1);
-    res.json({user_id, userDetail, gameDetail});
+    res.json({user_id, userDetail, gameDetail, gamesPlayed});
   });
 
   // renders stats page
