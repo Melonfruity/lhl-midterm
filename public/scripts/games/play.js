@@ -6,12 +6,12 @@ const loadPage = function (message) {
     url: '/game',
     method: 'GET',
     success: function () {
-      if (message === 'not done') {
+      if (message === 'Round not done') {
         $(".status").remove();
-        $(".main-container .content").append(`<p class="status">not done</p>`);
+        $(".dealer-card").append(`<p class="status">Waiting For Other Players</p>`);
       }
       else {
-        $(".main-container .content").append(`<p class="announcement"> ${message}</p>`)
+        $(".dealer-card").append(`<img src="/images/standard_card_deck/${message}H.jpg" class="card" value="${message}"><p class="announcement">${message}</p>`)
       }
 
     }
@@ -30,7 +30,7 @@ const loadCards = function (message, user_id) {
       for (let card in message) {
         if (message[card] > 0) {
           output += `${card.slice(5)}, `;
-          $(`.player${id}-hand`).append(`<img src="/images/standard_card_deck/${card.slice(5)}${suit}.jpg" class="card" value="${card.slice(5)}">`)
+          $(`.player${user_id}-hand`).append(`<img src="/images/standard_card_deck/${card.slice(5)}${suit}.jpg" class="card" value="${card.slice(5)}">`)
         }
       }
       $(`.player${user_id}-message`).remove();
@@ -39,19 +39,18 @@ const loadCards = function (message, user_id) {
   })
   .then(() => {
     $('.card').on('click', (function () {
-      console.log("I've been clicked")
       $.ajax({
         method: "post",
         url: "/api/games/hand",
         data: {
           user_id: $(".user_id").val(),
-          pickedCard: $('.card').attr('value')
+          pickedCard: $(this).attr('value')
         },
         success: function (data) {
-          console.log(data);
+          console.log("data from success: card on click ", data);
         },
         error: function (xhr) {
-          console.log(xhr);
+          console.log("data from error: card on click ", xhr);
         }
       })
     }))
@@ -114,10 +113,10 @@ $(document).ready(function () {
           pickedCard: $(".submit-card").val()
         },
         success: function (data) {
-          console.log(data);
+          console.log("data from success: submit button on click ", data);
         },
         error: function (xhr) {
-          console.log(xhr);
+          console.log("data from error: submit button on click ", xhr);
         },
       });
     });
@@ -137,7 +136,7 @@ $(document).ready(function () {
               loadPage(`Winner: ${data.winner}, Score: ${data.score}, Round: ${data.round_number}`);
               startRound(initialize);
             } else
-              loadPage('not done');
+              loadPage('Round not done');
 
           }
         })
