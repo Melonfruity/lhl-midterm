@@ -78,12 +78,14 @@ const gamesRouterWrapped = (db) => {
           })
       })
       .then((finished) => {
-        console.log(finished);
+        
         const queryString2 = `SELECT user_id, card_played
         FROM player_hands
         WHERE game_state_id = ${game_state_id}
         AND card_played = (SELECT max(card_played)
         FROM player_hands)`;
+        console.log("Post/round is finished: ", finished);
+
         if (finished) {
           return db
             .query(queryString2)
@@ -103,7 +105,7 @@ const gamesRouterWrapped = (db) => {
           output.winner = data.rows[0].user_id;
 
           const queryString3 = `
-              SELECT dealer_card 
+              SELECT dealer_card
               FROM game_states
               WHERE game_states.id = ${game_state_id}
               `;
@@ -111,7 +113,6 @@ const gamesRouterWrapped = (db) => {
             .query(queryString3)
             .then((data) => {
               output.roundScore = data.rows[0].dealer_card;
-              //console.log(output.score, output.winner);
               const queryString4 = `
                     UPDATE player_hands
                     SET score = score + ${output.roundScore}
@@ -145,6 +146,7 @@ const gamesRouterWrapped = (db) => {
   });
 
 
+  
 
   // game_states update
 
@@ -160,7 +162,7 @@ const gamesRouterWrapped = (db) => {
     // return the game_state
     db
       .query(queryString)
-      .then((data) => res.status(200).json(data.rows))
+      .then((data) => res.status(200).json(data.rows[0]))
       .catch((err) => res.status(400).json(err.stack));
   });
 
@@ -190,7 +192,7 @@ const gamesRouterWrapped = (db) => {
     const game_state_id = req.query.game_state_id;
     
     // change as necessary
-    const queryString = `SELECT card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13 FROM player_hands
+    const queryString = `SELECT suit, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13 FROM player_hands
       WHERE user_id = ${user_id}
       AND game_state_id = ${game_state_id};`
     // update players hand
@@ -204,7 +206,6 @@ const gamesRouterWrapped = (db) => {
     const room_id = req.query.room_id;
     findGameStateId(room_id)
       .then((game_state_id) => {
-
         const queryString1 = `
         UPDATE player_hands
         SET played_this_round = false,
@@ -218,6 +219,9 @@ const gamesRouterWrapped = (db) => {
       });
   });
 
+
+
+  
 
   return gamesRouter;
 };

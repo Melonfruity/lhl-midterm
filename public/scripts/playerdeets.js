@@ -45,7 +45,7 @@ $(() => {
   }).done((data) => {
 
     const { user_id, userDetail, gameDetail } = data;
-    console.log(gameDetail)
+    //console.log(gameDetail)
     const profileDetails = `
       <h4> ${userDetail.username} </h4>
       <p>Player Since: ${userDetail.player_since} </p>

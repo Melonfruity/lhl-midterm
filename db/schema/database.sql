@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS users;
 /* 1. cards in a deck of cards */
 CREATE TABLE cards (
   id SERIAL PRIMARY KEY,
-  name VARCHAR(255) NOT NULL, -- king_of_hearts
+  suit VARCHAR(255) NOT NULL, -- king_of_hearts
   type VARCHAR(255) NOT NULL, -- standard_cards
   value VARCHAR(255) NOT NULL, --
   img_url VARCHAR(255) -- URL
@@ -96,7 +96,7 @@ CREATE TABLE player_hands (
   id SERIAL PRIMARY KEY,
   game_state_id INTEGER REFERENCES game_states(id) ON DELETE CASCADE,
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
-  suit SMALLINT DEFAULT 0,
+  suit VARCHAR(255),
   score SMALLINT DEFAULT 0,
   card_1 SMALLINT DEFAULT 1,
   card_2 SMALLINT DEFAULT 1,
@@ -110,9 +110,9 @@ CREATE TABLE player_hands (
   card_10 SMALLINT DEFAULT 1,
   card_11 SMALLINT DEFAULT 1,
   card_12 SMALLINT DEFAULT 1,
-  card_13 SMALLINT DEFAULT 1, 
+  card_13 SMALLINT DEFAULT 1,
   played_this_round BOOLEAN DEFAULT false,
-  card_played SMALLINT 
+  card_played SMALLINT
 );
 
 

@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css" />
   <link rel="stylesheet" href="/vendor/border-box.css" type="text/css" />
   <link rel="stylesheet" href="/styles/layout.css" type="text/css" />
+  <link rel="stylesheet" href="/styles/game.css" type="text/css" />
 
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -24,20 +25,17 @@
 <body>
   <div class="main-container">
     <div class="content" style="display: block">
-      <p>player cards</p>
-      <div class="player-hand">
-        <p>testing</p>
-      </div>
+      <!-- temporary display: block for visibility while building -->
+      <h3>Dealer's Card</h3>
+      <div class="dealer-card"></div>
+      <div class="message"></div>
+      <div class="winner"></div>
+      <h3>Player 1 Card</h3>
+      <div class="player-hand"></div>
       <div>
         <textarea class="submit-card" name="text" placeholder="card number"></textarea>
         <textarea class="user_id" name="text" placeholder="user id"></textarea>
         <input class="submit-button btn s6" type="submit" value="submit">
-      </div>
-      <div class="message">
-        <div class="dealer-card">
-        </div>
-        <div class="winner">
-        </div>
       </div>
     </div>
   </div>
