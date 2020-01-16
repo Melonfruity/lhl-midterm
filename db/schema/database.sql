@@ -23,6 +23,7 @@ CREATE TABLE users (
   username VARCHAR(255),
   password VARCHAR(255),
   tokens INTEGER,
+  img_url VARCHAR(255), -- profile pic img
   player_since DATE NOT NULL DEFAULT CURRENT_DATE,
   is_guest BOOLEAN
 );
