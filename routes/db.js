@@ -23,5 +23,5 @@ const dbRouterWrapper = (db) => {
 
   return dbRouter;
 }
-
+    
 module.exports = dbRouterWrapper;
