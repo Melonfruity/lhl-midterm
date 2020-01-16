@@ -58,16 +58,16 @@ INSERT INTO cards (suit, type, value, img_url) VALUES ('diamonds', 'standard_car
 
 
 -- DEFAULT USERS
-INSERT INTO users (username, password, tokens, is_guest) VALUES ('playerone', 'unhashedpass', 10, FALSE);
-INSERT INTO users (username, password, tokens, is_guest) VALUES ('playertwo', 'unhashedpass', 15, FALSE);
-INSERT INTO users (username, password, tokens, is_guest) VALUES ('guest', 'guest', 0, TRUE);
-INSERT INTO users (username, password, tokens, is_guest) VALUES ('guyusername', 'unhashedpass', 2, FALSE);
-INSERT INTO users (username, password, tokens, is_guest) VALUES ('dudeusername', 'unhashedpass', 11, FALSE);
-INSERT INTO users (username, password, tokens, is_guest) VALUES ('playerguyusername', 'unhashedpass', 255, FALSE);
-INSERT INTO users (username, password, tokens, is_guest) VALUES ('teausername', 'unhashedpass', 25, FALSE);
-INSERT INTO users (username, password, tokens, is_guest) VALUES ('appleusername', 'unhashedpass', 5, FALSE);
-INSERT INTO users (username, password, tokens, is_guest) VALUES ('cupusername', 'unhashedpass', 50, FALSE);
-INSERT INTO users (username, password, tokens, is_guest) VALUES ('screenusername', 'guest', 0, TRUE);
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('playerone', 'unhashedpass', 10, FALSE, '/images/user_photos/Bulbasaur.png');
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('playertwo', 'unhashedpass', 15, FALSE, '/images/user_photos/Caterpie.png');
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('guest', 'guest', 0, TRUE, '/images/user_photos/Charmander.png');
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('guyusername', 'unhashedpass', 2, FALSE, '/images/user_photos/Pidgey.png');
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('dudeusername', 'unhashedpass', 11, FALSE, '/images/user_photos/Pikachu.png');
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('playerguyusername', 'unhashedpass', 255, FALSE, '/images/user_photos/Rattata.png');
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('teausername', 'unhashedpass', 25, FALSE, '/images/user_photos/Snorlax.png');
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('appleusername', 'unhashedpass', 5, FALSE, '/images/user_photos/Squirtle.png');
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('cupusername', 'unhashedpass', 50, FALSE, '/images/user_photos/Weedle.png');
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('screenusername', 'guest', 0, TRUE, '/images/user_photos/Zubat.png');
 
 -- GAME TYPES
 INSERT INTO games (name, description, tutorial, min_players, max_players)

@@ -1,9 +1,9 @@
 $(() => {
-        
+
   const $login = $('#login');
   const $register = $('#register');
   const $guest = $('guest');
-  const $username = $('#username'); 
+  const $username = $('#username');
   const $password = $('#password');
 
   const $errorMsg = $('.error-msg');
@@ -34,7 +34,7 @@ $(() => {
     e.preventDefault();
     login();
   });
-  
+
   $register.on('click', (e) => {
     e.preventDefault();
     if ($username.val().length < 3 || $password.val().length < 3) {
@@ -63,6 +63,7 @@ $(() => {
     const { user_id, userDetail, gameDetail } = data;
     console.log(gameDetail)
     const profileDetails = `
+      <img class='profile-image' src="${userDetail.img_url}">
       <h4> ${userDetail.username} </h4>
       <p>Player Since: ${userDetail.player_since} </p>
       <p>Games Played: ${userDetail.games_played} </p>
