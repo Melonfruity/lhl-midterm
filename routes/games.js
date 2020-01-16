@@ -63,7 +63,7 @@ const gamesRouterWrapped = (db) => {
         return true;
       })
       .then((finished) => {
-        console.log(finished);
+        console.log("Post/round is finished: ", finished);
 
         if (finished) {
 
@@ -85,7 +85,7 @@ const gamesRouterWrapped = (db) => {
           output.winner = data.rows[0].user_id;
 
           const queryString3 = `
-              SELECT dealer_card 
+              SELECT dealer_card
               FROM game_states
               WHERE game_states.id = ${game_state_id}
               `;
@@ -93,7 +93,6 @@ const gamesRouterWrapped = (db) => {
             .query(queryString3)
             .then((data) => {
               output.roundScore = data.rows[0].dealer_card;
-              //console.log(output.score, output.winner);
               const queryString4 = `
                     UPDATE player_hands
                     SET score = score + ${output.roundScore}
@@ -129,10 +128,8 @@ const gamesRouterWrapped = (db) => {
 
       });
 
-   
+
   });
-
-
 
   // game_states update
   gamesRouter.post('/state', (req, res) => {
@@ -170,9 +167,8 @@ const gamesRouterWrapped = (db) => {
 
   // player_hand update
   gamesRouter.post('/hand', (req, res) => {
-
-
-    const { user_id, pickedCard } = req.body;
+    let { user_id, pickedCard } = req.body;
+    if (user_id = 0) {user_id = 1} // this is for testing only, remove later
     let output = {};   // change as necessary
     output[user_id] = pickedCard;
     const queryString1 = `UPDATE player_hands
@@ -194,7 +190,7 @@ const gamesRouterWrapped = (db) => {
     const game_state_id = req.query.game_state_id;
 
     // change as necessary
-    const queryString = `SELECT card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13 FROM player_hands
+    const queryString = `SELECT suit, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13 FROM player_hands
       WHERE user_id = ${user_id}
       AND game_state_id = ${game_state_id};`
     // update players hand
@@ -207,13 +203,13 @@ const gamesRouterWrapped = (db) => {
   gamesRouter.post('/start', (req, res) => {
     const { game_state_id } = req.body;
     const queryString1 = `
-    
+
     UPDATE player_hands
     SET played_this_round = false,
         card_played = null
     WHERE game_state_id = ${game_state_id};
     `
-    
+
     db
       .query(queryString1)
       .then(dealerCard(game_state_id, res))

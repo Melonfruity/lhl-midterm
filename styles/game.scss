@@ -1,0 +1,13 @@
+img.card {
+  max-height: 10rem;
+  margin: 4px;
+}
+
+div[class$=hand]{
+  display: flex;
+  flex-wrap: wrap;
+
+  img {
+    cursor: pointer;
+  }
+}

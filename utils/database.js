@@ -105,6 +105,16 @@ LIMIT 10;`
       })
   }
 
+  const getSuitWithUserIdandGameState = (userId, gameState) => {
+    const queryString = `SELECT game_state_id, user_id, suit
+    FROM player_hands
+    WHERE user_id = 1 AND game_state_id = 1;`
+    return db.quer(queryString, [userId, gameState])
+    .then((data) => {
+      return data.rows;
+    })
+  }
+
   return {
     findUserByUsername,
     createUser,
@@ -113,6 +123,7 @@ LIMIT 10;`
     getGamesWonWithUserId,
     mostGamesWon,
     mostGamesPlayed,
-    highestWinRatio
+    highestWinRatio,
+    getSuitWithUserIdandGameState
   }
 }
