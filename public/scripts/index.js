@@ -84,7 +84,7 @@
       }).done((room) => {
         console.log(room)
         const room_id = room.room_id;
-        document.location.href = `/rooms/:${room_id}`
+        document.location.href = `/rooms/:${room_id}`  //changed from /rooms/:roomid to /game/fid for consistency
       })
     })
 
@@ -100,5 +100,4 @@
       })
     })
   });
-
 })(window.jQuery, window, document);

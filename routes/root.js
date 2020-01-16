@@ -53,11 +53,9 @@ const rootRouterWrapper = (db) => {
     const templateVars = { user: req.session ? req.session.userID : null }
     res.render('rooms', templateVars);
   });
+  
 
-  rootRouter.get('/game', (req, res) => {
-    const templateVars = { user: req.session ? req.session.userID : null }
-    res.render('game', templateVars);
-  })
+
 
 
 
