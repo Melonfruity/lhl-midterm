@@ -121,6 +121,11 @@ body {
   cursor: pointer;
 }
 
+h3 {
+  padding: 1rem;
+  border-bottom: 2px solid black;
+}
+
 @media only screen and (max-width: 1024px) {
   .game {
     width: 100%;
