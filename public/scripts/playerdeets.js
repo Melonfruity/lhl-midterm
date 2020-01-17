@@ -62,6 +62,7 @@ $(() => {
   }).done((data) => {
     const { user_id, userDetail, gameDetail, gamesPlayed } = data;
     const profileDetails = `
+    <p>User id: ${user_id}</p>
       <img class='profile-image' src="${userDetail.img_url}">
       <h4> ${userDetail.username} </h4>
       <p>Player Since: ${userDetail.player_since} </p>

@@ -23,7 +23,7 @@
       const createRoom = (room_id, game_id, game_started, count) => `
         <tr id="r${room_id}">
           <td>
-            ${game_id}
+            ${room_id}
           </td>
           <td id="c${room_id}">
             ${count} / 2
@@ -43,7 +43,11 @@
           const newRoom = createRoom(room_id, game_id, game_started, count);
           $rooms.append(newRoom);
           document.querySelector(`#r${room_id}`).addEventListener('click', (e) => {
-            document.location.href = `/game/:${game_id}`;
+            document.location.href = `/rooms/${room_id}`;
+            $.ajax({
+              method: 'GET',
+              url: `/rooms/${room_id}`
+            }).done((data) => console.log(data));
           })
         }})
             
@@ -107,7 +111,7 @@
       }).done((room) => {
         console.log(room)
         const room_id = room.room_id;
-        document.location.href = `/rooms/:${room_id}`  //changed from /rooms/:roomid to /game/fid for consistency
+        document.location.href = `/rooms/${room_id}`  //changed from /rooms/:roomid to /game/fid for consistency
       })
     })
 
@@ -119,7 +123,7 @@
       }).done((room) => {
         console.log(room)
         const room_id = room.room_id;
-        document.location.href = `/rooms/:${room_id}`
+        document.location.href = `/rooms/${room_id}`
       })
     })
   });

@@ -17,8 +17,8 @@ const roomIdFromUrl = function(url) {
   let output = '';
   for (let i = url.length - 1; i >= 0; i--) {
     if (url[i] === '/') {
-      for (let j = i + 2; j < url.length; j++) {
-        
+      for (let j = i + 1; j < url.length; j++) {
+
         output += url[j];
       }
       return output;
@@ -85,15 +85,20 @@ const loadCards = function(message) {
 
 const startRound = function(bool, room_id, game_state_id) {
   if (bool) {
+    console.log('data')
 
     $.ajax({
       method: "get",
       url: `/api/games/start/?room_id=${room_id}`,
       success: function(data) {
+      
         bool = false;
-        console.log(data.cardValue);
+        //console.log('hello');
         loadPage(data.cardValue);
         getPlayerhand(game_state_id);
+      },
+      error: function(xhr) {
+        console.log("error from get start", xhr)
       }
     });
   }
@@ -104,6 +109,7 @@ const getPlayerhand = function(game_state_id) {
     method: "get",
     url: `/api/games/hand/?game_state_id=${game_state_id}`,
     success: function(data) {
+      console.log('getplayerhand', data);
       loadCards(data);
     }
   });
@@ -128,14 +134,14 @@ $(document).ready(function() {
     console.log('hello');
     //initialize game
     const pageURL = $(location).attr("href");
-    
+
     room_id = roomIdFromUrl(pageURL);
-    
+
     getGameStateId(room_id)
       .then(data => {
-      
+
         game_state_id = data.id;
-        console.log('game', game_state_id);
+
         startRound(initialize, room_id, game_state_id);
 
       });

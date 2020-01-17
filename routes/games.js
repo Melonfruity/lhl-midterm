@@ -83,7 +83,7 @@ const gamesRouterWrapped = (db) => {
       })
       .then((finished) => {
         
-        console.log('finished', finished);
+        //console.log('finished', finished);
 
         const queryString2 = `SELECT user_id, card_played
         FROM player_hands
@@ -202,9 +202,11 @@ const gamesRouterWrapped = (db) => {
 
   // player_hand get
   gamesRouter.get('/hand/', (req, res) => {
-    const user_id = req.session ? req.session.userID : null;
+    const user_id = 18;
+    //const user_id = req.session ? req.session.userID : null;
     const game_state_id = req.query.game_state_id;
-
+    console.log('user',user_id)
+    console.log('game', game_state_id)
     // change as necessary
     const queryString = `SELECT suit, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13 FROM player_hands
       WHERE user_id = ${user_id}
@@ -237,7 +239,7 @@ const gamesRouterWrapped = (db) => {
             db
               .query(checkIfTwo)
               .then((numOfPlayers) => {
-                if (numOfPlayers >= 2) {
+                if (numOfPlayers) {
                   dealerCard(game_state_id, res);
 
                 }
