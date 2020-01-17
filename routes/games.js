@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 
 
 const dbParams = require('../utils/dbParams');
@@ -8,11 +9,11 @@ const findGameStateId = function(room_id) {
   const queryFindGameState = `
   SELECT id
   FROM game_states
-  WHERE room_id = ${room_id}
+  WHERE room_id = ${room_id};
   `;
   return db.query(queryFindGameState)
     .then((data) => data.rows[0].id);
-}
+};
 
 const dealerCard = function(game_state_id, res) {
   let cardNum = Math.floor(Math.random() * 13 + 1);
@@ -20,7 +21,7 @@ const dealerCard = function(game_state_id, res) {
     SELECT card_${cardNum}
     FROM game_states
     WHERE game_states.id = ${game_state_id};
-    `
+    `;
   db
     .query(queryString2)
     .then((data) => {
@@ -32,7 +33,7 @@ const dealerCard = function(game_state_id, res) {
           UPDATE game_states
           SET dealer_card = ${cardNum},
           card_${cardNum} = 0
-          WHERE game_states.id = ${game_state_id}`;
+          WHERE game_states.id = ${game_state_id};`;
           db
             .query(queryString3)
             .then(res.json({ cardValue: cardNum, game_state_id: game_state_id }));
@@ -41,8 +42,8 @@ const dealerCard = function(game_state_id, res) {
           dealerCard(game_state_id, res);
         }
       }
-    })
-}
+    });
+};
 
 
 const gamesRouter = require('express').Router();
@@ -56,97 +57,136 @@ const gamesRouterWrapped = (db) => {
     const room_id = req.query.room_id;
     let output = { winner: null };
     let game_state_id;
-    console.log(room_id);
+
     findGameStateId(room_id)
       .then(gameStateId => {
-        game_state_id = gameStateId
+        game_state_id = gameStateId;
+        
 
         const queryString1 = `SELECT played_this_round
         FROM player_hands
         JOIN game_states ON game_state_id = game_states.id
         where game_states.id = ${game_state_id}
         `;
-        db
+        return db
           .query(queryString1)
           .then((data) => {
+
             for (let user of data.rows) {
               if (!user.played_this_round) {
                 return false;
               }
             }
             return true;
-          })
+          });
+
       })
       .then((finished) => {
         
+        //console.log('finished', finished);
+
         const queryString2 = `SELECT user_id, card_played
         FROM player_hands
         WHERE game_state_id = ${game_state_id}
         AND card_played = (SELECT max(card_played)
         FROM player_hands)`;
-        console.log("Post/round is finished: ", finished);
+        
 
         if (finished) {
           return db
             .query(queryString2)
-        }
-        else {
-          res.json(output);
-        }
-      })
-      .then((data) => {
-        if (!data) return;
-        if (data.rows.length > 1) { //if there is a tie
-          output.winner = 'tie';
-          output.score = 0;
-          res.json(output);
 
-        } else {
-          output.winner = data.rows[0].user_id;
-
-          const queryString3 = `
-              SELECT dealer_card
-              FROM game_states
-              WHERE game_states.id = ${game_state_id}
-              `;
-          db
-            .query(queryString3)
             .then((data) => {
-              output.roundScore = data.rows[0].dealer_card;
-              const queryString4 = `
+              
+              if (data) {
+                if (data.rows.length > 1) { //if there is a tie
+                  output.winner = 'tie';
+                  output.score = 0;
+                    console.log('increment');
+                    
+                    const queryString3 = `
+                SELECT dealer_card
+                FROM game_states
+                WHERE game_states.id = ${game_state_id}
+                `;
+
+                    db
+                      .query(queryString3)
+                      .then((data) => {
+                        output.roundScore = data.rows[0].dealer_card;
+                        const incrementRound = `
+                          UPDATE game_states
+                          SET round_number = round_number + 1
+                          WHERE game_states.id = 1
+                          RETURNING round_number;
+                          `;
+
+                            db
+                              .query(incrementRound)
+                              .then((data) => {
+                                output.round_number = data.rows[0].round_number;
+                                console.log(output);
+                                res.json(output);
+                              });
+                      })
+
+                } else {
+                  
+                  output.winner = data.rows[0].user_id;
+
+                  const queryString3 = `
+                SELECT dealer_card
+                FROM game_states
+                WHERE game_states.id = ${game_state_id}
+                `;
+                  db
+                    .query(queryString3)
+                    .then((data) => {
+                      output.roundScore = data.rows[0].dealer_card;
+                      const queryString4 = `
                     UPDATE player_hands
                     SET score = score + ${output.roundScore}
                     WHERE user_id = ${output.winner}
                     RETURNING score
                     `;
-              db
-                .query(queryString4)
-                .then((data) => {
-                  output.score = data.rows[0].score;
-                  console.log('increment');
+                      db
+                        .query(queryString4)
+                        .then((data) => {
+                          output.score = data.rows[0].score;
+                          console.log('increment');
 
-                  const incrementRound = `
+                          const incrementRound = `
                         UPDATE game_states
                         SET round_number = round_number + 1
                         WHERE game_states.id = 1
                         RETURNING round_number;
                         `;
 
-                  db
-                    .query(incrementRound)
-                    .then((data) => {
-                      output.round_number = data.rows[0].round_number
-                      console.log(output)
-                      res.json(output);
-                    })
-                })
-            })
-        };
-      });
+                          db
+                            .query(incrementRound)
+                            .then((data) => {
+                              output.round_number = data.rows[0].round_number;
+                              console.log(output);
+                              res.json(output);
+                            });
+                        });
+                    });
+                }
+              }
+            });
+
+        }
+        else {
+          res.json(output);
+        }
+      })
+
+
+
   });
 
 
-  
+
 
   // game_states update
 
@@ -168,7 +208,7 @@ const gamesRouterWrapped = (db) => {
 
   // player_hand update
   gamesRouter.post('/hand/', (req, res) => {
-    
+
     const user_id = req.session ? req.session.userID : null;
     const { pickedCard } = req.body;
     let output = {};   // change as necessary
@@ -188,13 +228,15 @@ const gamesRouterWrapped = (db) => {
 
   // player_hand get
   gamesRouter.get('/hand/', (req, res) => {
-    const user_id = req.session ? req.session.userID : null;
+    const user_id = req.session.userID;
+    //const user_id = req.session ? req.session.userID : null;
     const game_state_id = req.query.game_state_id;
-    
+    console.log('user',user_id)
+    console.log('game', game_state_id)
     // change as necessary
     const queryString = `SELECT suit, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13 FROM player_hands
       WHERE user_id = ${user_id}
-      AND game_state_id = ${game_state_id};`
+      AND game_state_id = ${game_state_id};`;
     // update players hand
     db
       .query(queryString)
@@ -204,24 +246,46 @@ const gamesRouterWrapped = (db) => {
 
   gamesRouter.get('/start/', (req, res) => {
     const room_id = req.query.room_id;
+    const user_id = req.session.userID;
     findGameStateId(room_id)
       .then((game_state_id) => {
         const queryString1 = `
         UPDATE player_hands
         SET played_this_round = false,
         card_played = null
-        FROM rooms
-        WHERE game_state_id = ${game_state_id};
-        `
+        WHERE game_state_id = ${game_state_id}
+        AND user_id = ${user_id};
+        
+        `;
         db
           .query(queryString1)
-          .then(dealerCard(game_state_id, res));
+          .then((data) => {
+            const checkIfTwo = `
+            SELECT COUNT(room_users.*) 
+            FROM room_users WHERE room_id = ${room_id};`;
+
+            db
+              .query(checkIfTwo)
+              .then((numOfPlayers) => {
+                if (numOfPlayers.rows[0].count === '2') {
+                  console.log('check two players')
+                  dealerCard(game_state_id, res);
+
+                }
+              });
+
+
+
+          });
+
+
+
       });
   });
 
 
 
-  
+
 
   return gamesRouter;
 };

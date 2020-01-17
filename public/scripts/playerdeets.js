@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 $(() => {
 
   const $login = $('#login');
@@ -18,13 +19,13 @@ $(() => {
         url: "/api/users/login",
         data: {username, password}
       }).done((users) => window.location.reload())
-      .always(data => {
-        if (data.fail().responseText) {
-          $errorMsg.text('WRONG USER OR PASSWORD');
-        }
-      });
+        .always(data => {
+          if (data.fail().responseText) {
+            $errorMsg.text('WRONG USER OR PASSWORD');
+          }
+        });
     }
-  }
+  };
 
   $login.on('click', (e) => {
     e.preventDefault();
@@ -44,13 +45,13 @@ $(() => {
       $.ajax({
         method: "POST",
         url: "/api/users/register",
-        data: {username: $username.val(), password: $password.val()}
+        data: { username: $username.val(), password: $password.val() }
       }).done((users) => window.location.reload())
         .always(data => {
-        if (data.fail().responseText) {
-          $errorMsg.text('USER TAKEN');
-        }
-      });
+          if (data.fail().responseText) {
+            $errorMsg.text('USER TAKEN');
+          }
+        });
     }
   });
 
@@ -62,12 +63,13 @@ $(() => {
   }).done((data) => {
     const { user_id, userDetail, gameDetail, gamesPlayed } = data;
     const profileDetails = `
+    <p>User id: ${user_id}</p>
       <img class='profile-image' src="${userDetail.img_url}">
       <h4> ${userDetail.username} </h4>
       <p>Player Since: ${userDetail.player_since} </p>
       <p>Games Played: ${gamesPlayed.games_played} </p>
       <p>Games Won: ${gameDetail.games_won} </p>
-    `
+    `;
     $profileDetails.append(profileDetails);
   });
 });
