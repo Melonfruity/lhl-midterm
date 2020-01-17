@@ -241,7 +241,8 @@ const gamesRouterWrapped = (db) => {
             db
               .query(checkIfTwo)
               .then((numOfPlayers) => {
-                if (numOfPlayers) {
+                if (numOfPlayers.rows[0].count === '2') {
+                  console.log('check two players')
                   dealerCard(game_state_id, res);
 
                 }

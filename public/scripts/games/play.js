@@ -126,7 +126,7 @@ let game_state_id;
 
 $(document).ready(function() {
 
-
+  
 
   // example of how to get and post to the server.
   // In this case, to the test server

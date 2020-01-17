@@ -9,7 +9,7 @@ GET http://localhost:3001/api/games/round/?room_id=1
 
 
 ###
-GET http://localhost:3001/api/games/hand/?game_state_id=19
+GET http://localhost:3001/api/games/hand/?game_state_id=12
 ###
 GET http://localhost:3001/api/games/start/?room_id=1
 
