@@ -48,7 +48,7 @@
             $.ajax({
               method: 'GET',
               url: `/rooms/${room_id}`
-            }).done((data) => console.log(data));
+            }).done((data) => console.log('db all'));
           })
         }})
             

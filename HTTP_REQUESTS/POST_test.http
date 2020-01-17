@@ -73,3 +73,8 @@ content-type: application/json
 {
   "game_state_id": "1"
 }
+
+###
+POST http://localhost:3001/api/games/deal/?room_id=12
+Content-Type: application/json
+

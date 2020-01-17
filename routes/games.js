@@ -38,7 +38,7 @@ const dealerCard = function(game_state_id, res) {
             .query(queryString3)
             .then(res.json({ cardValue: cardNum, game_state_id: game_state_id }));
         }
-        if (card[property] === 0) {
+        else if (card[property] === 0) {
           dealerCard(game_state_id, res);
         }
       }
@@ -61,7 +61,7 @@ const gamesRouterWrapped = (db) => {
     findGameStateId(room_id)
       .then(gameStateId => {
         game_state_id = gameStateId;
-        
+
 
         const queryString1 = `SELECT played_this_round
         FROM player_hands
@@ -82,7 +82,7 @@ const gamesRouterWrapped = (db) => {
 
       })
       .then((finished) => {
-        
+
         //console.log('finished', finished);
 
         const queryString2 = `SELECT user_id, card_played
@@ -90,48 +90,48 @@ const gamesRouterWrapped = (db) => {
         WHERE game_state_id = ${game_state_id}
         AND card_played = (SELECT max(card_played)
         FROM player_hands)`;
-        
+
 
         if (finished) {
           return db
             .query(queryString2)
 
             .then((data) => {
-              
+
               if (data) {
                 if (data.rows.length > 1) { //if there is a tie
                   output.winner = 'tie';
                   output.score = 0;
-                    console.log('increment');
-                    
-                    const queryString3 = `
+                  
+
+                  const queryString3 = `
                 SELECT dealer_card
                 FROM game_states
                 WHERE game_states.id = ${game_state_id}
                 `;
 
-                    db
-                      .query(queryString3)
-                      .then((data) => {
-                        output.roundScore = data.rows[0].dealer_card;
-                        const incrementRound = `
+                  db
+                    .query(queryString3)
+                    .then((data) => {
+                      output.roundScore = data.rows[0].dealer_card;
+                      const incrementRound = `
                           UPDATE game_states
                           SET round_number = round_number + 1
                           WHERE game_states.id = 1
                           RETURNING round_number;
                           `;
 
-                            db
-                              .query(incrementRound)
-                              .then((data) => {
-                                output.round_number = data.rows[0].round_number;
-                                console.log(output);
-                                res.json(output);
-                              });
-                      })
+                      db
+                        .query(incrementRound)
+                        .then((data) => {
+                          output.round_number = data.rows[0].round_number;
+                          
+                          res.json(output);
+                        });
+                    })
 
                 } else {
-                  
+
                   output.winner = data.rows[0].user_id;
 
                   const queryString3 = `
@@ -166,7 +166,7 @@ const gamesRouterWrapped = (db) => {
                             .query(incrementRound)
                             .then((data) => {
                               output.round_number = data.rows[0].round_number;
-                              console.log(output);
+                              
                               res.json(output);
                             });
                         });
@@ -231,7 +231,7 @@ const gamesRouterWrapped = (db) => {
     const user_id = req.session.userID;
     //const user_id = req.session ? req.session.userID : null;
     const game_state_id = req.query.game_state_id;
-    console.log('user',user_id)
+    console.log('user', user_id)
     console.log('game', game_state_id)
     // change as necessary
     const queryString = `SELECT suit, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13 FROM player_hands
@@ -260,27 +260,39 @@ const gamesRouterWrapped = (db) => {
         db
           .query(queryString1)
           .then((data) => {
-            const checkIfTwo = `
-            SELECT COUNT(room_users.*) 
-            FROM room_users WHERE room_id = ${room_id};`;
-
-            db
-              .query(checkIfTwo)
-              .then((numOfPlayers) => {
-                if (numOfPlayers.rows[0].count === '2') {
-                  console.log('check two players')
-                  dealerCard(game_state_id, res);
-
-                }
-              });
-
-
-
+            res.send('get start success')
+            console.log('round prepared');
           });
-
-
-
       });
+  });
+
+  gamesRouter.post('/deal/', (req, res) => {
+    const room_id = req.query.room_id;
+    const user_id = req.session.userID;
+    
+
+    const querySmallestuserId = `
+    SELECT dealer_card
+    FROM game_states
+    WHERE room_id = ${room_id}
+    `
+    db
+      .query(querySmallestuserId)
+      .then((data) => {
+        if (!data.rows[0].dealer_card) {
+     
+              dealerCard(room_id, res)
+            
+        }
+      });
+
+
+
+
+
+
+
+
   });
 
 

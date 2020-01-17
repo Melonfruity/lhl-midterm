@@ -58,7 +58,7 @@ const roomsRouterWrapper = (db) => {
               const queryNewPlayerHandParams = [gameStateId, user_id];
               db
                 .query(queryNewPlayerHand, queryNewPlayerHandParams)
-                .then((playerHand) => console.log(playerHand.rows));
+                .then((playerHand) => console.log());
             });
           res.json({ room_id: room.id });
         })
@@ -80,7 +80,7 @@ const roomsRouterWrapper = (db) => {
     db
       .query(queryCheckIfUserInRoom)
       .then((data) => {
-        console.log(data.rows[0].count);
+      
         if (data.rows[0].count === '1') {
           
           const templateVars = {

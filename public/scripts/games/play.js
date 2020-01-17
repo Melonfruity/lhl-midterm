@@ -1,6 +1,6 @@
 /* eslint-disable camelcase */
 // proper document ready function
-const getGameStateId = function(room_id) {
+const getGameState = function(room_id) { //returns object containing state
   return $.ajax({
     url: `/api/games/state/`,
     method: 'GET',
@@ -12,6 +12,9 @@ const getGameStateId = function(room_id) {
     }
   });
 };
+
+
+
 
 const roomIdFromUrl = function(url) {
   let output = '';
@@ -26,7 +29,7 @@ const roomIdFromUrl = function(url) {
   }
 };
 
-
+//loads dealer card and other messages
 const loadPage = function(message) {
 
   $.ajax({
@@ -83,25 +86,25 @@ const loadCards = function(message) {
 
 };
 
-const startRound = function(bool, room_id, game_state_id) {
-  if (bool) {
-    
+const startRound = function(room_id, game_state_id) {
 
-    $.ajax({
-      method: "get",
-      url: `/api/games/start/?room_id=${room_id}`,
-      success: function(data) {
-       // console.log(data.rows);
-        bool = false;
-        //console.log('hello');
-        loadPage(data.cardValue);
-        getPlayerhand(game_state_id);
-      },
-      error: function(xhr) {
-        console.log("error from get start", xhr)
-      }
-    });
-  }
+
+
+  $.ajax({
+    method: "get",
+    url: `/api/games/start/?room_id=${room_id}`,
+    success: function(data) {
+      // console.log(data.rows);
+      bool = false;
+      //console.log('hello');
+
+      getPlayerhand(game_state_id);
+    },
+    error: function(xhr) {
+      console.log("error from get start", xhr)
+    }
+  });
+
 };
 
 const getPlayerhand = function(game_state_id) {
@@ -118,36 +121,49 @@ const getPlayerhand = function(game_state_id) {
 };
 
 let roundInput = [];
-let initialize = true;
 let room_id;
 let gameOver = false;
 let game_state_id;
 
+const getNewDealerAndDisPlay = function(room_id) {
+
+  $.ajax({
+    method: "post",
+    url: `/api/games/deal/?room_id=${room_id}`,
+    success:
+      getGameState(room_id)
+        .then(data => {
+          console.log('data',data)
+          dealer_card = data.dealer_card;
+          game_state_id = data.id;
+          loadPage(dealer_card);
+        })
+
+
+
+  });
+}
+
 
 $(document).ready(function() {
 
-  
+
 
   // example of how to get and post to the server.
   // In this case, to the test server
   // checkout routes/tests.js
 
   $(function() {
-    console.log('hello');
+  
     //initialize game
     const pageURL = $(location).attr("href");
-
     room_id = roomIdFromUrl(pageURL);
 
-    getGameStateId(room_id)
-      .then(data => {
+    console.log('pre room', room_id)
 
-        game_state_id = data.id;
-       
-        startRound(initialize, room_id, game_state_id);
 
-      });
-
+    getNewDealerAndDisPlay(room_id)
+    startRound(room_id, game_state_id)
 
 
 
@@ -174,6 +190,7 @@ $(document).ready(function() {
         },
         success: function(data) {
           console.log("data from success: submit button on click ", data);
+
         },
         error: function(xhr) {
           console.log("data from error: submit button on click ", xhr);
@@ -189,9 +206,11 @@ $(document).ready(function() {
           url: `/api/games/round/?room_id=${room_id}`,
           success: function(data) {
             if (data.winner) {
-              initialize = true;
+
               loadPage(`Winner: ${data.winner}, Score: ${data.score}, Round: ${data.round_number}`);
-              startRound(initialize, room_id, game_state_id);
+              getNewDealerAndDisPlay(room_id);
+              startRound(room_id, game_state_id)
+
             } else
               loadPage('Round not done');
 
