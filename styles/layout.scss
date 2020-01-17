@@ -119,25 +119,22 @@ body {
   width: 100px;
 }
 
-<<<<<<< HEAD
 .rooms {
   tr {
     cursor: pointer;
   }
 }
 
-h3 {
+h3.less-margins {
   padding: 1rem;
   border-bottom: 2px solid black;
 }
-=======
 @media only screen and (max-width: 768px ){
   .game1, .game2 {
     flex-direction: column;
     padding: 0;
     align-items: center;
   }
->>>>>>> ca8fcd0fc002165db2157ebf599b3c7fb84bfe13
 
   .lobby-buttons {
     display: flex;
@@ -164,13 +161,9 @@ h3 {
   .list-rooms {
     width: 100%;
   }
-<<<<<<< HEAD
-}
-=======
 
   .content {
     flex-direction: column;
   }
 
 }
->>>>>>> ca8fcd0fc002165db2157ebf599b3c7fb84bfe13

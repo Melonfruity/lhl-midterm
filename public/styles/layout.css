@@ -117,19 +117,15 @@ body {
   width: 100px;
 }
 
-<<<<<<< HEAD
 .rooms tr {
   cursor: pointer;
 }
 
-h3 {
+h3.less-margins {
   padding: 1rem;
   border-bottom: 2px solid black;
 }
 
-@media only screen and (max-width: 1024px) {
-  .game {
-=======
 @media only screen and (max-width: 768px) {
   .game1, .game2 {
     flex-direction: column;
@@ -141,7 +137,6 @@ h3 {
     justify-content: space-between;
   }
   .game-join {
->>>>>>> ca8fcd0fc002165db2157ebf599b3c7fb84bfe13
     width: 100%;
     display: flex;
     flex-direction: column;

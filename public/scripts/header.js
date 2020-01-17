@@ -6,7 +6,7 @@
   // checkout routes/tests.js
 
   $(function() {
-    
+
     const $profile = $('#nav-profile');
     const $playerDeets = $('.player-deets');
     const $mainContainer = $('.main-container');
@@ -19,6 +19,13 @@
         $playerDeets.css('display', 'block');
         $mainContainer.css('width', '75%');
       }
+      // if ($mainContainer.css('width') === '75%') {
+      //   $playerDeets.animate({width: 'toggle'}, 50);
+      //   $mainContainer.css('width', '100%');
+      // } else {
+      //   $playerDeets.animate({width: 'toggle'}, 50);
+      //   $mainContainer.css('width', '75%');
+      // }
     });
 
   });
