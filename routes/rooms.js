@@ -82,7 +82,7 @@ const roomsRouterWrapper = (db) => {
       .then((data) => {
         console.log(data.rows[0].count);
         if (data.rows[0].count === '1') {
-          console.log('if statement')
+          
           const templateVars = {
             user: req.session ? req.session.userID : null,
           };
@@ -99,7 +99,7 @@ const roomsRouterWrapper = (db) => {
             .then((data) => {
               const game_state_id = data.rows[0].id
 
-              console.log('gamestate', game_state_id)
+              
 
 
               const query = `
@@ -173,7 +173,7 @@ const roomsRouterWrapper = (db) => {
     // })
 
     // res.render('game', templateVars);
-    console.log('here');
+    
   });
 
 

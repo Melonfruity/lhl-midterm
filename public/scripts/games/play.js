@@ -30,7 +30,7 @@ const roomIdFromUrl = function(url) {
 const loadPage = function(message) {
 
   $.ajax({
-    url: '/rooms/:id',
+    url: `/rooms/${room_id}`,
     method: 'GET',
     success: function() {
       if (message === 'Round not done') {
@@ -47,7 +47,7 @@ const loadPage = function(message) {
 const loadCards = function(message) {
 
   $.ajax({
-    url: '/rooms/:id',
+    url: `/rooms/${room_id}`,
     method: 'GET',
     success: function() {
       let output = '';
@@ -85,13 +85,13 @@ const loadCards = function(message) {
 
 const startRound = function(bool, room_id, game_state_id) {
   if (bool) {
-    console.log('data')
+    
 
     $.ajax({
       method: "get",
       url: `/api/games/start/?room_id=${room_id}`,
       success: function(data) {
-      
+       // console.log(data.rows);
         bool = false;
         //console.log('hello');
         loadPage(data.cardValue);
@@ -105,9 +105,11 @@ const startRound = function(bool, room_id, game_state_id) {
 };
 
 const getPlayerhand = function(game_state_id) {
+  console.log('pre-getplayerhand');
   $.ajax({
     method: "get",
     url: `/api/games/hand/?game_state_id=${game_state_id}`,
+
     success: function(data) {
       console.log('getplayerhand', data);
       loadCards(data);
@@ -141,7 +143,7 @@ $(document).ready(function() {
       .then(data => {
 
         game_state_id = data.id;
-
+       
         startRound(initialize, room_id, game_state_id);
 
       });

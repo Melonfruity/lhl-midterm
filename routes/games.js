@@ -202,7 +202,7 @@ const gamesRouterWrapped = (db) => {
 
   // player_hand get
   gamesRouter.get('/hand/', (req, res) => {
-    const user_id = 18;
+    const user_id = req.session.userID;
     //const user_id = req.session ? req.session.userID : null;
     const game_state_id = req.query.game_state_id;
     console.log('user',user_id)
@@ -220,14 +220,16 @@ const gamesRouterWrapped = (db) => {
 
   gamesRouter.get('/start/', (req, res) => {
     const room_id = req.query.room_id;
+    const user_id = req.session.userID;
     findGameStateId(room_id)
       .then((game_state_id) => {
         const queryString1 = `
         UPDATE player_hands
         SET played_this_round = false,
         card_played = null
-        FROM rooms
-        WHERE game_state_id = ${game_state_id};
+        WHERE game_state_id = ${game_state_id}
+        AND user_id = ${user_id};
+        
         `;
         db
           .query(queryString1)
