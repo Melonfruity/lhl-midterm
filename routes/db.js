@@ -21,6 +21,26 @@ const dbRouterWrapper = (db) => {
 
   });
 
+  // game_states update
+  dbRouter.get('/:id', (req, res) => {
+    const room_id = req.params.id;
+
+    // check the round number 
+    const queryString = `
+      SELECT player_hands.played_this_round FROM player_hands
+      JOIN game_states ON player_hands.game_state_id = game_states.id
+      WHERE game_states.room_id = ${room_id};
+    `
+    db
+      .query(queryString)
+      .then(data => {
+        const pOPlayed = data.rows[0] ? data.rows[0].played_this_round : false;
+        const pTPlayed = data.rows[1] ? data.rows[1].played_this_round : false;
+      
+        res.status(200).json({ nextRound: pOPlayed && pTPlayed });
+      })
+  })
+
   return dbRouter;
 }
     

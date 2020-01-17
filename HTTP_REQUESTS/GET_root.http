@@ -19,3 +19,16 @@ GET http://localhost:3001/api/games/state/?room_id=1
 
 ###
 GET http://localhost:3001/rooms/4
+
+###
+
+GET http://localhost:3001/api/db/7
+
+
+SELECT player_hands.id, game_states.id FROM player_hands
+JOIN game_states ON player_hands.game_state_id = game_states.id
+WHERE player_hands.played_this_round = false;
+
+SELECT player_hands.user_id, game_states.id, player_hands.played_this_round FROM player_hands
+JOIN game_states ON player_hands.game_state_id = game_states.id
+WHERE game_states.room_id = 9;

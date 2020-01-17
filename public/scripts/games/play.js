@@ -1,206 +1,137 @@
-/* eslint-disable camelcase */
 // proper document ready function
-const getGameStateId = function(room_id) {
-  return $.ajax({
-    url: `/api/games/state/`,
-    method: 'GET',
-    data: {
-      room_id: room_id
-    },
-    success: function(data) {
-      return data;
-    }
-  });
-};
-
-const roomIdFromUrl = function(url) {
-  let output = '';
-  for (let i = url.length - 1; i >= 0; i--) {
-    if (url[i] === '/') {
-      for (let j = i + 1; j < url.length; j++) {
-
-        output += url[j];
-      }
-      return output;
-    }
-  }
-};
-
-
-const loadPage = function(message) {
-
-  $.ajax({
-    url: `/rooms/${room_id}`,
-    method: 'GET',
-    success: function() {
-      if (message === 'Round not done') {
-        $(".status").remove();
-        $(".dealer-card").append(`<p class="status">Waiting For Other Players</p>`);
-      } else {
-        $(".dealer-card").append(`<img src="/images/standard_card_deck/${message}H.jpg" class="card" value="${message}"><p class="announcement">${message}</p>`);
-      }
-
-    }
-  });
-};
-
-const loadCards = function(message) {
-
-  $.ajax({
-    url: `/rooms/${room_id}`,
-    method: 'GET',
-    success: function() {
-      let output = '';
-      let suit = message.suit;
-      delete message.suit;
-      for (let card in message) {
-        if (message[card] > 0) {
-          output += `${card.slice(5)}, `;
-          $(`.player-hand`).append(`<img src="/images/standard_card_deck/${card.slice(5)}${suit}.jpg" class="card" value="${card.slice(5)}">`);
-        }
-      }
-      $(`.player-message`).remove();
-      $(`.player-hand`).append(`<div class="player-message"> ${output}</p>`);
-    }
-  })
-    .then(() => {
-      $('.card').on('click', (function() {
-        $.ajax({
-          method: "post",
-          url: "/api/games/hand",
-          data: {
-            pickedCard: $(this).attr('value')
-          },
-          success: function(data) {
-            console.log("data from success: card on click ", data);
-          },
-          error: function(xhr) {
-            console.log("data from error: card on click ", xhr);
-          }
-        });
-      }));
-    });
-
-};
-
-const startRound = function(bool, room_id, game_state_id) {
-  if (bool) {
-    
-
-    $.ajax({
-      method: "get",
-      url: `/api/games/start/?room_id=${room_id}`,
-      success: function(data) {
-       // console.log(data.rows);
-        bool = false;
-        //console.log('hello');
-        loadPage(data.cardValue);
-        getPlayerhand(game_state_id);
-      },
-      error: function(xhr) {
-        console.log("error from get start", xhr)
-      }
-    });
-  }
-};
-
-const getPlayerhand = function(game_state_id) {
-  console.log('pre-getplayerhand');
-  $.ajax({
-    method: "get",
-    url: `/api/games/hand/?game_state_id=${game_state_id}`,
-
-    success: function(data) {
-      console.log('getplayerhand', data);
-      loadCards(data);
-    }
-  });
-};
-
-let roundInput = [];
-let initialize = true;
-let room_id;
-let gameOver = false;
-let game_state_id;
-
-
-$(document).ready(function() {
-
-  
-
-  // example of how to get and post to the server.
-  // In this case, to the test server
-  // checkout routes/tests.js
+(function($, window, document){
 
   $(function() {
-    console.log('hello');
-    //initialize game
-    const pageURL = $(location).attr("href");
+    
+    // grab room location
+    const room_id = $(location).attr("href").substring(28);
+    const $dealerCard = $('.dealer-card');
+    const $playerHand = $('.player-hand');
+    const $message = $('.message');
+    const $scoreboard = $('.score-tracker');
 
-    room_id = roomIdFromUrl(pageURL);
+    let dealer_card;
+    let thisTotal;
+    let theirTotal;
+    let thisRoundScore;
+    let theirRoundScore;
 
-    getGameStateId(room_id)
-      .then(data => {
+    // create image function
+    const image = (num, type) => `<img src="/images/standard_card_deck/${num}H.jpg" class="${type}${num} card" value="${num}">`
+    
+    const trackerTemplate = (thisScore, theirScore) => `
+      <tr>
+        <td>
+          ${thisScore}
+        </td>
+        <td>
+          ${theirScore}
+        </td>
+      </tr>`
 
-        game_state_id = data.id;
-       
-        startRound(initialize, room_id, game_state_id);
+    // add a new/replace dealer card
+    const replaceDealerCard = (val) => {
+      $dealerCard.empty();
+      $dealerCard.append(image(val, 'D'))
+    }
 
-      });
+    // calculate score and append
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    //run once if initialize true
-
-    //Submit card choice for a user (this has been updated to the on img click above)
-    $('.submit-button').click(function() {
+    // allows user to play card only if the
+    // played_this_turn flag is false
+    const playCard = (val, card) => {
+      
       $.ajax({
-        method: "post",
-        url: "/api/games/hand/",
+        method: 'post',
+        url: '/api/games/play',
         data: {
-          pickedCard: $(".submit-card").val(),
-          room_id: room_id
-        },
-        success: function(data) {
-          console.log("data from success: submit button on click ", data);
-        },
-        error: function(xhr) {
-          console.log("data from error: submit button on click ", xhr);
-        },
-      });
-    });
+          room_id,
+        }
+      }).done(data => {
+        if (!data.played_this_round) {
+          $.ajax({
+            method: 'post',
+            url: '/api/games/hand',
+            data: {
+              cardNum: val,
+              room_id
+            }
+          }).done(data => card.remove())
+        } else {
+          console.log('Waiting on next player');
+        }
+      })
+    }
 
-    //long polling check if round is over
-    setInterval(function() {
-      if (!gameOver) {
+    const startGame = () => {
+      setInterval(() => {
+
         $.ajax({
-          method: "get",
-          url: `/api/games/round/?room_id=${room_id}`,
-          success: function(data) {
-            if (data.winner) {
-              initialize = true;
-              loadPage(`Winner: ${data.winner}, Score: ${data.score}, Round: ${data.round_number}`);
-              startRound(initialize, room_id, game_state_id);
-            } else
-              loadPage('Round not done');
+          method: 'get',
+          url: '/api/games/updateGame',
+          data: {
+            room_id,
+            dealer_card
+          }
+        }).done(data => {
+          if(data.score) {
+              data.score.forEach(val => {
+                console.log(val, val.score, val.user_id)
+              if (Number(val.user_id) === Number(data.user_id)) {
+                thisTotal += Number(val.score);
+                thisRoundScore = val.score;
+              } else {
+                theirTotal += Number(val.score);
+                theirRoundScore = val.score;
+                console.log(theirRoundScore)
+              }
+            });
+            $scoreboard.append(trackerTemplate(thisRoundScore, theirRoundScore));
+          }
+          dealer_card = data.dealer_card;
+          replaceDealerCard(data.dealer_card);
+        })
 
+      }, 3000)
+    };
+
+    // deals out the first card
+    const initializeGame = () => {
+      $.ajax({
+        method: 'get',
+        url: '/api/games/initiate',
+        data: {
+          room_id,
+        }
+      }).done(data => {
+          if (data.dealer_card) {
+            dealer_card = data.dealer_card;
+            replaceDealerCard(data.dealer_card);
           }
         });
 
-      }
-    }, 3000);
+      $.ajax({
+        method: 'get',
+        url: '/api/games/hand',
+        data: {
+          room_id,
+        }
+      }).done(data => {
+        $playerHand.empty();
+        for (let i = 1; i <= 13; i ++) {
+          if (data[`card_${i}`]) {
+            $playerHand.append(image(i, 'P'))
+            const card = $(`.P${i}`);
+            card.click((e) => {
+              const val = card.attr('value');
+              playCard(val, card);
+            })
+          }
+        }
+        startGame();
+      });
+    };
+    initializeGame();
+  })
 
-  });
-
-});
+})(window.jQuery, window, document);

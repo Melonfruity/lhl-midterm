@@ -1,13 +1,17 @@
 div.main-container {
   div.content {
-    display: block;
+    display: flex;
+    flex-direction: column;
   }
+  width: 100%;
 }
 
-img.card {
+.card {
   max-height: 10rem;
   margin: 4px;
 }
+
+
 
 div[class$=hand]{
   display: flex;

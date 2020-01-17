@@ -28,16 +28,21 @@
       <h3>Dealer's Card</h3>
       <div class="dealer-card"></div>
       <div class="message"></div>
-      <div class="winner"></div>
-      <h3>Player 1 Card</h3>
+      <h3>Player Cards</h3>
       <div class="player-hand"></div>
       <div>
-        <textarea class="submit-card" name="text" placeholder="card number"></textarea>
-        <textarea class="user_id" name="text" placeholder="user id"></textarea>
-        <input class="submit-button btn s6" type="submit" value="submit">
+        <table class="striped highlight centered">
+          <thead>
+            <tr>
+              <th>YOU</th>
+              <th>ENEMY</th>
+            </tr>
+          </thead>  
+          <tbody class="score-tracker">
+            
+          </tbody>
+        </table>
       </div>
-        <button class="deal">DEAL</button>
-    </div>
   </div>
   <%- include('partials/_playerdeets') %>
 </body>

@@ -115,5 +115,3 @@ CREATE TABLE player_hands (
   played_this_round BOOLEAN DEFAULT false,
   card_played SMALLINT
 );
-
-

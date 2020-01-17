@@ -6,6 +6,7 @@ const usersRouterWrapper = (db) => {
   // login
   usersRouter.post('/login', (req, res) => {
     const { username, password } = req.body;
+    console.log(username, password)
     // return the user entry if applicable
     databaseHelper.findUserByUsername(username)
       .then((user) => {

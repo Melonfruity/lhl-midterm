@@ -1,291 +1,212 @@
 /* eslint-disable camelcase */
-
-
-const dbParams = require('../utils/dbParams');
-const { Pool } = require('pg');
-const db = new Pool(dbParams);
-
-const findGameStateId = function(room_id) {
-  const queryFindGameState = `
-  SELECT id
-  FROM game_states
-  WHERE room_id = ${room_id};
-  `;
-  return db.query(queryFindGameState)
-    .then((data) => data.rows[0].id);
-};
-
-const dealerCard = function(game_state_id, res) {
-  let cardNum = Math.floor(Math.random() * 13 + 1);
-  const queryString2 = `
-    SELECT card_${cardNum}
-    FROM game_states
-    WHERE game_states.id = ${game_state_id};
-    `;
-  db
-    .query(queryString2)
-    .then((data) => {
-      let card = data.rows[0];
-      for (let property in card) {
-        if (card[property] > 0) {
-          const queryString3 = `
-          
-          UPDATE game_states
-          SET dealer_card = ${cardNum},
-          card_${cardNum} = 0
-          WHERE game_states.id = ${game_state_id};`;
-          db
-            .query(queryString3)
-            .then(res.json({ cardValue: cardNum, game_state_id: game_state_id }));
-        }
-        if (card[property] === 0) {
-          dealerCard(game_state_id, res);
-        }
-      }
-    });
-};
-
-
 const gamesRouter = require('express').Router();
 
 const gamesRouterWrapped = (db) => {
-
-  // Have frontend pass player_id and game_id
-
-  //check if everyone went
-  gamesRouter.get('/round/', (req, res) => {
+  
+  // Create the first dealer card
+  gamesRouter.get('/initiate', async (req, res) => {
     const room_id = req.query.room_id;
-    let output = { winner: null };
-    let game_state_id;
 
-    findGameStateId(room_id)
-      .then(gameStateId => {
-        game_state_id = gameStateId;
-        
+    const chkDealerCard = `
+    SELECT dealer_card FROM game_states
+    WHERE room_id = ${room_id}`
 
-        const queryString1 = `SELECT played_this_round
-        FROM player_hands
-        JOIN game_states ON game_state_id = game_states.id
-        where game_states.id = ${game_state_id}
-        `;
-        return db
-          .query(queryString1)
-          .then((data) => {
-
-            for (let user of data.rows) {
-              if (!user.played_this_round) {
-                return false;
-              }
-            }
-            return true;
-          });
-
-      })
-      .then((finished) => {
-        
-        //console.log('finished', finished);
-
-        const queryString2 = `SELECT user_id, card_played
-        FROM player_hands
-        WHERE game_state_id = ${game_state_id}
-        AND card_played = (SELECT max(card_played)
-        FROM player_hands)`;
-        
-
-        if (finished) {
-          return db
-            .query(queryString2)
-
-            .then((data) => {
-              
-              if (data) {
-                if (data.rows.length > 1) { //if there is a tie
-                  output.winner = 'tie';
-                  output.score = 0;
-                    console.log('increment');
-                    
-                    const queryString3 = `
-                SELECT dealer_card
-                FROM game_states
-                WHERE game_states.id = ${game_state_id}
-                `;
-
-                    db
-                      .query(queryString3)
-                      .then((data) => {
-                        output.roundScore = data.rows[0].dealer_card;
-                        const incrementRound = `
-                          UPDATE game_states
-                          SET round_number = round_number + 1
-                          WHERE game_states.id = 1
-                          RETURNING round_number;
-                          `;
-
-                            db
-                              .query(incrementRound)
-                              .then((data) => {
-                                output.round_number = data.rows[0].round_number;
-                                console.log(output);
-                                res.json(output);
-                              });
-                      })
-
-                } else {
-                  
-                  output.winner = data.rows[0].user_id;
-
-                  const queryString3 = `
-                SELECT dealer_card
-                FROM game_states
-                WHERE game_states.id = ${game_state_id}
-                `;
-                  db
-                    .query(queryString3)
-                    .then((data) => {
-                      output.roundScore = data.rows[0].dealer_card;
-                      const queryString4 = `
-                    UPDATE player_hands
-                    SET score = score + ${output.roundScore}
-                    WHERE user_id = ${output.winner}
-                    RETURNING score
-                    `;
-                      db
-                        .query(queryString4)
-                        .then((data) => {
-                          output.score = data.rows[0].score;
-                          console.log('increment');
-
-                          const incrementRound = `
-                        UPDATE game_states
-                        SET round_number = round_number + 1
-                        WHERE game_states.id = 1
-                        RETURNING round_number;
-                        `;
-
-                          db
-                            .query(incrementRound)
-                            .then((data) => {
-                              output.round_number = data.rows[0].round_number;
-                              console.log(output);
-                              res.json(output);
-                            });
-                        });
-                    });
-                }
-              }
-            });
-
-        }
-        else {
-          res.json(output);
-        }
-      })
-
-
-
+    const check = await db
+      .query(chkDealerCard)
+      .then(data => data.rows[0])
+    
+    if (check.dealer_card) {
+      res.json(check)
+    } else {
+      const cardNum = Math.floor(Math.random() * 13) + 1;
+      const initDealerCard = `
+        UPDATE game_states
+        SET card_${cardNum} = 0, dealer_card = '${cardNum}', round_number = round_number + 1
+        WHERE room_id = ${room_id}
+        RETURNING *;
+      `
+      await db
+        .query(initDealerCard)
+        .then(data => res.json({ dealer_card: cardNum }))
+    }
+    
   });
 
+  // get playerhand
+  gamesRouter.get('/hand', async (req, res) => {
+    const user_id = req.session.userID;
+    const { room_id } = req.query;
 
-
-
-  // game_states update
-
-
-  // Show dealers hand, Not currently used, but can be useful
-  gamesRouter.get('/state/', (req, res) => {
-    const room_id = req.query.room_id;
-
-    // change as necessary
-    const queryString = `
+    const getGameState = `
       SELECT * FROM game_states
-      WHERE room_id = ${room_id};`;
-    // return the game_state
-    db
-      .query(queryString)
-      .then((data) => res.status(200).json(data.rows[0]))
-      .catch((err) => res.status(400).json(err.stack));
+      WHERE game_states.room_id = ${room_id};
+    `
+    const game_state = await db
+      .query(getGameState)
+      .then(data => data.rows[0])
+    
+    const getPlayerHand = `
+      SELECT * FROM player_hands
+      WHERE game_state_id = ${game_state.id}
+      AND player_hands.user_id = ${user_id};
+    `
+    await db
+      .query(getPlayerHand)
+      .then(data => res.json(data.rows[0]))
+
   });
 
-  // player_hand update
-  gamesRouter.post('/hand/', (req, res) => {
-
-    const user_id = req.session ? req.session.userID : null;
-    const { pickedCard } = req.body;
-    let output = {};   // change as necessary
-    output[user_id] = pickedCard;
-    const queryString1 = `UPDATE player_hands
-      SET card_${pickedCard} = 0
-          ,played_this_round = true
-          ,card_played = ${pickedCard}
-      WHERE user_id = ${user_id}
-      RETURNING *;`;
-    db
-      .query(queryString1)
-      .then((data) => res.status(200).send(data.rows))
-      .catch((err) => res.status(400).json(err.stack));
-  });
-
-
-  // player_hand get
-  gamesRouter.get('/hand/', (req, res) => {
+  // update playerhand
+  gamesRouter.post('/hand', async (req, res) => {
     const user_id = req.session.userID;
-    //const user_id = req.session ? req.session.userID : null;
-    const game_state_id = req.query.game_state_id;
-    console.log('user',user_id)
-    console.log('game', game_state_id)
-    // change as necessary
-    const queryString = `SELECT suit, card_1, card_2, card_3, card_4, card_5, card_6, card_7, card_8, card_9, card_10, card_11, card_12, card_13 FROM player_hands
+    const { cardNum, room_id } = req.body;
+
+    const getGameState = `
+      SELECT * FROM game_states
+      WHERE game_states.room_id = ${room_id};
+    `
+    const game_state = await db
+      .query(getGameState)
+      .then(data => data.rows[0].id)
+
+    const updateHand = `
+      UPDATE player_hands
+      SET card_${cardNum} = 0, played_this_round = true, card_played = ${cardNum}
       WHERE user_id = ${user_id}
-      AND game_state_id = ${game_state_id};`;
-    // update players hand
-    db
-      .query(queryString)
-      .then((data) => res.status(200).json(data.rows[0]))
-      .catch((err) => res.status(400).json(err.stack));
+      AND game_state_id = ${game_state}
+      RETURNING *;
+    `
+    await db
+      .query(updateHand)
+      .then(data => res.json(data.rows[0]))
   });
 
-  gamesRouter.get('/start/', (req, res) => {
-    const room_id = req.query.room_id;
+  // increment round and send back new dealer card
+  // include new score
+  gamesRouter.post('/play', async (req, res) => {
     const user_id = req.session.userID;
-    findGameStateId(room_id)
-      .then((game_state_id) => {
-        const queryString1 = `
-        UPDATE player_hands
-        SET played_this_round = false,
-        card_played = null
-        WHERE game_state_id = ${game_state_id}
+    const { room_id } = req.body;
+
+    const getGameState = `
+      SELECT * FROM game_states
+      WHERE game_states.room_id = ${room_id};
+    `
+    const game_state = await db
+      .query(getGameState)
+      .then(data => data.rows[0].id);
+
+    const getIfPlayed = `
+      SELECT played_this_round FROM player_hands
+        WHERE game_state_id = ${game_state}
         AND user_id = ${user_id};
-        
-        `;
-        db
-          .query(queryString1)
-          .then((data) => {
-            const checkIfTwo = `
-            SELECT COUNT(room_users.*) 
-            FROM room_users WHERE room_id = ${room_id};`;
-
-            db
-              .query(checkIfTwo)
-              .then((numOfPlayers) => {
-                if (numOfPlayers.rows[0].count === '2') {
-                  console.log('check two players')
-                  dealerCard(game_state_id, res);
-
-                }
-              });
-
-
-
-          });
-
-
-
+    `
+    await db
+      .query(getIfPlayed)
+      .then(data => {
+        const played = data.rows[0];
+        res.json(played);
       });
+
   });
 
+  gamesRouter.get('/updateGame', async (req, res) => {
+    const user_id = req.session.userID;
+    console.log(user_id)
+    const { room_id, dealer_card } = req.query;
 
+    const getGameState = `
+      SELECT * FROM game_states
+      WHERE game_states.room_id = ${room_id};
+    `
+    const game_state = await db
+      .query(getGameState)
+      .then(data => data.rows[0].id);
 
+    // Check that both players played
+    const getBothPlayed = `
+      SELECT count(*) FROM player_hands
+        WHERE game_state_id = ${game_state}
+        AND played_this_round = true;
+    `
+    const bothPlayed = await db
+      .query(getBothPlayed)
+      .then(data => data.rows[0]);
 
+    if (bothPlayed.count === '2') {
+
+      const usersRoom = `
+        SELECT * FROM room_users
+        WHERE room_id = ${room_id};
+      `
+      const usersInRoom = await db
+        .query(usersRoom)
+        .then(data => data.rows);
+    
+      const pOne = usersInRoom[0].user_id;
+      const pTwo = usersInRoom[1].user_id;
+
+      const updateHand = (user) => `
+        UPDATE player_hands
+          SET played_this_round = false
+          WHERE user_id = ${user}
+          AND game_state_id = ${game_state}
+          RETURNING card_played;`
+      
+      const pOneCard = await db
+        .query(updateHand(pOne))
+        .then(data => data.rows[0]);
+
+      const pTwoCard = await db
+        .query(updateHand(pTwo))
+        .then(data => data.rows[0]);
+
+      console.log(pOneCard, pTwoCard, dealer_card);
+      console.log(typeof pOneCard.card_played)
+      // // Scoring
+      const pOScore = pOneCard.card_played > pTwoCard.card_played ? Number(dealer_card) : 0;
+      const pTScore = pTwoCard.card_played > pOneCard.card_played ? Number(dealer_card) : 0;
+
+      const score = [{user_id: pOne, score: pOScore}, {user_id: pTwo, score: pTScore}]
+
+      const newDealerCard = async () => {
+        const cardNum = Math.floor(Math.random() * 13) + 1;
+        const chkDealerCard = `
+          SELECT * FROM game_states
+          WHERE room_id = ${room_id}
+          AND card_${cardNum} = 1;
+        `
+        const check = await db
+          .query(chkDealerCard)
+          .then(data => data.rows[0])
+        if (check) {
+          const newDealerCard = `
+          UPDATE game_states
+          SET card_${cardNum} = 0, dealer_card = '${cardNum}', round_number = round_number + 1
+          WHERE room_id = ${room_id}
+          RETURNING *;
+        `
+        // need to get this and send to frontend
+        await db
+          .query(newDealerCard)
+          .then(data => res.json({ dealer_card: cardNum, score, user_id: user_id}))
+        } else {
+          newDealerCard();
+        }
+      }
+      newDealerCard();
+    } else {
+      const chkDealerCard = `
+        SELECT dealer_card FROM game_states
+        WHERE room_id = ${room_id}`
+
+      await db
+        .query(chkDealerCard)
+        .then(data => {
+            res.json(data.rows[0]);
+        })
+    }
+
+  });
 
   return gamesRouter;
 };

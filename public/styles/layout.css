@@ -126,7 +126,7 @@ h3.less-margins {
   border-bottom: 2px solid black;
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1024px) {
   .game1, .game2 {
     flex-direction: column;
     padding: 0;

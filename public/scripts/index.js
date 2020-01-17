@@ -30,7 +30,7 @@
             ${count} / 2
           </td>
           <td>
-            ${game_started}
+            ${count === 2}
           </td>
         </tr>
       `
@@ -61,7 +61,7 @@
 
       if ($listRooms.css('display') === 'none') {
 
-        if ($(window).width() <= 768) {
+        if ($(window).width() <= 1024) {
           $listRooms.css('display', 'flex');
           $gameTwo.css('display', 'none');
         } else {
@@ -72,7 +72,7 @@
           grabGames(1);
         }, 5000)
       } else {
-        if ($(window).width() <= 768) {
+        if ($(window).width() <= 1024) {
           $listRooms.css('display', 'none');
           $gameTwo.css('display', 'flex');
         } else {
@@ -89,7 +89,7 @@
 
     $joinTwo.click((e) => {
       if ($listRooms.css('display') === 'none') {
-        if ($(window).width() <= 768) {
+        if ($(window).width() <= 1024) {
           $listRooms.css('display', 'flex');
           $gameOne.css('display', 'none');
         } else {
@@ -100,7 +100,7 @@
           grabGames(2);
         }, 5000)
       } else {
-        if ($(window).width() <= 768) {
+        if ($(window).width() <= 1024) {
           $listRooms.css('display', 'none');
           $gameOne.css('display', 'flex');
         } else {

@@ -58,7 +58,7 @@ const roomsRouterWrapper = (db) => {
               const queryNewPlayerHandParams = [gameStateId, user_id];
               db
                 .query(queryNewPlayerHand, queryNewPlayerHandParams)
-                .then((playerHand) => console.log(playerHand.rows));
+                .then((playerHand) => console.log('phrows', playerHand.rows));
             });
           res.json({ room_id: room.id });
         })
@@ -80,7 +80,6 @@ const roomsRouterWrapper = (db) => {
     db
       .query(queryCheckIfUserInRoom)
       .then((data) => {
-        console.log(data.rows[0].count);
         if (data.rows[0].count === '1') {
           
           const templateVars = {
@@ -122,77 +121,8 @@ const roomsRouterWrapper = (db) => {
             })
             .catch((err) => console.log(err.stack));
         }
-
-
-        //   if (data.rows[0].count === 0) {
-        //     if (!user_id) {
-        //       res.json({ error: 'not logged in or playing as guest' });
-        //     } else {
-
-
-        //       const queryNewRoomUsers = `
-        //       INSERT INTO room_users (room_id, user_id)
-        //         VALUES ($1, $2)
-        //         RETURNING *;
-        //     `;
-        //       const queryNewRoomUsersParams = [room_id, user_id];
-
-        //       db
-        //         .query(queryNewRoomUsers, queryNewRoomUsersParams)
-        //         .then((roomUsers) => roomUsers.rows);
-
-
-        //       const getGameState = `
-        // SELECT game_states.id 
-        // FROM game_states
-        // WHERE room_id = ${room_id}
-        // `
-        //       db.query(getGameState)
-        //         .then((data) => {
-        //           const game_state_id = data.rows[0].id
-
-        //           const queryNewPlayerHand = `
-        //   INSERT INTO player_hands (game_state_id, user_id)
-        //   VALUES ($1, $2)
-        //   RETURNING *;
-        //   `;
-        //           const queryNewPlayerHandParams = [game_state_id, user_id];
-        //           db
-        //             .query(queryNewPlayerHand, queryNewPlayerHandParams)
-        //             .then((playerHand) => playerHand.rows);
       }).catch((err) => console.log(err.stack));
-    // }
-    //res.json({ room_id: room_id });
-
-
-
-    //   }
-    //   else {
-    //     res.send('user already exist');
-    //   }
-    // })
-
-    // res.render('game', templateVars);
-    
   });
-
-
-
-//helakkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-
-  // change this to games
-  // console.log(req.params)
-  // databaseHelper.getAllGames()
-  //   .then((gamesData) => {
-  //     const templateVars = {
-  //       user: req.session ? req.session.userID : null,
-  //       gamesData
-  //     };
-  //     console.log(gamesData);
-  //     res.render('index', templateVars);
-  //   })
-  //   .catch((err) => res.status(400).json(err.stack));
-  //});
 
   return roomsRouter;
 };

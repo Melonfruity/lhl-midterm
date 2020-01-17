@@ -1,8 +1,13 @@
-div.main-container div.content {
-  display: block;
+div.main-container {
+  width: 100%;
 }
 
-img.card {
+div.main-container div.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.card {
   max-height: 10rem;
   margin: 4px;
 }
