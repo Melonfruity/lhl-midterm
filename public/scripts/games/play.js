@@ -17,7 +17,8 @@ const roomIdFromUrl = function(url) {
   let output = '';
   for (let i = url.length - 1; i >= 0; i--) {
     if (url[i] === '/') {
-      for (let j = i + 1; j < url.length; j++) {
+      for (let j = i + 2; j < url.length; j++) {
+        
         output += url[j];
       }
       return output;
@@ -90,6 +91,7 @@ const startRound = function(bool, room_id, game_state_id) {
       url: `/api/games/start/?room_id=${room_id}`,
       success: function(data) {
         bool = false;
+        console.log(data.cardValue);
         loadPage(data.cardValue);
         getPlayerhand(game_state_id);
       }
@@ -126,9 +128,9 @@ $(document).ready(function() {
     console.log('hello');
     //initialize game
     const pageURL = $(location).attr("href");
-    console.log(pageURL);
+    
     room_id = roomIdFromUrl(pageURL);
-
+    
     getGameStateId(room_id)
       .then(data => {
         game_state_id = data.id;
