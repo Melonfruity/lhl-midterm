@@ -61,7 +61,7 @@ const gamesRouterWrapped = (db) => {
     findGameStateId(room_id)
       .then(gameStateId => {
         game_state_id = gameStateId;
-        console.log('gameState', game_state_id);
+        
 
         const queryString1 = `SELECT played_this_round
         FROM player_hands
@@ -82,6 +82,7 @@ const gamesRouterWrapped = (db) => {
 
       })
       .then((finished) => {
+        
         console.log('finished', finished);
 
         const queryString2 = `SELECT user_id, card_played
@@ -89,68 +90,72 @@ const gamesRouterWrapped = (db) => {
         WHERE game_state_id = ${game_state_id}
         AND card_played = (SELECT max(card_played)
         FROM player_hands)`;
-        //console.log("Post/round is finished: ", finished);
+        
 
         if (finished) {
           return db
             .query(queryString2)
-        }
-        else {
-          res.json(output);
-        }
-      })
-      .then((data) => {
-        console.log('data', data)
-        if (data) {
-          if (data.rows.length > 1) { //if there is a tie
-            output.winner = 'tie';
-            output.score = 0;
-            res.json(output);
 
-          } else {
-            console.log(data.rows);
-            output.winner = data.rows[0].user_id;
+            .then((data) => {
+              
+              if (data) {
+                if (data.rows.length > 1) { //if there is a tie
+                  output.winner = 'tie';
+                  output.score = 0;
+                  res.json(output);
 
-            const queryString3 = `
+                } else {
+                  
+                  output.winner = data.rows[0].user_id;
+
+                  const queryString3 = `
                 SELECT dealer_card
                 FROM game_states
                 WHERE game_states.id = ${game_state_id}
                 `;
-            db
-              .query(queryString3)
-              .then((data) => {
-                output.roundScore = data.rows[0].dealer_card;
-                const queryString4 = `
+                  db
+                    .query(queryString3)
+                    .then((data) => {
+                      output.roundScore = data.rows[0].dealer_card;
+                      const queryString4 = `
                     UPDATE player_hands
                     SET score = score + ${output.roundScore}
                     WHERE user_id = ${output.winner}
                     RETURNING score
                     `;
-                db
-                  .query(queryString4)
-                  .then((data) => {
-                    output.score = data.rows[0].score;
-                    console.log('increment');
+                      db
+                        .query(queryString4)
+                        .then((data) => {
+                          output.score = data.rows[0].score;
+                          console.log('increment');
 
-                    const incrementRound = `
+                          const incrementRound = `
                         UPDATE game_states
                         SET round_number = round_number + 1
                         WHERE game_states.id = 1
                         RETURNING round_number;
                         `;
 
-                    db
-                      .query(incrementRound)
-                      .then((data) => {
-                        output.round_number = data.rows[0].round_number;
-                        console.log(output);
-                        res.json(output);
-                      });
-                  });
-              });
-          }
+                          db
+                            .query(incrementRound)
+                            .then((data) => {
+                              output.round_number = data.rows[0].round_number;
+                              console.log(output);
+                              res.json(output);
+                            });
+                        });
+                    });
+                }
+              }
+            });
+
         }
-      });
+        else {
+          res.json(output);
+        }
+      })
+
+
 
   });
 

@@ -133,7 +133,9 @@ $(document).ready(function() {
     
     getGameStateId(room_id)
       .then(data => {
+      
         game_state_id = data.id;
+        console.log('game', game_state_id);
         startRound(initialize, room_id, game_state_id);
 
       });

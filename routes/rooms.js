@@ -34,7 +34,7 @@ const roomsRouterWrapper = (db) => {
 
           db
             .query(queryNewRoomUsers, queryNewRoomUsersParams)
-            .then((roomUsers) => console.log(roomUsers.rows));
+            .then((roomUsers) => roomUsers.rows);
 
           const queryNewGameState = `
             INSERT INTO game_states (room_id)
@@ -46,15 +46,17 @@ const roomsRouterWrapper = (db) => {
           db
             .query(queryNewGameState, queryNewGameStateParams)
             .then((gameState) => {
+              console.log('gamestate rows', gameState.rows[0].id);
+              
               const queryNewPlayerHand = `
-                INSERT INTO player_hands (game_state_id, user_id)
-                  VALUES ($1, $2)
-                  RETURNING *;
+              INSERT INTO player_hands (game_state_id, user_id)
+              VALUES ($1, $2)
+              RETURNING *;
               `;
-              const queryNewPlayerHandParams = [gameState.id, user_id];
+              const queryNewPlayerHandParams = [gameState.rows[0].id, user_id];
               db
                 .query(queryNewPlayerHand, queryNewPlayerHandParams)
-                .then((playerHand) => console.log(playerHand.rows));
+                .then((playerHand) => playerHand.rows);
             });
           res.json({ room_id: room.id });
         })
