@@ -125,10 +125,6 @@ const roomsRouterWrapper = (db) => {
 
 
         //   if (data.rows[0].count === 0) {
-
-
-
-
         //     if (!user_id) {
         //       res.json({ error: 'not logged in or playing as guest' });
         //     } else {
@@ -182,7 +178,7 @@ const roomsRouterWrapper = (db) => {
 
 
 
-
+//helakkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 
   // change this to games
   // console.log(req.params)
