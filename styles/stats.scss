@@ -1,12 +1,31 @@
-// See: https://sass-lang.com/
+div.content {
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3rem;
+  border-bottom: 2px solid black;
+}
 
 .leaderboard-tables {
   display: flex;
   flex-direction: row;
+  margin-bottom: 3rem;
 }
 
 .bdr {
   border-right: 2px solid black;
   border-left: 2px solid black;
   height: 100%;
+}
+
+thead {
+  border-bottom: 2px solid black;
+}
+
+th {
+  font-size: 1.25rem;
 }

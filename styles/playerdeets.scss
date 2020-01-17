@@ -1,9 +1,17 @@
 .player-deets {
   background-color: #0f4c75;
+  padding: 1rem;
+  color: whitesmoke;
 }
 
 .profile-container {
   margin-top: 3em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#profile-details {
   display: flex;
   flex-direction: column;
   align-items: center;

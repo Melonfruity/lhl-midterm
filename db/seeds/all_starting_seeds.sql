@@ -58,9 +58,9 @@ INSERT INTO cards (suit, type, value, img_url) VALUES ('diamonds', 'standard_car
 
 
 -- DEFAULT USERS
-INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('playerone', 'unhashedpass', 10, FALSE, '/images/user_photos/Bulbasaur.png');
-INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('playertwo', 'unhashedpass', 15, FALSE, '/images/user_photos/Caterpie.png');
-INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('guest', 'guest', 0, TRUE, '/images/user_photos/Charmander.png');
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('almost', 'noPass', 10, TRUE, '/images/user_photos/Bulbasaur.png');
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('hello', 'unhashedpass', 15, FALSE, '/images/user_photos/Caterpie.png');
+INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('hihihi', 'guest', 0, TRUE, '/images/user_photos/Charmander.png');
 INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('guyusername', 'unhashedpass', 2, FALSE, '/images/user_photos/Pidgey.png');
 INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('dudeusername', 'unhashedpass', 11, FALSE, '/images/user_photos/Pikachu.png');
 INSERT INTO users (username, password, tokens, is_guest, img_url) VALUES ('playerguyusername', 'unhashedpass', 255, FALSE, '/images/user_photos/Rattata.png');

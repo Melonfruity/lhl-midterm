@@ -1,3 +1,7 @@
+div.main-container div.content {
+  display: block;
+}
+
 img.card {
   max-height: 10rem;
   margin: 4px;

@@ -119,6 +119,16 @@ body {
   width: 100px;
 }
 
+.rooms {
+  tr {
+    cursor: pointer;
+  }
+}
+
+h3.less-margins {
+  padding: 1rem;
+  border-bottom: 2px solid black;
+}
 @media only screen and (max-width: 768px ){
   .game1, .game2 {
     flex-direction: column;
