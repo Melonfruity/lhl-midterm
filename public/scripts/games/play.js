@@ -4,7 +4,7 @@
   $(function() {
     
     // grab room location
-    const room_id = $(location).attr("href").substring(41);
+    const room_id = $(location).attr("href").substring(48);
     const $dealerCard = $('.dealer-card');
     const $playerHand = $('.player-hand');
     const $message = $('.message');
